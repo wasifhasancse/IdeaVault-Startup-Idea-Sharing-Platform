@@ -12,7 +12,7 @@ const PrimaryButton = ({
 }) => {
   const inner = (
     <>
-      <span className="lable">{label}</span>
+      <span className="lable px-2.5">{label}</span>
       <Icon className="svg-icon" />
     </>
   );
@@ -39,7 +39,7 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-items: center;
     padding: 6px 14px;
-    gap: 8px;
+    gap: 16px;
     height: 36px;
     width: fit-content;
     min-width: 90px;

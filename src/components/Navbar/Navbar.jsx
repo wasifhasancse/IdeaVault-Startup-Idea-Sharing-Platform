@@ -1,5 +1,4 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import {
   FiBookOpen,
@@ -8,16 +7,15 @@ import {
   FiMessageSquare,
   FiZap,
 } from "react-icons/fi";
-import PrimaryButton from "../Button/PrimaryButton";
 import DarkModeSwitch from "./DarkModeSwitch";
 import Hamburger from "./Hamburger";
 import LogoWithAnimation from "./LogoWithAnimation";
 import NavLink from "./NavLink";
-import UserNavProfile from "./UserNavProfile";
 
 const Navbar = () => {
-  const { data: userData } = authClient.useSession();
-  const isLoggedIn = Boolean(userData?.session);
+  // const { data: userData } = authClient.useSession();
+  // const isLoggedIn = Boolean(userData?.session);
+  const isLoggedIn = Boolean(true);
 
   const publicLinks = [
     { href: "/", label: "Home", icon: FiHome },
@@ -47,24 +45,14 @@ const Navbar = () => {
         </div>
 
         <ul className="hidden items-center gap-2 md:flex">
-          {navLinks.map((navItems, index) =>
-            navItems.isPrimary ? (
-              <li key={index}>
-                <PrimaryButton
-                  href={navItems.href}
-                  label={navItems.label}
-                  icon={navItems.icon}
-                />
-              </li>
-            ) : (
-              <NavLink key={index} navItems={navItems} />
-            ),
-          )}
+          {navLinks.map((navItems, index) => (
+            <NavLink key={index} navItems={navItems} />
+          ))}
         </ul>
 
         <div className="flex items-center gap-3">
           <DarkModeSwitch />
-          <UserNavProfile />
+          {/* <UserNavProfile /> */}
         </div>
       </div>
     </nav>
