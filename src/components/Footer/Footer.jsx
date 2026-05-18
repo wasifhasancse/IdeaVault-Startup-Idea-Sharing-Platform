@@ -5,7 +5,7 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import { FiMail, FiZap } from "react-icons/fi";
+import { FiMail, FiMapPin, FiPhone, FiZap } from "react-icons/fi";
 import LogoWithAnimation from "../Navbar/LogoWithAnimation";
 
 const Footer = () => {
@@ -40,14 +40,14 @@ const Footer = () => {
   return (
     <footer className="border-t border-[#5e41de]/15 bg-white dark:border-[#5e41de]/20 dark:bg-zinc-950">
       <div className="mx-auto max-w-11/12 py-12 lg:py-16">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-8">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1 flex flex-col gap-5">
+          <div className="col-span-2 md:col-span-4 lg:col-span-1 flex flex-col gap-5">
             <Link href="/" className="z-10 inline-flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5e41de] text-white shadow-md shadow-[#5e41de]/30">
                 <FiZap size={18} />
               </span>
-              <LogoWithAnimation/>
+              <LogoWithAnimation />
             </Link>
             <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
               The platform where startup ideas come to life. Share, discover,
@@ -122,7 +122,7 @@ const Footer = () => {
           </div>
 
           {/* Support */}
-          <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <div className="space-y-1.5">
               <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100">
                 Support
@@ -142,18 +142,63 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-            <a
-              href="mailto:hello@ideavault.com"
-              className="group mt-1 max-w-[70%] flex items-center gap-2 rounded-lg border border-[#5e41de]/15 bg-[#5e41de]/5 px-3 py-2.5 transition-colors hover:border-[#5e41de]/30 hover:bg-[#5e41de]/10 dark:border-[#5e41de]/25 dark:bg-[#5e41de]/10"
-            >
-              <FiMail
-                size={14}
-                className="shrink-0 text-[#5e41de] dark:text-[#a78bfa]"
-              />
-              <span className="text-sm text-zinc-500 transition-colors group-hover:text-[#5e41de] dark:text-zinc-400 dark:group-hover:text-[#a78bfa]">
-                hello@ideavault.com
-              </span>
-            </a>
+          </div>
+
+          {/* Contact */}
+          <div className="col-span-2 md:col-span-2 lg:col-span-1 flex flex-col gap-4">
+            <div className="space-y-1.5">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100">
+                Contact
+              </h3>
+              <div className="h-0.5 w-8 rounded-full bg-[#5e41de]" />
+            </div>
+            <ul className="space-y-2.5">
+              <li>
+                <a
+                  href="mailto:hello@ideavault.com"
+                  className="group flex items-center gap-3 rounded-xl border border-[#5e41de]/15 bg-[#5e41de]/5 px-3 py-2.5 transition-colors hover:border-[#5e41de]/30 hover:bg-[#5e41de]/10 dark:border-[#5e41de]/25 dark:bg-[#5e41de]/10"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/15 dark:bg-[#5e41de]/25">
+                    <FiMail
+                      size={13}
+                      className="text-[#5e41de] dark:text-[#a78bfa]"
+                    />
+                  </span>
+                  <span className="text-sm text-zinc-500 transition-colors group-hover:text-[#5e41de] dark:text-zinc-400 dark:group-hover:text-[#a78bfa]">
+                    hello@ideavault.com
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+8801712345678"
+                  className="group flex items-center gap-3 rounded-xl border border-[#5e41de]/15 bg-[#5e41de]/5 px-3 py-2.5 transition-colors hover:border-[#5e41de]/30 hover:bg-[#5e41de]/10 dark:border-[#5e41de]/25 dark:bg-[#5e41de]/10"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/15 dark:bg-[#5e41de]/25">
+                    <FiPhone
+                      size={13}
+                      className="text-[#5e41de] dark:text-[#a78bfa]"
+                    />
+                  </span>
+                  <span className="text-sm text-zinc-500 transition-colors group-hover:text-[#5e41de] dark:text-zinc-400 dark:group-hover:text-[#a78bfa]">
+                    +880 1712-345678
+                  </span>
+                </a>
+              </li>
+              <li>
+                <div className="flex items-center gap-3 rounded-xl border border-[#5e41de]/15 bg-[#5e41de]/5 px-3 py-2.5 dark:border-[#5e41de]/25 dark:bg-[#5e41de]/10">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/15 dark:bg-[#5e41de]/25">
+                    <FiMapPin
+                      size={13}
+                      className="text-[#5e41de] dark:text-[#a78bfa]"
+                    />
+                  </span>
+                  <span className="text-sm text-zinc-500 dark:text-zinc-400">
+                    Dhanmondi, Dhaka, Bangladesh
+                  </span>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
 
