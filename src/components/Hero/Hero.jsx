@@ -52,7 +52,7 @@ const Hero = () => {
             </div>
 
             {/* Stats */}
-            <div className="flex items-center justify-center gap-4 lg:justify-start">
+            <div className="flex flex-wrap  items-center justify-center gap-4 lg:justify-start">
               <div className="flex flex-col items-center rounded-2xl border border-[#5e41de]/15 bg-[#5e41de]/5 px-5 py-3 shadow-sm shadow-[#5e41de]/10 dark:border-[#5e41de]/20 dark:bg-[#5e41de]/10 lg:items-start">
                 <p className="text-2xl font-bold text-[#5e41de] dark:text-[#a78bfa]">
                   1.2K+

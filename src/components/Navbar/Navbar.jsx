@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-[#5e41de]/15 dark:border-[#5e41de]/25 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md">
       <div className="mx-auto h-16 max-w-11/12 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-2.5 lg:gap-4">
           <Hamburger navLinks={navLinks} />
           <Link href="/" className="flex items-center">
             <LogoWithAnimation />
@@ -47,7 +47,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <DarkModeSwitch />
           {isPending ? (
             <div className="h-9 w-9 animate-spin rounded-full border-2 border-[#5e41de]/25 border-t-[#5e41de]" />
