@@ -18,3 +18,135 @@
   --dropdown-text: #f4f4f5;
   --dropdown-border: rgba(94, 65, 222, 0.25);
 }
+
+/* ── Sign-in page ─────────────────────────────────────────── */
+
+.signin-form input[type="email"]:focus,
+.signin-form input[type="password"]:focus,
+.signin-form input[type="text"]:focus {
+  outline: none !important;
+  border-color: #5e41de !important;
+  background: rgba(94, 65, 222, 0.07) !important;
+  box-shadow:
+    0 0 0 3px rgba(94, 65, 222, 0.14),
+    0 2px 14px rgba(94, 65, 222, 0.1) !important;
+}
+
+.signin-form input::placeholder {
+  color: rgba(94, 65, 222, 0.3);
+}
+
+/* Google button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  width: 100%;
+  border: 1px solid rgba(94, 65, 222, 0.22);
+  background: rgba(94, 65, 222, 0.07);
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5e41de;
+  letter-spacing: 0.4px;
+  transition:
+    background 0.5s ease,
+    border-color 0.3s ease;
+}
+
+.dark .google-btn {
+  color: #a78bfa;
+  background: rgba(94, 65, 222, 0.12);
+  border-color: rgba(167, 139, 250, 0.25);
+}
+
+.google-btn:hover {
+  background: rgba(94, 65, 222, 0.14);
+  border-color: rgba(94, 65, 222, 0.4);
+  animation: signin-rotate 0.7s ease-in-out both;
+}
+
+.google-btn:hover .google-label {
+  display: none;
+}
+
+.google-btn .google-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform 0.8s ease;
+}
+
+.google-btn:hover .google-icon {
+  transform: rotate(50deg);
+}
+
+/* Submit button */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  width: 100%;
+  border: none;
+  background: #5e41de;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 18px rgba(94, 65, 222, 0.35);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #4930b8;
+  box-shadow: 0 8px 24px rgba(94, 65, 222, 0.45);
+  animation: signin-rotate 0.7s ease-in-out both;
+}
+
+.submit-btn:active {
+  box-shadow: 0 3px 10px rgba(94, 65, 222, 0.3);
+}
+
+.submit-btn:hover .submit-label {
+  display: none;
+}
+
+.submit-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform 0.8s ease;
+}
+
+.submit-btn:hover .submit-icon {
+  transform: rotate(50deg) scale(1.2);
+}
+
+@keyframes signin-rotate {
+  0% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  25% {
+    transform: rotate(3deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-3deg) translate3d(0, 0, 0);
+  }
+  75% {
+    transform: rotate(1deg) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+}

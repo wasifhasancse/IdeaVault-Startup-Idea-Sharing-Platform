@@ -1,7 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import {
-  Button,
   FieldError,
   Form,
   Input,
@@ -12,10 +11,9 @@ import {
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import { FiZap } from "react-icons/fi";
+import { ImPower } from "react-icons/im";
 import { IoMdLogIn } from "react-icons/io";
 import { RiLightbulbFlashFill } from "react-icons/ri";
-import styled from "styled-components";
 
 export default function SignIn() {
   const onSubmit = async (event) => {
@@ -74,32 +72,22 @@ export default function SignIn() {
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-[#5e41de]/20 bg-[#5e41de]/5 px-4 py-3 shadow-sm shadow-[#5e41de]/10 dark:bg-[#5e41de]/10">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#5e41de] dark:text-[#a78bfa]">
-                  💡 My Ideas
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#5e41de] dark:text-[#a78bfa] inline-flex items-center gap-1">
+                  <RiLightbulbFlashFill /> My Ideas
                 </p>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                   Manage and track your submitted startup concepts
                 </p>
               </div>
               <div className="rounded-2xl border border-[#5e41de]/20 bg-[#5e41de]/5 px-4 py-3 shadow-sm shadow-[#5e41de]/10 dark:bg-[#5e41de]/10">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#5e41de] dark:text-[#a78bfa]">
-                  ⚡ Interactions
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#5e41de] dark:text-[#a78bfa] inline-flex items-center gap-1">
+                  <ImPower /> Interactions
                 </p>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                   Track votes, comments, and feedback on ideas
                 </p>
               </div>
             </div>
-
-            <p className="mt-6 text-sm text-zinc-500 dark:text-zinc-400">
-              New to IdeaVault?{" "}
-              <Link
-                href="/signup"
-                className="font-bold text-[#5e41de] underline decoration-[#5e41de]/30 underline-offset-4 transition hover:text-[#4930b8] dark:text-[#a78bfa]"
-              >
-                Create an account
-              </Link>
-            </p>
           </div>
 
           {/* Right Panel */}
@@ -118,17 +106,16 @@ export default function SignIn() {
               </div>
             </div>
 
-            <StyledWrapper>
+            <div className="signin-form w-full">
               <Form className="flex w-full flex-col gap-5" onSubmit={onSubmit}>
-                <Button
+                <button
                   type="button"
-                  onPress={handleGoogleSignIn}
-                  variant="bordered"
-                  className="google-btn h-11 w-full rounded-xl border-[#5e41de]/25 bg-white/70 text-sm font-semibold text-zinc-700 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/5 dark:bg-zinc-900/70 dark:text-zinc-200 md:h-12"
+                  onClick={handleGoogleSignIn}
+                  className="google-btn"
                 >
-                  <FcGoogle className="h-5 w-5" />
-                  Continue with Google
-                </Button>
+                  <FcGoogle className="google-icon" />
+                  <span className="google-label">Continue with Google</span>
+                </button>
 
                 <div className="flex items-center gap-3">
                   <div className="h-px w-full bg-[#5e41de]/15" />
@@ -190,8 +177,8 @@ export default function SignIn() {
                   <span className="submit-label">Sign In to IdeaVault</span>
                 </button>
 
-                <p className="text-center text-sm text-zinc-500 dark:text-zinc-400">
-                  New to IdeaVault?{" "}
+                <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-2.5">
+                  Haven&apos;t created an account yet?{" "}
                   <Link
                     href="/signup"
                     className="font-bold text-[#5e41de] underline decoration-[#5e41de]/30 underline-offset-4 transition hover:text-[#4930b8] dark:text-[#a78bfa]"
@@ -200,143 +187,10 @@ export default function SignIn() {
                   </Link>
                 </p>
               </Form>
-            </StyledWrapper>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-const StyledWrapper = styled.div`
-  width: 100%;
-
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  input[type="text"]:focus {
-    outline: none !important;
-    border-color: #5e41de !important;
-    background: rgba(94, 65, 222, 0.07) !important;
-    box-shadow:
-      0 0 0 3px rgba(94, 65, 222, 0.14),
-      0 2px 14px rgba(94, 65, 222, 0.1) !important;
-  }
-
-  input::placeholder {
-    color: rgba(94, 65, 222, 0.3);
-  }
-
-  .google-btn {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .google-btn::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -75%;
-    width: 45%;
-    height: 200%;
-    background: rgba(94, 65, 222, 0.06);
-    transform: skewX(-15deg);
-    transition: left 0.5s ease;
-  }
-
-  .google-btn:hover::after {
-    left: 125%;
-  }
-
-  .submit-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 46px;
-    border: none;
-    border-radius: 12px;
-    background: #5e41de;
-    color: white;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    overflow: visible;
-    box-shadow: 0 4px 18px rgba(94, 65, 222, 0.35);
-    transition:
-      background 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-
-  .submit-btn:hover {
-    background: #4930b8;
-    box-shadow: 0 8px 24px rgba(94, 65, 222, 0.45);
-    animation: rotate624 0.7s ease-in-out both;
-  }
-
-  .submit-btn:active {
-    box-shadow: 0 3px 10px rgba(94, 65, 222, 0.3);
-  }
-
-  .submit-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  .submit-label {
-    display: inline-block;
-    transition: margin-left 0.5s ease;
-  }
-
-  .submit-btn:hover .submit-icon {
-    opacity: 1;
-  }
-
-  .submit-btn:hover .submit-label {
-    margin-left: 10px;
-    animation: storm1261 0.7s ease-in-out both;
-    animation-delay: 0.06s;
-  }
-
-  @keyframes rotate624 {
-    0% {
-      transform: rotate(0deg) translate3d(0, 0, 0);
-    }
-    25% {
-      transform: rotate(3deg) translate3d(0, 0, 0);
-    }
-    50% {
-      transform: rotate(-3deg) translate3d(0, 0, 0);
-    }
-    75% {
-      transform: rotate(1deg) translate3d(0, 0, 0);
-    }
-    100% {
-      transform: rotate(0deg) translate3d(0, 0, 0);
-    }
-  }
-
-  @keyframes storm1261 {
-    0% {
-      transform: translate3d(0, 0, 0) translateZ(0);
-    }
-    25% {
-      transform: translate3d(4px, 0, 0) translateZ(0);
-    }
-    50% {
-      transform: translate3d(-3px, 0, 0) translateZ(0);
-    }
-    75% {
-      transform: translate3d(2px, 0, 0) translateZ(0);
-    }
-    100% {
-      transform: translate3d(0, 0, 0) translateZ(0);
-    }
-  }
-`;
