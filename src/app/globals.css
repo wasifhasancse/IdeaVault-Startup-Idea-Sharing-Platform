@@ -19,7 +19,33 @@
   --dropdown-border: rgba(94, 65, 222, 0.25);
 }
 
-/* ── Sign-in page ─────────────────────────────────────────── */
+/* ── Button loader spinner ────────────────────────────────── */
+
+.btn-loader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-loader-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  animation: btn-spin 1s linear infinite;
+  stroke: currentColor;
+}
+
+.btn-loader-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Sign-in / Sign-up pages ──────────────────────────────── */
 
 .signin-form input[type="email"]:focus,
 .signin-form input[type="password"]:focus,
@@ -131,6 +157,55 @@
 
 .submit-btn:hover .submit-icon {
   transform: rotate(50deg) scale(1.2);
+}
+
+/* Reset button */
+.reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  width: 100%;
+  border: 1px solid rgba(94, 65, 222, 0.3);
+  background: transparent;
+  color: #5e41de;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  transition:
+    background 0.5s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.dark .reset-btn {
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+.reset-btn:hover {
+  background: rgba(94, 65, 222, 0.07);
+  border-color: rgba(94, 65, 222, 0.5);
+  animation: signin-rotate 0.7s ease-in-out both;
+}
+
+.reset-btn:hover .reset-label {
+  display: none;
+}
+
+.reset-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.8s ease;
+}
+
+.reset-btn:hover .reset-icon {
+  transform: rotate(180deg);
 }
 
 @keyframes signin-rotate {

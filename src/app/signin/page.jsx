@@ -1,4 +1,5 @@
 "use client";
+import ButtonLoader from "@/components/Loader/ButtonLoader";
 import { authClient } from "@/lib/auth-client";
 import {
   FieldError,
@@ -10,28 +11,38 @@ import {
 } from "@heroui/react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { ImPower } from "react-icons/im";
 import { IoMdLogIn } from "react-icons/io";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
 export default function SignIn() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
   const onSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const { data, error } = await authClient.signIn.email({
-      email,
-      password,
-      callbackURL: "/",
-    });
-    if (error) {
-      toast.danger("Failed to sign in. " + error.message);
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData(event.target);
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
+      if (error) {
+        toast.danger("Failed to sign in. " + error.message);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true);
     await authClient.signIn.social({ provider: "google", callbackURL: "/" });
   };
 
@@ -111,10 +122,17 @@ export default function SignIn() {
                 <button
                   type="button"
                   onClick={handleGoogleSignIn}
+                  disabled={isGoogleLoading || isSubmitting}
                   className="google-btn"
                 >
-                  <FcGoogle className="google-icon" />
-                  <span className="google-label">Continue with Google</span>
+                  {isGoogleLoading ? (
+                    <ButtonLoader text="Connecting..." />
+                  ) : (
+                    <>
+                      <FcGoogle className="google-icon" />
+                      <span className="google-label">Continue with Google</span>
+                    </>
+                  )}
                 </button>
 
                 <div className="flex items-center gap-3">
@@ -172,9 +190,19 @@ export default function SignIn() {
                   Forgot Password?
                 </button>
 
-                <button type="submit" className="submit-btn">
-                  <IoMdLogIn className="submit-icon" />
-                  <span className="submit-label">Sign In to IdeaVault</span>
+                <button
+                  type="submit"
+                  disabled={isSubmitting || isGoogleLoading}
+                  className="submit-btn"
+                >
+                  {isSubmitting ? (
+                    <ButtonLoader text="Signing in..." />
+                  ) : (
+                    <>
+                      <IoMdLogIn className="submit-icon" />
+                      <span className="submit-label">Sign In to IdeaVault</span>
+                    </>
+                  )}
                 </button>
 
                 <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-2.5">
