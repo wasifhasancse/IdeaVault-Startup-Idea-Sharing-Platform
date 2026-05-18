@@ -73,7 +73,7 @@ const UpdateProfile = () => {
                 Settings
               </span>
               {/* Lottie animation */}
-              <div className="mx-auto w-full max-w-xs md:max-w-sm lg:mx-0">
+              <div className="mx-auto w-full max-w-xs md:max-w-md lg:mx-0 lg:max-w-lg">
                 <DotLottieReact
                   src="https://lottie.host/b9a210e5-cb52-4daf-aefb-01df1f9024ab/248RdexoE7.lottie"
                   loop
@@ -185,7 +185,7 @@ const UpdateProfile = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Zoe Montoya"
+                  placeholder="e.g. Wasif Hasan"
                   className="w-full rounded-xl border border-[#5e41de]/20 bg-white/80 px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
                 />
               </div>
