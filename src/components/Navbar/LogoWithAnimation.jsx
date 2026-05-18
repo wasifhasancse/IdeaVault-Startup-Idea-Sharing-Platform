@@ -6,127 +6,177 @@ const LogoWithAnimation = () => {
   return (
     <StyledWrapper>
       <span className="ui-logo">
-        <span>IdeaVault</span>
+        <span className="text-[#5e41de] dark:text-[#a78bfa]">IdeaVault</span>
       </span>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
+  /* From Uiverse.io by SteveBloX */
   .ui-logo {
-    --logo-transition: 0.3s;
-    --logo-letter-spacing: 0.05rem;
-    --logo-animation-duration: 3s;
-    --default-logo-color: #5e41de;
-    --hover-logo-color: #a78bfa;
-    --font-size: 22px;
-    --font-weight: 800;
-    --font-family: Menlo, Roboto Mono, monospace;
-
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
-  }
-
-  .ui-logo > span {
-    letter-spacing: var(--logo-letter-spacing);
-    transition: var(--logo-transition);
-    box-sizing: border-box;
     position: relative;
-    background: inherit;
-    color: var(--default-logo-color);
-    font: var(--font-weight) var(--font-size) var(--font-family);
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
-  .ui-logo > span::before {
-    box-sizing: border-box;
+  .ui-logo:active {
+    transform: scale(0.95);
+  }
+
+  .ui-logo:before,
+  .ui-logo:after {
     position: absolute;
     content: "";
-    background: inherit;
-    color: var(--hover-logo-color);
+    width: 150%;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: -1000;
+    background-repeat: no-repeat;
   }
 
-  .ui-logo:hover > span,
-  .ui-logo:focus > span {
-    color: var(--hover-logo-color);
+  .ui-logo:hover:before {
+    top: -70%;
+    background-image:
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, transparent 20%, #5e41de 20%, transparent 30%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%),
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #a78bfa 15%, transparent 20%),
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%),
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%);
+    background-size:
+      10% 10%,
+      20% 20%,
+      15% 15%,
+      20% 20%,
+      18% 18%,
+      10% 10%,
+      15% 15%,
+      10% 10%,
+      18% 18%;
+    background-position: 50% 120%;
+    animation: purpleTopBubbles 0.6s ease;
   }
 
-  .ui-logo:hover > span::before,
-  .ui-logo:focus > span::before {
-    animation: chitchat linear both var(--logo-animation-duration);
-  }
-
-  @keyframes chitchat {
+  @keyframes purpleTopBubbles {
     0% {
-      content: "#";
+      background-position:
+        5% 90%,
+        10% 90%,
+        10% 90%,
+        15% 90%,
+        25% 90%,
+        25% 90%,
+        40% 90%,
+        55% 90%,
+        70% 90%;
     }
-    5% {
-      content: ".";
-    }
-    10% {
-      content: "^{";
-    }
-    15% {
-      content: "-!";
-    }
-    20% {
-      content: "#$_";
-    }
-    25% {
-      content: "№:0";
-    }
-    30% {
-      content: "#{+.";}35%{content: "@}-?";
-    }
-    40% {
-      content: "?{4@%";
-    }
-    45% {
-      content: "=.,^!";
-    }
+
     50% {
-      content: "?2@%";
+      background-position:
+        0% 80%,
+        0% 20%,
+        10% 40%,
+        20% 0%,
+        30% 30%,
+        22% 50%,
+        50% 50%,
+        65% 20%,
+        90% 30%;
     }
-    55% {
-      content: "\\;1}]";
-    }
-    60% {
-      content: "?{%:%";
-      right: 0;
-    }
-    65% {
-      content: "|{f[4";
-      right: 0;
-    }
-    70% {
-      content: "{4%0%";
-      right: 0;
-    }
-    75% {
-      content: "'1_0<";
-      right: 0;
-    }
-    80% {
-      content: "{0%";
-      right: 0;
-    }
-    85% {
-      content: "]>'";
-      right: 0;
-    }
-    90% {
-      content: "4";
-      right: 0;
-    }
-    95% {
-      content: "2";
-      right: 0;
-    }
+
     100% {
-      content: "";
-      right: 0;
+      background-position:
+        0% 70%,
+        0% 10%,
+        10% 30%,
+        20% -10%,
+        30% 20%,
+        22% 40%,
+        50% 40%,
+        65% 10%,
+        90% 20%;
+      background-size:
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%;
+    }
+  }
+
+  .ui-logo:hover::after {
+    bottom: -70%;
+    background-image:
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #5e41de 15%, transparent 20%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%),
+      radial-gradient(circle, #5e41de 20%, transparent 20%),
+      radial-gradient(circle, #a78bfa 20%, transparent 20%),
+      radial-gradient(circle, #5e41de 20%, transparent 20%);
+    background-size:
+      15% 15%,
+      20% 20%,
+      18% 18%,
+      20% 20%,
+      15% 15%,
+      20% 20%,
+      18% 18%;
+    background-position: 50% 0%;
+    animation: purpleBottomBubbles 0.6s ease;
+  }
+
+  @keyframes purpleBottomBubbles {
+    0% {
+      background-position:
+        10% -10%,
+        30% 10%,
+        55% -10%,
+        70% -10%,
+        85% -10%,
+        70% -10%,
+        70% 0%;
+    }
+
+    50% {
+      background-position:
+        0% 80%,
+        20% 80%,
+        45% 60%,
+        60% 100%,
+        75% 70%,
+        95% 60%,
+        105% 0%;
+    }
+
+    100% {
+      background-position:
+        0% 90%,
+        20% 90%,
+        45% 70%,
+        60% 110%,
+        75% 80%,
+        95% 70%,
+        110% 10%;
+      background-size:
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%,
+        0% 0%;
     }
   }
 `;
