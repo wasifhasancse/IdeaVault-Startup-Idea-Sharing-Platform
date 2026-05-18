@@ -1,23 +1,25 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import {
-  FiBookOpen,
+import { FiBookOpen,
   FiEdit2,
   FiHome,
   FiMessageSquare,
-  FiZap,
-} from "react-icons/fi";
+  FiZap, } from "react-icons/fi";
 import DarkModeSwitch from "./DarkModeSwitch";
 import Hamburger from "./Hamburger";
 import LogoWithAnimation from "./LogoWithAnimation";
 import NavLink from "./NavLink";
 import UserNavProfile from "./UserNavProfile";
-import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
-  const { data: userData } = authClient.useSession();
-  // const isLoggedIn = Boolean(userData?.session);
-  const isLoggedIn = Boolean(true);
+  const {
+        data: session,
+        isPending,
+        error,
+    } = authClient.useSession()
+  console.log(session);
+  const isLoggedIn = session?.user;
 
   const publicLinks = [
     { href: "/", label: "Home", icon: FiHome },
@@ -26,7 +28,7 @@ const Navbar = () => {
 
   const privateLinks = [
     { href: "/add-idea", label: "Add Idea", icon: FiEdit2, isPrimary: true },
-    { href: "/my-ideas", label: "My Ideas", icon: FiBookOpen },
+    { href: "/my-ideas", label: "My Ideas", icon: FiZap },
     {
       href: "/my-interactions",
       label: "My Interactions",

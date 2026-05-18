@@ -46,7 +46,7 @@ const UserNavProfile = () => {
             <Image
               src={
                 userData?.user?.image ||
-                "https://img.icons8.com/color/1200/user.jpg"
+                "https://images.icon-icons.com/3446/PNG/512/profile_user_avatar_people_icon_219228.png"
               }
               alt="User avatar"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
@@ -70,7 +70,7 @@ const UserNavProfile = () => {
                 <Image
                   src={
                     userData?.user?.image ||
-                    "https://img.icons8.com/color/1200/user.jpg"
+                    "https://images.icon-icons.com/3446/PNG/512/profile_user_avatar_people_icon_219228.png"
                   }
                   alt="User avatar"
                   className="h-full w-full object-cover"
