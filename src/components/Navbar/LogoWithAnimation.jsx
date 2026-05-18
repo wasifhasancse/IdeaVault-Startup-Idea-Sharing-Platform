@@ -1,175 +1,134 @@
-import React from 'react';
-import styled from 'styled-components';
+"use client";
+
+import styled from "styled-components";
 
 const LogoWithAnimation = () => {
   return (
     <StyledWrapper>
-      <button className="ui-btn">
-        <span>
-          Button
-        </span>
-      </button>
+      <span className="ui-logo">
+        <span>IdeaVault</span>
+      </span>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
-  .ui-btn {
-    --btn-default-bg: rgb(41, 41, 41);
-    --btn-padding: 15px 20px;
-    --btn-hover-bg: rgb(51, 51, 51);
-    --btn-transition: .3s;
-    --btn-letter-spacing: .1rem;
-    --btn-animation-duration: 1.2s;
-    --btn-shadow-color: rgba(0, 0, 0, 0.137);
-    --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
-    --hover-btn-color: #FAC921;
-    --default-btn-color: #fff;
-    --font-size: 16px;
-    /* 👆 this field should not be empty */
-    --font-weight: 600;
-    --font-family: Menlo,Roboto Mono,monospace;
-    /* 👆 this field should not be empty */
-  }
+  .ui-logo {
+    --logo-transition: 0.3s;
+    --logo-letter-spacing: 0.05rem;
+    --logo-animation-duration: 3s;
+    --default-logo-color: #5e41de;
+    --hover-logo-color: #a78bfa;
+    --font-size: 22px;
+    --font-weight: 800;
+    --font-family: Menlo, Roboto Mono, monospace;
 
-  /* button settings 👆 */
-
-  .ui-btn {
     box-sizing: border-box;
-    padding: var(--btn-padding);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--default-btn-color);
-    font: var(--font-weight) var(--font-size) var(--font-family);
-    background: var(--btn-default-bg);
-    border: none;
-    cursor: pointer;
-    transition: var(--btn-transition);
-    overflow: hidden;
-    box-shadow: var(--btn-shadow);
+    cursor: default;
   }
 
-  .ui-btn span {
-    letter-spacing: var(--btn-letter-spacing);
-    transition: var(--btn-transition);
+  .ui-logo > span {
+    letter-spacing: var(--logo-letter-spacing);
+    transition: var(--logo-transition);
     box-sizing: border-box;
     position: relative;
     background: inherit;
+    color: var(--default-logo-color);
+    font: var(--font-weight) var(--font-size) var(--font-family);
   }
 
-  .ui-btn span::before {
+  .ui-logo > span::before {
     box-sizing: border-box;
     position: absolute;
     content: "";
     background: inherit;
+    color: var(--hover-logo-color);
   }
 
-  .ui-btn:hover, .ui-btn:focus {
-    background: var(--btn-hover-bg);
+  .ui-logo:hover > span,
+  .ui-logo:focus > span {
+    color: var(--hover-logo-color);
   }
 
-  .ui-btn:hover span, .ui-btn:focus span {
-    color: var(--hover-btn-color);
-  }
-
-  .ui-btn:hover span::before, .ui-btn:focus span::before {
-    animation: chitchat linear both var(--btn-animation-duration);
+  .ui-logo:hover > span::before,
+  .ui-logo:focus > span::before {
+    animation: chitchat linear both var(--logo-animation-duration);
   }
 
   @keyframes chitchat {
     0% {
       content: "#";
     }
-
     5% {
       content: ".";
     }
-
     10% {
       content: "^{";
     }
-
     15% {
       content: "-!";
     }
-
     20% {
       content: "#$_";
     }
-
     25% {
       content: "№:0";
     }
-
     30% {
-      content: "#{+.";
+      content: "#{+.";}35%{content: "@}-?";
     }
-
-    35% {
-      content: "@}-?";
-    }
-
     40% {
       content: "?{4@%";
     }
-
     45% {
       content: "=.,^!";
     }
-
     50% {
       content: "?2@%";
     }
-
     55% {
-      content: "\;1}]";
+      content: "\\;1}]";
     }
-
     60% {
       content: "?{%:%";
       right: 0;
     }
-
     65% {
       content: "|{f[4";
       right: 0;
     }
-
     70% {
       content: "{4%0%";
       right: 0;
     }
-
     75% {
       content: "'1_0<";
       right: 0;
     }
-
     80% {
       content: "{0%";
       right: 0;
     }
-
     85% {
       content: "]>'";
       right: 0;
     }
-
     90% {
       content: "4";
       right: 0;
     }
-
     95% {
       content: "2";
       right: 0;
     }
-
     100% {
       content: "";
       right: 0;
     }
-  }`;
+  }
+`;
 
 export default LogoWithAnimation;

@@ -1,2 +1,20 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --navbar-border: rgba(94, 65, 222, 0.12);
+  --dropdown-bg: #ffffff;
+  --dropdown-text: #374151;
+  --dropdown-border: rgba(94, 65, 222, 0.15);
+}
+
+.dark {
+  --navbar-bg: rgba(9, 9, 11, 0.85);
+  --navbar-border: rgba(94, 65, 222, 0.2);
+  --dropdown-bg: #18181b;
+  --dropdown-text: #f4f4f5;
+  --dropdown-border: rgba(94, 65, 222, 0.25);
+}
