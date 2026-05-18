@@ -6,6 +6,7 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import { FiMail, FiZap } from "react-icons/fi";
+import LogoWithAnimation from "../Navbar/LogoWithAnimation";
 
 const Footer = () => {
   const exploreLinks = [
@@ -42,13 +43,11 @@ const Footer = () => {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1 flex flex-col gap-5">
-            <Link href="/" className="inline-flex items-center gap-2.5">
+            <Link href="/" className="z-10 inline-flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5e41de] text-white shadow-md shadow-[#5e41de]/30">
                 <FiZap size={18} />
               </span>
-              <span className="text-xl font-extrabold tracking-tight text-[#5e41de] dark:text-[#a78bfa]">
-                IdeaVault
-              </span>
+              <LogoWithAnimation/>
             </Link>
             <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
               The platform where startup ideas come to life. Share, discover,
