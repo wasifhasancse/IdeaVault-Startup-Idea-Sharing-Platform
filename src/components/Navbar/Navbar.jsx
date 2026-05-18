@@ -1,11 +1,9 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { FiBookOpen,
-  FiEdit2,
-  FiHome,
-  FiMessageSquare,
-  FiZap, } from "react-icons/fi";
+import { FiEdit2, FiMessageSquare, FiZap } from "react-icons/fi";
+import { IoHomeSharp } from "react-icons/io5";
+import { MdTipsAndUpdates } from "react-icons/md";
 import DarkModeSwitch from "./DarkModeSwitch";
 import Hamburger from "./Hamburger";
 import LogoWithAnimation from "./LogoWithAnimation";
@@ -13,17 +11,12 @@ import NavLink from "./NavLink";
 import UserNavProfile from "./UserNavProfile";
 
 const Navbar = () => {
-  const {
-        data: session,
-        isPending,
-        error,
-    } = authClient.useSession()
-  console.log(session);
+  const { data: session, isPending } = authClient.useSession();
   const isLoggedIn = session?.user;
 
   const publicLinks = [
-    { href: "/", label: "Home", icon: FiHome },
-    { href: "/ideas", label: "Ideas", icon: FiZap },
+    { href: "/", label: "Home", icon: IoHomeSharp },
+    { href: "/ideas", label: "Ideas", icon: MdTipsAndUpdates },
   ];
 
   const privateLinks = [
@@ -56,7 +49,11 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <DarkModeSwitch />
-          <UserNavProfile />
+          {isPending ? (
+            <div className="h-9 w-9 animate-spin rounded-full border-2 border-[#5e41de]/25 border-t-[#5e41de]" />
+          ) : (
+            <UserNavProfile />
+          )}
         </div>
       </div>
     </nav>
