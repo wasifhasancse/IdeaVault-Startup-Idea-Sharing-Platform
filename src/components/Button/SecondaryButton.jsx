@@ -1,60 +1,83 @@
+"use client";
+
+import Link from "next/link";
 import { IoTrailSignSharp } from "react-icons/io5";
 import styled from "styled-components";
 
-const SecondaryButton = () => {
+const SecondaryButton = ({
+  label = "Button",
+  icon: Icon = IoTrailSignSharp,
+  href,
+  onClick,
+}) => {
+  const inner = (
+    <>
+      <span className="lable">{label}</span>
+      <Icon className="svg-icon" />
+    </>
+  );
+
   return (
     <StyledWrapper>
-      <button className="btn-shine">
-        <span className="lable">Button</span>
-        <IoTrailSignSharp className="svg-icon" />
-      </button>
+      {href ? (
+        <Link href={href} className="btn-shine" onClick={onClick}>
+          {inner}
+        </Link>
+      ) : (
+        <button className="btn-shine" onClick={onClick}>
+          {inner}
+        </button>
+      )}
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
-  button {
-    display: flex;
+  .btn-shine {
+    display: inline-flex;
     align-items: center;
     position: relative;
-    padding: 6px 12px;
+    padding: 8px 20px;
     gap: 8px;
-    height: 36px;
-    width: 120px;
+    height: 42px;
+    width: fit-content;
+    min-width: 140px;
     border: none;
     background: #5e41de33;
     border-radius: 20px;
     cursor: pointer;
     outline: none;
+    text-decoration: none;
     transition: background 0.5s ease;
   }
 
-  button .lable {
+  .btn-shine .lable {
     line-height: 20px;
-    font-size: 17px;
+    font-size: 15px;
     color: #5d41de;
     font-family: sans-serif;
     letter-spacing: 1px;
-    font-weight: 500;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
-  button:hover {
+  .btn-shine:hover {
     background: #5e41de4d;
     animation: rotate624 0.7s ease-in-out both;
   }
 
-  button:hover .lable {
+  .btn-shine:hover .lable {
     display: none;
   }
 
-  button .svg-icon {
+  .btn-shine .svg-icon {
     width: 20px;
     height: 20px;
     color: #5d41de;
     transition: 0.8s;
   }
 
-  button:hover .svg-icon {
+  .btn-shine:hover .svg-icon {
     margin-left: 40px;
     transform: rotate(50deg);
   }
