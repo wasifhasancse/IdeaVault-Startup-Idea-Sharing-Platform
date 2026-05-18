@@ -1,4 +1,5 @@
 "use client";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "@heroui/react";
 import dynamic from "next/dynamic";
@@ -6,7 +7,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiArrowLeft, FiEdit3, FiImage, FiUser } from "react-icons/fi";
+import { GrUpdate } from "react-icons/gr";
 import { RiLightbulbFlashFill } from "react-icons/ri";
+import { RxReset } from "react-icons/rx";
 
 const DotLottieReact = dynamic(
   () => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact),
@@ -23,11 +26,18 @@ const UpdateProfile = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     setIsSaving(true);
+
+    const updateInfo = {};
+    if (name) {
+      updateInfo.name = name;
+    }
+    if (imageUrl) {
+      updateInfo.image = imageUrl;
+    }
+
     try {
-      await authClient.updateUser({
-        image: imageUrl || undefined,
-        name: name || undefined,
-      });
+      await authClient.updateUser(updateInfo);
+
       toast.success("Profile updated successfully");
       router.push("/profile");
     } catch {
@@ -217,24 +227,26 @@ const UpdateProfile = () => {
 
               {/* Buttons */}
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                <button
-                  type="reset"
-                  onClick={() => {
+                
+                <span onClick={() => {
                     setName("");
                     setImageUrl("");
                     setImgError(false);
-                  }}
-                  className="h-11 w-full rounded-xl border border-[#5e41de]/25 bg-transparent px-6 text-sm font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15 sm:w-auto"
-                >
-                  Reset
-                </button>
-                <button
+                  }}>
+                  <PrimaryButton
+                    type="reset"
+                    label="Reset"
+                    savingText="Resetting..."
+                    icon={RxReset}
+                  />
+                </span>
+                <PrimaryButton
                   type="submit"
-                  disabled={isSaving}
-                  className="h-11 w-full rounded-xl bg-[#5e41de] px-6 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-                >
-                  {isSaving ? "Saving…" : "Save Changes"}
-                </button>
+                  isSaving={isSaving}
+                  label="Save Changes"
+                  savingText="Saving..."
+                  icon={GrUpdate}
+                />
               </div>
             </form>
           </div>

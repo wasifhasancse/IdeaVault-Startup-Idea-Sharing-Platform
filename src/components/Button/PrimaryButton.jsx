@@ -3,9 +3,14 @@
 import Link from "next/link";
 import { IoTrailSignSharp } from "react-icons/io5";
 import styled from "styled-components";
+import ButtonLoader from "../Loader/ButtonLoader";
 
 const PrimaryButton = ({
+  type = "button",
   label = "Button",
+  disabled = false,
+  isSaving = false,
+  savingText = "Saving...",
   icon: Icon = IoTrailSignSharp,
   href,
   onClick,
@@ -20,12 +25,22 @@ const PrimaryButton = ({
   return (
     <StyledWrapper>
       {href ? (
-        <Link href={href} className="btn-shine" onClick={onClick}>
-          {inner}
+        <Link
+          href={href}
+          className="btn-shine"
+          onClick={onClick}
+          disabled={disabled || isSaving}
+        >
+          {isSaving ? <ButtonLoader text={savingText} /> : inner}
         </Link>
       ) : (
-        <button className="btn-shine" onClick={onClick}>
-          {inner}
+        <button
+          type={type}
+          className="btn-shine"
+          onClick={onClick}
+          disabled={disabled || isSaving}
+        >
+          {isSaving ? <ButtonLoader text={savingText} /> : inner}
         </button>
       )}
     </StyledWrapper>
