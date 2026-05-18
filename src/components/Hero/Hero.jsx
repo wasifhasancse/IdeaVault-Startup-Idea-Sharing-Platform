@@ -27,7 +27,7 @@ const Hero = () => {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl md:text-6xl">
+            <h1 className=" text-4xl font-extrabold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl md:text-6xl">
               Where{" "}
               <span className="text-[#5e41de] dark:text-[#a78bfa]">
                 Great Ideas
