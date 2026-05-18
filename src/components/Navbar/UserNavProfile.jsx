@@ -11,7 +11,6 @@ import {
   FiLogOut,
   FiMessageSquare,
   FiSettings,
-  FiUser,
 } from "react-icons/fi";
 import PrimaryButton from "../Button/PrimaryButton";
 import Image from "next/image";
@@ -28,15 +27,6 @@ const UserNavProfile = () => {
   const ref = useRef(null);
   const { data: userData, isPending } = authClient.useSession();
   const isSignedIn = Boolean(userData?.user);
-
-  const initials = userData?.user?.name
-    ? userData.user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : "U";
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -97,8 +87,8 @@ const UserNavProfile = () => {
               width={200}
             />
         </span>
-        <span className="max-w-27.5 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold text-[#5e41de] dark:text-[#a78bfa]">
-          {userData?.user?.name || "My Account"}
+        <span className="hidden md:flex max-w-27.5 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-semibold text-[#5e41de] dark:text-[#a78bfa]">
+          {`${(userData?.user?.name).split(" ")[0]}` || "My Account"}
         </span>
         <FiChevronDown
           size={14}

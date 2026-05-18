@@ -1,37 +1,64 @@
 "use client";
-import { useState } from "react";
-import { HiMenu, HiX } from "react-icons/hi";
-import NavLink from "./NavLink";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 const Hamburger = ({ navLinks }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const pathname = usePathname();
 
   return (
-    <div className="relative md:hidden">
-      <button
-        className="rounded-lg p-1.5 text-[#5e41de] dark:text-[#a78bfa] hover:bg-[#5e41de]/10 dark:hover:bg-[#5e41de]/20 active:bg-[#5e41de] active:text-white transition-all duration-200 flex items-center justify-center"
-        onClick={() => setMenuOpen((prev) => !prev)}
-        aria-label="Toggle menu"
-      >
-        {menuOpen ? <HiX size={22} /> : <HiMenu size={22} />}
-      </button>
+    <div className="relative lg:hidden" ref={ref}>
+      <div className="ham-trigger">
+        <input
+          type="checkbox"
+          id="ham-cb"
+          className="ham-checkbox"
+          checked={menuOpen}
+          onChange={() => setMenuOpen((prev) => !prev)}
+        />
+        <label htmlFor="ham-cb" className="ham-toggle" aria-label="Toggle menu">
+          <span className="ham-bar ham-bar-top" />
+          <span className="ham-bar ham-bar-mid" />
+          <span className="ham-bar ham-bar-btm" />
+        </label>
+      </div>
 
       <div
-        className={`absolute left-0 top-11 mt-1 w-56 rounded-xl border border-[#5e41de]/20 dark:border-[#5e41de]/30 bg-white dark:bg-zinc-900 shadow-xl shadow-[#5e41de]/10 dark:shadow-[#5e41de]/20 ring-1 ring-[#5e41de]/10 transition-all duration-200 origin-top ${
-          menuOpen
-            ? "scale-y-100 opacity-100 pointer-events-auto"
-            : "scale-y-0 opacity-0 pointer-events-none"
-        }`}
+        className={`ham-panel min-w-56 border border-[#5e41de]/15 bg-white shadow-xl shadow-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-900 dark:shadow-[#5e41de]/25 ${menuOpen ? "open" : ""}`}
+        role="menu"
       >
-        <ul className="flex flex-col gap-1.5 p-2">
-          {navLinks.map((navItems, index) => (
-            <NavLink
+        <div className="flex flex-col p-1.5">
+          {navLinks.map((item, index) => (
+            <Link
               key={index}
-              navItems={navItems}
+              href={item.href}
+              className="nav-menu-item"
+              style={{
+                color: pathname === item.href ? "#5e41de" : undefined,
+                background:
+                  pathname === item.href ? "rgba(94,65,222,0.08)" : undefined,
+              }}
               onClick={() => setMenuOpen(false)}
-            />
+              role="menuitem"
+            >
+              <item.icon className="nav-item-icon h-3.75 w-3.75 shrink-0" />
+              <span>{item.label}</span>
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

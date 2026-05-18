@@ -106,7 +106,7 @@ const HeroSwiper = () => {
                 <p className="mb-1.5 text-sm font-semibold text-[#5e41de] dark:text-[#a78bfa]">
                   {slide.badge}
                 </p>
-                <h3 className="mb-2.5 text-xl font-bold leading-snug text-zinc-900 dark:text-zinc-50">
+                <h3 className="line-clamp-1 mb-2.5 text-xl font-bold leading-snug text-zinc-900 dark:text-zinc-50">
                   {slide.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">

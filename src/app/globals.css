@@ -159,55 +159,6 @@
   transform: rotate(50deg) scale(1.2);
 }
 
-/* Reset button */
-.reset-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 46px;
-  width: 100%;
-  border: 1px solid rgba(94, 65, 222, 0.3);
-  background: transparent;
-  color: #5e41de;
-  border-radius: 20px;
-  cursor: pointer;
-  outline: none;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  transition:
-    background 0.5s ease,
-    border-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.dark .reset-btn {
-  color: #a78bfa;
-  border-color: rgba(167, 139, 250, 0.3);
-}
-
-.reset-btn:hover {
-  background: rgba(94, 65, 222, 0.07);
-  border-color: rgba(94, 65, 222, 0.5);
-  animation: signin-rotate 0.7s ease-in-out both;
-}
-
-.reset-btn:hover .reset-label {
-  display: none;
-}
-
-.reset-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  transition: transform 0.8s ease;
-}
-
-.reset-btn:hover .reset-icon {
-  transform: rotate(180deg);
-}
-
 @keyframes signin-rotate {
   0% {
     transform: rotate(0deg) translate3d(0, 0, 0);
@@ -370,4 +321,112 @@
 .dark .nav-menu-logout:hover {
   background: rgba(239, 68, 68, 0.12);
   color: #f87171;
+}
+
+/* ── Hamburger animated toggle ────────────────────────────── */
+
+.ham-checkbox {
+  display: none;
+}
+
+.ham-toggle {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition-duration: 0.5s;
+}
+
+.ham-bar {
+  width: 100%;
+  height: 3px;
+  background-color: #5e41de;
+  border-radius: 4px;
+  transition-duration: 0.5s;
+}
+
+.dark .ham-bar {
+  background-color: #a78bfa;
+}
+
+.ham-bar-mid {
+  transition-duration: 0.8s;
+}
+
+.ham-bar-top,
+.ham-bar-btm {
+  width: 70%;
+}
+
+.ham-checkbox:checked + .ham-toggle .ham-bar {
+  position: absolute;
+  transition-duration: 0.5s;
+}
+
+.ham-checkbox:checked + .ham-toggle .ham-bar-mid {
+  transform: scaleX(0);
+  transition-duration: 0.5s;
+}
+
+.ham-checkbox:checked + .ham-toggle .ham-bar-top {
+  width: 100%;
+  transform: rotate(45deg);
+  transition-duration: 0.5s;
+}
+
+.ham-checkbox:checked + .ham-toggle .ham-bar-btm {
+  width: 100%;
+  transform: rotate(-45deg);
+  transition-duration: 0.5s;
+}
+
+.ham-checkbox:checked + .ham-toggle {
+  transition-duration: 0.5s;
+  transform: rotate(180deg);
+}
+
+.ham-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ham-trigger:hover {
+  background: rgba(94, 65, 222, 0.1);
+}
+
+.dark .ham-trigger:hover {
+  background: rgba(94, 65, 222, 0.18);
+}
+
+.ham-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  border-radius: 14px;
+  padding: 6px;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.96);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  z-index: 200;
+}
+
+.ham-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }

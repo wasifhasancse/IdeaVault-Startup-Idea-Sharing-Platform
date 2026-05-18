@@ -41,13 +41,13 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <ul className="hidden items-center gap-2 md:flex">
+        <ul className="hidden items-center gap-2 lg:flex">
           {navLinks.map((navItems, index) => (
             <NavLink key={index} navItems={navItems} />
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <DarkModeSwitch />
           {isPending ? (
             <div className="h-9 w-9 animate-spin rounded-full border-2 border-[#5e41de]/25 border-t-[#5e41de]" />
