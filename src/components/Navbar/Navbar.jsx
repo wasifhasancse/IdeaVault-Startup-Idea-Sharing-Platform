@@ -11,9 +11,11 @@ import DarkModeSwitch from "./DarkModeSwitch";
 import Hamburger from "./Hamburger";
 import LogoWithAnimation from "./LogoWithAnimation";
 import NavLink from "./NavLink";
+import UserNavProfile from "./UserNavProfile";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
-  // const { data: userData } = authClient.useSession();
+  const { data: userData } = authClient.useSession();
   // const isLoggedIn = Boolean(userData?.session);
   const isLoggedIn = Boolean(true);
 
@@ -52,7 +54,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <DarkModeSwitch />
-          {/* <UserNavProfile /> */}
+          <UserNavProfile />
         </div>
       </div>
     </nav>

@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,9 +9,8 @@ import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 
 const UserNavProfile = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  // const { data: userData, isPending } = authClient.useSession();
-  const isPending = Boolean(false);
-  const isSignedIn = Boolean(true);
+  const { data: userData, isPending } = authClient.useSession();
+  const isSignedIn = Boolean(userData?.user);
 
   const manageSignOut = () => {
     toast.success("Signed out successfully, See you again!");
