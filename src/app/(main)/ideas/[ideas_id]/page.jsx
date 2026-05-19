@@ -94,83 +94,83 @@ const IdeasDetailsPage = async ({ params }) => {
       {/* ── META ROW ── */}
       <div className="relative border-b border-zinc-200/70 bg-white dark:border-white/5 dark:bg-zinc-900/70 dark:backdrop-blur-sm">
         <div className="mx-auto max-w-11/12">
-          <div className="flex flex-wrap items-stretch gap-px bg-zinc-100 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-[#5e41de]/15">
-            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+          <div className="grid grid-cols-2 gap-px bg-zinc-100 shadow-xl sm:grid-cols-3 md:grid-cols-5 dark:border-white/5 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-[#5e41de]/15">
+            <div className="flex items-center gap-3 bg-white px-4 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 sm:px-5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
                 <TbCategoryFilled
                   size={13}
                   className="text-[#5e41de] dark:text-[#a78bfa]"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   CATEGORY
                 </p>
-                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
                   {category}
                 </p>
               </div>
             </div>
-            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+            <div className="flex items-center gap-3 bg-white px-4 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 sm:px-5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
                 <FiCalendar
                   size={13}
                   className="text-[#5e41de] dark:text-[#a78bfa]"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   POSTED
                 </p>
-                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
                   {createTime}
                 </p>
               </div>
             </div>
-            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+            <div className="flex items-center gap-3 bg-white px-4 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 sm:px-5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
                 <FiDollarSign
                   size={13}
                   className="text-[#5e41de] dark:text-[#a78bfa]"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   BUDGET
                 </p>
-                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
                   {estimatedBudget}
                 </p>
               </div>
             </div>
-            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+            <div className="flex items-center gap-3 bg-white px-4 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 sm:px-5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
                 <FiUsers
                   size={13}
                   className="text-[#5e41de] dark:text-[#a78bfa]"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   AUDIENCE
                 </p>
-                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
                   {targetAudience.length} groups
                 </p>
               </div>
             </div>
-            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+            <div className="col-span-2 flex items-center gap-3 bg-white px-4 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70 sm:col-span-3 sm:px-5 md:col-span-1">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
                 <FiTag
                   size={13}
                   className="text-[#5e41de] dark:text-[#a78bfa]"
                 />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   TAGS
                 </p>
-                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
                   {tags.length} tags
                 </p>
               </div>
