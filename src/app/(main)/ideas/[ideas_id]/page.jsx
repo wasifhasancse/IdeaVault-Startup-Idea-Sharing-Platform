@@ -13,6 +13,8 @@ import {
 } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 import CommentsSection from "./CommentsSection";
+import { GetIdeasById } from "@/lib/Action/GetData";
+import Image from "next/image";
 
 /* ── static seed data ───────────────────────────────────── */
 const IDEA = {
@@ -42,12 +44,25 @@ const IDEA = {
   },
 };
 
-/* ── page ───────────────────────────────────────────────── */
-export default function IdeasDetailsPage() {
+
+const IdeasDetailsPage = async ({ params }) => {
+  const { ideas_id } = await params;
+  const ideasDetails = await GetIdeasById(ideas_id);
+  const {_id, title, category, shortDescription, detailedDescription, problemStatement, proposedSolution, estimatedBudget, createTime, tags,targetAudience, userInfo} = ideasDetails;
+  console.log(ideasDetails);
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <div className="relative min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+      {/* ── Fixed viewport background (dark only) ── */}
+      <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
+        {/* Deep gradient base */}
+        <div className="absolute inset-0 bg-linear-to-br from-zinc-950 via-[#1a1035] to-zinc-950" />
+        {/* Ambient glow blobs */}
+        <div className="absolute -right-40 -top-40 h-150 w-150 rounded-full bg-[#5e41de]/15 blur-[140px]" />
+        <div className="absolute -bottom-40 -left-40 h-150 w-150 rounded-full bg-[#a78bfa]/12 blur-[140px]" />
+        <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5e41de]/8 blur-[100px]" />
+      </div>
       {/* ── HERO ── */}
-      <div className="relative h-72 w-full overflow-hidden md:h-[380px]">
+      <div className="relative h-72 w-full overflow-hidden md:h-95">
         {/* Gradient bg */}
         <div className="relative h-full w-full bg-linear-to-135deg from-yellow-500 via-amber-500 to-orange-500">
           <div
@@ -85,24 +100,24 @@ export default function IdeasDetailsPage() {
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-yellow-700 backdrop-blur-sm">
               <FiLayers size={10} />
-              {IDEA.category}
+              {category}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold text-white/90 backdrop-blur-sm">
               <FiCalendar size={10} />
-              {IDEA.date}
+              {createTime}
             </span>
           </div>
           <h1 className="text-2xl font-extrabold leading-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.5)] sm:text-3xl lg:text-4xl">
-            {IDEA.title}
+            {title}
           </h1>
           <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-white/70">
-            {IDEA.shortDescription}
+            {shortDescription}
           </p>
         </div>
       </div>
 
       {/* ── META ROW ── */}
-      <div className="border-b border-zinc-200/70 bg-white dark:border-zinc-700/50 dark:bg-zinc-900">
+      <div className="relative border-b border-zinc-200/70 bg-white dark:border-white/5 dark:bg-zinc-900/70 dark:backdrop-blur-sm">
         <div className="mx-auto max-w-11/12">
           <div className="flex flex-wrap items-stretch gap-px bg-zinc-100 dark:bg-zinc-800/50">
             {[
@@ -141,12 +156,12 @@ export default function IdeasDetailsPage() {
       </div>
 
       {/* ── BODY ── */}
-      <div className="mx-auto max-w-11/12 py-8 md:py-12">
+      <div className="relative mx-auto max-w-11/12 py-8 md:py-12">
         <div className="grid gap-7 lg:grid-cols-[1fr_290px]">
           {/* ── LEFT: content ── */}
           <div className="flex flex-col gap-5">
             {/* About */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-sm dark:border-zinc-800 dark:border-l-[#5e41de] dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-[#5e41de] dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/8 dark:bg-[#5e41de]/15">
                   <RiLightbulbFlashLine
@@ -163,14 +178,14 @@ export default function IdeasDetailsPage() {
                   </h2>
                 </div>
               </div>
-              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-zinc-800" />
+              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-[#5e41de]/15" />
               <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-400">
-                {IDEA.detailedDescription}
+                {detailedDescription}
               </p>
             </div>
 
             {/* The Problem */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-sm dark:border-zinc-800 dark:border-l-rose-500 dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-rose-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-rose-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-900/20">
                   <FiAlertCircle
@@ -187,14 +202,14 @@ export default function IdeasDetailsPage() {
                   </h2>
                 </div>
               </div>
-              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-zinc-800" />
+              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-rose-500/15" />
               <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-400">
-                {IDEA.problemStatement}
+                {problemStatement}
               </p>
             </div>
 
             {/* Proposed Solution */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-sm dark:border-zinc-800 dark:border-l-emerald-500 dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-emerald-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-emerald-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-900/20">
                   <FiZap
@@ -211,9 +226,9 @@ export default function IdeasDetailsPage() {
                   </h2>
                 </div>
               </div>
-              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-zinc-800" />
+              <div className="mb-4 h-px w-full bg-zinc-100 dark:bg-emerald-500/15" />
               <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-400">
-                {IDEA.proposedSolution}
+                {proposedSolution}
               </p>
             </div>
           </div>
@@ -221,14 +236,15 @@ export default function IdeasDetailsPage() {
           {/* ── RIGHT: sidebar ── */}
           <aside className="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
             {/* Author */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-zinc-700/60 dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-3">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
-                  {IDEA.author.initials}
+                  <Image src={userInfo?.image} alt={userInfo?.name} width={200} height={200} />
                 </span>
+
                 <div>
                   <p className="text-sm font-bold text-zinc-800 dark:text-zinc-100">
-                    {IDEA.author.name}
+                    {userInfo?.name}
                   </p>
                   <p className="text-[10px] font-semibold text-[#5e41de] dark:text-[#a78bfa]">
                     Idea Creator
@@ -236,29 +252,29 @@ export default function IdeasDetailsPage() {
                 </div>
               </div>
               <div className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-2 rounded-lg bg-zinc-100/70 px-3 py-2 dark:bg-zinc-800/80">
+                <div className="flex items-center gap-2 rounded-lg bg-zinc-100/70 px-3 py-2 dark:border dark:border-[#5e41de]/12 dark:bg-[#5e41de]/8">
                   <FiUser
                     size={11}
                     className="shrink-0 text-zinc-400 dark:text-zinc-500"
                   />
                   <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
-                    {IDEA.author.email}
+                    {userInfo?.email}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 rounded-lg bg-zinc-100/70 px-3 py-2 dark:bg-zinc-800/80">
+                <div className="flex items-center gap-2 rounded-lg bg-zinc-100/70 px-3 py-2 dark:border dark:border-[#5e41de]/12 dark:bg-[#5e41de]/8">
                   <FiCalendar
                     size={11}
                     className="shrink-0 text-[#5e41de] dark:text-[#a78bfa]"
                   />
                   <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                    Posted {IDEA.date}
+                    Posted {createTime}
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Budget */}
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-700/30 dark:bg-emerald-950/30">
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:shadow-lg dark:shadow-emerald-500/10 dark:backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/40">
                   <FiDollarSign
@@ -271,7 +287,7 @@ export default function IdeasDetailsPage() {
                     Est. Budget
                   </p>
                   <p className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300">
-                    {IDEA.budget}
+                    {estimatedBudget}
                   </p>
                 </div>
               </div>
@@ -281,7 +297,7 @@ export default function IdeasDetailsPage() {
             </div>
 
             {/* Tags */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-zinc-700/60 dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiTag
                   size={12}
@@ -292,7 +308,7 @@ export default function IdeasDetailsPage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {IDEA.tags.map((tag) => (
+                {tags.map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1 rounded-lg border border-[#5e41de]/15 bg-[#5e41de]/6 px-2.5 py-1 text-xs font-semibold text-[#5e41de] dark:border-[#5e41de]/25 dark:bg-[#5e41de]/15 dark:text-[#a78bfa]"
@@ -305,7 +321,7 @@ export default function IdeasDetailsPage() {
             </div>
 
             {/* Target Audience */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-zinc-700/60 dark:bg-zinc-900 dark:shadow-zinc-900/40">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiUsers
                   size={12}
@@ -316,17 +332,17 @@ export default function IdeasDetailsPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-1.5">
-                {IDEA.audience.map((a) => (
+                {targetAudience.map((item) => (
                   <div
-                    key={a}
-                    className="flex items-center gap-2 rounded-lg bg-zinc-100/60 px-3 py-2 dark:bg-zinc-800/70"
+                    key={item}
+                    className="flex items-center gap-2 rounded-lg bg-zinc-100/60 px-3 py-2 dark:border dark:border-[#5e41de]/10 dark:bg-[#5e41de]/8"
                   >
                     <FiTarget
                       size={10}
                       className="shrink-0 text-[#5e41de] dark:text-[#a78bfa]"
                     />
                     <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
-                      {a}
+                      {item}
                     </span>
                   </div>
                 ))}
@@ -336,7 +352,7 @@ export default function IdeasDetailsPage() {
         </div>
 
         {/* ── Divider ── */}
-        <div className="my-10 h-px w-full bg-linear-to-r from-transparent via-zinc-200 to-transparent dark:via-zinc-700/60" />
+        <div className="my-10 h-px w-full bg-linear-to-r from-transparent via-zinc-200 to-transparent dark:via-[#5e41de]/30" />
 
         {/* ── Comments ── */}
         <CommentsSection />
@@ -344,3 +360,4 @@ export default function IdeasDetailsPage() {
     </div>
   );
 }
+export default IdeasDetailsPage;
