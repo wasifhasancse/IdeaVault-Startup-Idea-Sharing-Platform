@@ -1,12 +1,21 @@
-'use client';
+"use client";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
-const SearchingMethod = ({pat}) => {
-  const [search, setSearch] = useState("");
+const SearchingMethod = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter()
   const manageSearch = () => {
-
-  }
+    const params = new URLSearchParams(searchParams.toString());
+    if (searchQuery) {
+      params.set("search", searchQuery);
+    } else {
+      params.delete("search");
+    }
+    router.push(`/ideas?${params.toString()}`);
+  };
   return (
     <div className="relative flex min-w-0 flex-1 items-center">
       <FiSearch
@@ -15,7 +24,7 @@ const SearchingMethod = ({pat}) => {
       />
       <input
         type="text"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search ideas by title, description, or category…"
         className="w-full rounded-xl rounded-r-none border border-r-0 border-[#5e41de]/18 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
       />
@@ -32,4 +41,3 @@ const SearchingMethod = ({pat}) => {
 };
 
 export default SearchingMethod;
-
