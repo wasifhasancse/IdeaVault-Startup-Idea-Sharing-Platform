@@ -1,10 +1,5 @@
-"use client";
-
-import ButtonLoader from "@/components/Loader/ButtonLoader";
-import { toast } from "@heroui/react";
+import { PostAction } from "@/lib/Action/CrudAction";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import {
   FiAlertCircle,
   FiBookOpen,
@@ -14,7 +9,7 @@ import {
   FiTag,
   FiTarget,
   FiType,
-  FiZap
+  FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
@@ -72,83 +67,33 @@ const FieldLabel = ({ icon: Icon, children }) => (
   </label>
 );
 
-const AddIdea = () => {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedAudiences, setSelectedAudiences] = useState([]);
-
-  const toggleItem = (list, setList, value) => {
-    setList((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
-    );
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    const data = new FormData(e.currentTarget);
-    const payload = {
-      title: data.get("title"),
-      shortDescription: data.get("shortDescription"),
-      detailedDescription: data.get("detailedDescription"),
-      category: data.get("category"),
-      tags: selectedTags,
-      imageUrl: data.get("imageUrl"),
-      estimatedBudget: data.get("estimatedBudget"),
-      targetAudience: selectedAudiences,
-      problemStatement: data.get("problemStatement"),
-      proposedSolution: data.get("proposedSolution"),
-    };
-    try {
-      // TODO: wire up API call with payload
-      console.log(payload);
-      toast.success("Idea submitted successfully!");
-      
-    } catch {
-      toast.error("Failed to submit idea. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const CheckboxGroup = ({ items, selected, onToggle, cols = 3 }) => (
-    <div className={`grid grid-cols-2 gap-2 sm:grid-cols-${cols}`}>
-      {items.map((item) => {
-        const active = selected.includes(item);
-        return (
-          <button
-            key={item}
-            type="button"
-            onClick={() => onToggle(item)}
-            className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition-all duration-200 ${
-              active
-                ? "border-[#5e41de]/60 bg-[#5e41de]/10 text-[#5e41de] dark:border-[#5e41de]/50 dark:bg-[#5e41de]/20 dark:text-[#a78bfa]"
-                : "border-[#5e41de]/15 bg-white/60 text-zinc-500 hover:border-[#5e41de]/35 hover:bg-[#5e41de]/5 dark:border-[#5e41de]/20 dark:bg-zinc-800/40 dark:text-zinc-400"
-            }`}
+const CheckboxGroup = ({ items, name, cols = 3 }) => (
+  <div className={`grid grid-cols-2 gap-2 sm:grid-cols-${cols}`}>
+    {items.map((item) => (
+      <label
+        key={item}
+        className="group flex cursor-pointer items-center gap-2 rounded-xl border border-[#5e41de]/15 bg-white/60 px-3 py-2 text-xs font-semibold text-zinc-500 transition-all duration-200 hover:border-[#5e41de]/35 hover:bg-[#5e41de]/5 has-checked:border-[#5e41de]/60 has-checked:bg-[#5e41de]/10 has-checked:text-[#5e41de] dark:border-[#5e41de]/20 dark:bg-zinc-800/40 dark:text-zinc-400 dark:has-checked:border-[#5e41de]/50 dark:has-checked:bg-[#5e41de]/20 dark:has-checked:text-[#a78bfa]"
+      >
+        <input type="checkbox" name={name} value={item} className="sr-only" />
+        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-zinc-300 transition-all group-has-checked:border-[#5e41de] group-has-checked:bg-[#5e41de] dark:border-zinc-600">
+          <svg
+            viewBox="0 0 10 8"
+            className="h-2.5 w-2.5 fill-none stroke-white stroke-2 opacity-0 group-has-checked:opacity-100"
           >
-            <span
-              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-all ${
-                active
-                  ? "border-[#5e41de] bg-[#5e41de]"
-                  : "border-zinc-300 dark:border-zinc-600"
-              }`}
-            >
-              {active && (
-                <svg
-                  viewBox="0 0 10 8"
-                  className="h-2.5 w-2.5 fill-none stroke-white stroke-2"
-                >
-                  <polyline points="1,4 3.5,6.5 9,1" />
-                </svg>
-              )}
-            </span>
-            {item}
-          </button>
-        );
-      })}
-    </div>
-  );
+            <polyline points="1,4 3.5,6.5 9,1" />
+          </svg>
+        </span>
+        {item}
+      </label>
+    ))}
+  </div>
+);
+
+const AddIdea = async () => {
+  const formAction = async (formData) => {
+    "use server";
+    await PostAction(formData);
+  };
 
   return (
     <section className="relative min-h-[calc(100vh-64px)] overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
@@ -172,7 +117,7 @@ const AddIdea = () => {
             </span>
 
             {/* Lottie */}
-            <div className="mx-auto w-full max-w-xs md:max-w-sm lg:mx-0">
+            <div className="mx-auto w-full max-w-xs md:max-w-md lg:mx-0 lg:max-w-lg">
               <DotLottieReact
                 src="https://lottie.host/8401d7bb-a069-41ce-833c-5fb41a6a51c9/J99zf06PTS.lottie"
                 loop
@@ -239,7 +184,7 @@ const AddIdea = () => {
               </div>
             </div>
 
-            <form onSubmit={onSubmit} className="flex flex-col gap-5">
+            <form action={formAction} className="flex flex-col gap-5">
               {/* ── Section: Basic Info ── */}
               <div className="rounded-xl border border-[#5e41de]/10 bg-[#5e41de]/3 px-4 py-3 dark:border-[#5e41de]/15 dark:bg-[#5e41de]/5">
                 <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#5e41de] dark:text-[#a78bfa]">
@@ -296,12 +241,7 @@ const AddIdea = () => {
                     — pick all that apply
                   </span>
                 </p>
-                <CheckboxGroup
-                  items={TAGS}
-                  selected={selectedTags}
-                  onToggle={(v) => toggleItem(selectedTags, setSelectedTags, v)}
-                  cols={3}
-                />
+                <CheckboxGroup items={TAGS} name="tags" cols={3} />
               </div>
 
               {/* ── Section: Media & Budget ── */}
@@ -347,10 +287,7 @@ const AddIdea = () => {
                 </p>
                 <CheckboxGroup
                   items={TARGET_AUDIENCES}
-                  selected={selectedAudiences}
-                  onToggle={(v) =>
-                    toggleItem(selectedAudiences, setSelectedAudiences, v)
-                  }
+                  name="targetAudience"
                   cols={3}
                 />
               </div>
@@ -410,24 +347,15 @@ const AddIdea = () => {
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="reset"
-                  onClick={() => {
-                    setSelectedTags([]);
-                    setSelectedAudiences([]);
-                  }}
                   className="h-11 w-full rounded-xl border border-[#5e41de]/25 bg-transparent px-6 text-sm font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15 sm:w-auto"
                 >
                   Reset
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="h-11 w-full rounded-xl bg-[#5e41de] px-8 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  className="h-11 w-full rounded-xl bg-[#5e41de] px-8 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30 sm:w-auto"
                 >
-                  {isSubmitting ? (
-                    <ButtonLoader text="Submitting..." />
-                  ) : (
-                    "Submit Idea"
-                  )}
+                  Submit Idea
                 </button>
               </div>
             </form>
