@@ -1,3 +1,5 @@
+import { GetIdeasById } from "@/lib/Action/GetData";
+import Image from "next/image";
 import Link from "next/link";
 import {
   FiAlertCircle,
@@ -12,44 +14,28 @@ import {
   FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
+import { TbCategoryFilled } from "react-icons/tb";
 import CommentsSection from "./CommentsSection";
-import { GetIdeasById } from "@/lib/Action/GetData";
-import Image from "next/image";
-
-/* ── static seed data ───────────────────────────────────── */
-const IDEA = {
-  title: "AI-Powered Learning Platform for Rural Students",
-  category: "Education",
-  shortDescription:
-    "A smart adaptive learning app that delivers personalised curriculum to students in low-connectivity rural areas using offline-first AI models.",
-  detailedDescription:
-    "Our platform leverages on-device machine learning to deliver personalised, curriculum-aligned lessons without requiring constant internet access. Students can download content bundles during brief connectivity windows and continue learning offline. The AI tracks progress, adapts difficulty, and surfaces weak spots for targeted practice. Teachers receive weekly dashboards showing class performance, engagement rates, and recommended interventions. Content is available in multiple regional languages and follows national curriculum standards.",
-  problemStatement:
-    "Over 300 million school-age children in rural and remote regions lack consistent access to quality educational content. Poor connectivity, under-resourced schools, and one-size-fits-all curricula leave students significantly behind their urban peers. Existing EdTech solutions require stable internet and modern devices, making them impractical in these contexts.",
-  proposedSolution:
-    "Build an offline-first Progressive Web App with compressed AI models that run entirely on-device. Partner with regional NGOs to distribute low-cost Android tablets pre-loaded with the app. Use solar-powered community charging stations for device upkeep. Revenue comes from government EdTech grants, CSR partnerships, and a freemium model for schools that can afford a modest subscription.",
-  budget: "$120K",
-  date: "April 12, 2026",
-  tags: ["EdTech", "AI", "Offline-First", "Rural", "Adaptive Learning", "PWA"],
-  audience: [
-    "Rural K-12 Students",
-    "Government School Teachers",
-    "Education NGOs",
-    "Ministry of Education",
-  ],
-  author: {
-    name: "Priya Nair",
-    email: "priya.nair@edventure.org",
-    initials: "PN",
-  },
-};
-
 
 const IdeasDetailsPage = async ({ params }) => {
   const { ideas_id } = await params;
   const ideasDetails = await GetIdeasById(ideas_id);
-  const {_id, title, category, shortDescription, detailedDescription, problemStatement, proposedSolution, estimatedBudget, createTime, tags,targetAudience, userInfo} = ideasDetails;
   console.log(ideasDetails);
+  const {
+    _id,
+    title,
+    imageUrl,
+    category,
+    shortDescription,
+    detailedDescription,
+    problemStatement,
+    proposedSolution,
+    estimatedBudget,
+    createTime,
+    tags,
+    targetAudience,
+    userInfo,
+  } = ideasDetails;
   return (
     <div className="relative min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       {/* ── Fixed viewport background (dark only) ── */}
@@ -63,23 +49,13 @@ const IdeasDetailsPage = async ({ params }) => {
       </div>
       {/* ── HERO ── */}
       <div className="relative h-72 w-full overflow-hidden md:h-95">
-        {/* Gradient bg */}
+        {/* Gradient bg / image */}
         <div className="relative h-full w-full bg-linear-to-135deg from-yellow-500 via-amber-500 to-orange-500">
-          <div
-            className="absolute inset-0 opacity-[0.07]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, white 1.5px, transparent 1.5px)",
-              backgroundSize: "28px 28px",
-            }}
-          />
+          {imageUrl && (
+            <Image src={imageUrl} alt={title} fill className="object-cover" />
+          )}
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full border border-white/10" />
           <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full border border-white/10" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-white/20 bg-white/15 backdrop-blur-sm">
-              <RiLightbulbFlashLine size={44} className="text-white/80" />
-            </div>
-          </div>
         </div>
         {/* Scrim */}
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10" />
@@ -119,38 +95,87 @@ const IdeasDetailsPage = async ({ params }) => {
       {/* ── META ROW ── */}
       <div className="relative border-b border-zinc-200/70 bg-white dark:border-white/5 dark:bg-zinc-900/70 dark:backdrop-blur-sm">
         <div className="mx-auto max-w-11/12">
-          <div className="flex flex-wrap items-stretch gap-px bg-zinc-100 dark:bg-zinc-800/50">
-            {[
-              { icon: FiLayers, label: "Category", value: IDEA.category },
-              { icon: FiCalendar, label: "Posted", value: IDEA.date },
-              { icon: FiDollarSign, label: "Budget", value: IDEA.budget },
-              {
-                icon: FiUsers,
-                label: "Audience",
-                value: `${IDEA.audience.length} groups`,
-              },
-              { icon: FiTag, label: "Tags", value: `${IDEA.tags.length} tags` },
-            ].map(({ icon: Icon, label, value }, i, arr) => (
-              <div
-                key={label}
-                className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70"
-              >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
-                  <Icon
-                    size={13}
-                    className="text-[#5e41de] dark:text-[#a78bfa]"
-                  />
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-                    {label}
-                  </p>
-                  <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
-                    {value}
-                  </p>
-                </div>
+          <div className="flex flex-wrap items-stretch gap-px bg-zinc-100 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/15">
+            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
+                <TbCategoryFilled
+                  size={13}
+                  className="text-[#5e41de] dark:text-[#a78bfa]"
+                />
               </div>
-            ))}
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                  CATEGORY
+                </p>
+                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                  {category}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
+                <FiCalendar
+                  size={13}
+                  className="text-[#5e41de] dark:text-[#a78bfa]"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                  POSTED
+                </p>
+                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                  {createTime}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
+                <FiDollarSign
+                  size={13}
+                  className="text-[#5e41de] dark:text-[#a78bfa]"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                  BUDGET
+                </p>
+                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                  {estimatedBudget}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
+                <FiUsers
+                  size={13}
+                  className="text-[#5e41de] dark:text-[#a78bfa]"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                  AUDIENCE
+                </p>
+                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                  {targetAudience.length} groups
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center gap-3 bg-white px-5 py-4 transition-colors hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/70">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#5e41de]/8 dark:bg-[#5e41de]/20">
+                <FiTag
+                  size={13}
+                  className="text-[#5e41de] dark:text-[#a78bfa]"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                  TAGS
+                </p>
+                <p className="text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
+                  {tags.length} tags
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -161,7 +186,7 @@ const IdeasDetailsPage = async ({ params }) => {
           {/* ── LEFT: content ── */}
           <div className="flex flex-col gap-5">
             {/* About */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-[#5e41de] dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-[#5e41de] dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/8 dark:bg-[#5e41de]/15">
                   <RiLightbulbFlashLine
@@ -185,7 +210,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* The Problem */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-rose-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-rose-500/8 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-rose-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-rose-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-900/20">
                   <FiAlertCircle
@@ -209,7 +234,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Proposed Solution */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-sm dark:border-white/5 dark:border-l-emerald-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-emerald-500/8 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-emerald-500 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-emerald-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-900/20">
                   <FiZap
@@ -236,11 +261,22 @@ const IdeasDetailsPage = async ({ params }) => {
           {/* ── RIGHT: sidebar ── */}
           <aside className="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
             {/* Author */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
-                  <Image src={userInfo?.image} alt={userInfo?.name} width={200} height={200} />
-                </span>
+                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl">
+                  {userInfo?.image ? (
+                    <Image
+                      src={userInfo.image}
+                      alt={userInfo?.name || "Author"}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
+                      {userInfo?.name?.charAt(0)?.toUpperCase() ?? "?"}
+                    </span>
+                  )}
+                </div>
 
                 <div>
                   <p className="text-sm font-bold text-zinc-800 dark:text-zinc-100">
@@ -297,7 +333,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Tags */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiTag
                   size={12}
@@ -321,7 +357,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Target Audience */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiUsers
                   size={12}
@@ -359,5 +395,5 @@ const IdeasDetailsPage = async ({ params }) => {
       </div>
     </div>
   );
-}
+};
 export default IdeasDetailsPage;
