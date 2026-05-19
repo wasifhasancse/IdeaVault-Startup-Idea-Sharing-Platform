@@ -1,24 +1,12 @@
 import IdeaCard from "@/components/IdeaCard/IdeaCard";
+import FilterCategory from "@/components/Operations/FilterCategory";
 import SearchingMethod from "@/components/Operations/SearchingMethod";
 import { GetIdeasAction } from "@/lib/Action/CrudAction";
-import { FiCalendar, FiFilter, FiLayers, FiSearch } from "react-icons/fi";
+import { FiCalendar, FiFilter } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 
-const CATEGORIES = [
-  "All",
-  "Tech",
-  "Health",
-  "AI",
-  "Education",
-  "Finance",
-  "Environment",
-  "Social",
-  "Entertainment",
-  "Retail",
-  "Other",
-];
 const Ideas = async ({ searchParams }) => {
-  const searchQuery = await searchParams
+  const searchQuery = await searchParams;
   const ideas = await GetIdeasAction(searchQuery?.search || "");
 
   return (
@@ -52,22 +40,9 @@ const Ideas = async ({ searchParams }) => {
         <div className="mb-8 rounded-2xl border border-[#5e41de]/12 bg-white/80 p-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/70 sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
             {/* Search */}
-            <SearchingMethod/>
+            <SearchingMethod />
 
-            {/* Category filter */}
-            <div className="flex items-center gap-2">
-              <FiLayers size={13} className="shrink-0 text-[#5e41de]" />
-              <select
-                // onChange={(e) => setCategory(e.target.value)}
-                className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat === "All" ? "All Categories" : cat}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <FilterCategory />
 
             {/* Date from */}
             <div className="flex items-center gap-2">
@@ -84,7 +59,6 @@ const Ideas = async ({ searchParams }) => {
                 className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-3 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200"
               />
             </div>
-
           </div>
 
           {/* Results count */}
