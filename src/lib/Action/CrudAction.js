@@ -5,8 +5,9 @@ import { auth } from "../auth";
 const { token } = await auth.api.getToken({ headers: await headers() });
 const session = await auth.api.getSession({ headers: await headers() });
 
-export const GetIdeasAction = async () => {
-  const getData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`);
+export const GetIdeasAction = async (searchQuery) => {
+  console.log(searchQuery);
+  const getData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?search=${searchQuery || ""}`);
   const data = await getData.json();
   return data;
 };

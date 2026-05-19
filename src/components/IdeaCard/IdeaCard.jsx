@@ -51,7 +51,7 @@ const CATEGORY_STYLES = {
 };
 
 const IdeaCard = ({ idea }) => {
-  console.log(idea);
+
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#5e41de]/35 hover:shadow-xl hover:shadow-[#5e41de]/10 dark:border-zinc-700/60 dark:bg-zinc-900 dark:hover:border-[#5e41de]/45">
