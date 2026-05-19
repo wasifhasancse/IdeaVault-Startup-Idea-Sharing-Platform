@@ -185,7 +185,7 @@ const IdeasDetailsPage = async ({ params }) => {
           {/* ── LEFT: content ── */}
           <div className="flex flex-col gap-5">
             {/* About */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-[#5e41de] dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-[#5e41de] bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-[#5e41de] dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/8 dark:bg-[#5e41de]/15">
                   <RiLightbulbFlashLine
@@ -209,7 +209,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* The Problem */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-rose-500 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-rose-500/8 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-rose-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-rose-500 dark:bg-zinc-900/60  dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-rose-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 dark:bg-rose-900/20">
                   <FiAlertCircle
@@ -233,7 +233,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Proposed Solution */}
-            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-emerald-500 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-emerald-500/8 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-100 border-l-4 border-l-emerald-500 bg-white p-6 shadow-xl dark:border-white/5 dark:border-l-emerald-500 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg dark:shadow-emerald-500/8 dark:backdrop-blur-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-900/20">
                   <FiZap
@@ -260,7 +260,7 @@ const IdeasDetailsPage = async ({ params }) => {
           {/* ── RIGHT: sidebar ── */}
           <aside className="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
             {/* Author */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60  dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-3">
                 <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl">
                   {userInfo?.image ? (
@@ -309,7 +309,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Budget */}
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/10 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-emerald-500/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-emerald-500/10 dark:backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/40">
                   <FiDollarSign
@@ -332,7 +332,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Tags */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiTag
                   size={12}
@@ -356,7 +356,7 @@ const IdeasDetailsPage = async ({ params }) => {
             </div>
 
             {/* Target Audience */}
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 shadow-[#5e41de]/8 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
+            <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-2">
                 <FiUsers
                   size={12}
