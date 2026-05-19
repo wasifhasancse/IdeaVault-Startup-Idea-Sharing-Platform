@@ -1,4 +1,4 @@
-import { PostAction } from "@/lib/Action/CrudAction";
+import { AddIdeasPostAction } from "@/lib/Action/CrudAction";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
   FiAlertCircle,
@@ -92,7 +92,7 @@ const CheckboxGroup = ({ items, name, cols = 3 }) => (
 const AddIdea = async () => {
   const formAction = async (formData) => {
     "use server";
-    await PostAction(formData);
+    await AddIdeasPostAction(formData);
   };
 
   return (
