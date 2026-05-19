@@ -347,13 +347,13 @@ const AddIdea = async () => {
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="reset"
-                  className="h-11 w-full rounded-xl border border-[#5e41de]/25 bg-transparent px-6 text-sm font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15 sm:w-auto"
+                  className="h-11 w-full rounded-xl border border-[#5e41de]/25 bg-transparent px-6 text-sm font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15 sm:w-auto cursor-pointer"
                 >
                   Reset
                 </button>
                 <button
                   type="submit"
-                  className="h-11 w-full rounded-xl bg-[#5e41de] px-8 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30 sm:w-auto"
+                  className="h-11 w-full rounded-xl bg-[#5e41de] px-8 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30 sm:w-auto cursor-pointer"
                 >
                   Submit Idea
                 </button>

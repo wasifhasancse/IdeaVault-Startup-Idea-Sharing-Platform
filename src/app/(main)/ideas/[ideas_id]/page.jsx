@@ -262,7 +262,7 @@ const IdeasDetailsPage = async ({ params }) => {
             {/* Author */}
             <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl dark:border-white/5 dark:bg-zinc-900/60  dark:shadow-lg shadow-[#5e41de]/8 dark:shadow-[#5e41de]/10 dark:backdrop-blur-sm">
               <div className="mb-3 flex items-center gap-3">
-                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl">
+                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
                   {userInfo?.image ? (
                     <Image
                       src={userInfo.image}
