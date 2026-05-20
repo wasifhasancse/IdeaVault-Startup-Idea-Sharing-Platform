@@ -3,26 +3,16 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { FiMessageCircle, FiSend } from "react-icons/fi";
+import CommentActions from "./CommentActions";
 
 export default async function CommentsSection({ ideasDetails }) {
-  const { comments, userInfo } = ideasDetails;
-  console.log(ideasDetails);
-
-  console.log(comments);
+  const { comments, _id: ideasId } = ideasDetails;
   const session = await auth.api.getSession({ headers: await headers() });
-  console.log(session);
-  const isOwn = userInfo?.email === session?.user?.email;
-  console.log(isOwn);
+  const currentUserEmail = session?.user?.email;
+
   const formAction = async (formData) => {
     "use server";
-    const confirm = await CommentIdeasAction(formData, ideasDetails?._id);
-    console.log(CommentIdeasAction);
-    // if (confirm?.success) {
-    //   toast.success(confirm.message);
-    // }
-    // if (confirm.success === false) {
-    //   toast.error(confirm.message);
-    // }
+    await CommentIdeasAction(formData, ideasDetails?._id);
   };
 
   return (
@@ -51,57 +41,77 @@ export default async function CommentsSection({ ideasDetails }) {
         </span>
       </div>
       <div className="flex flex-col gap-3">
-        {comments.map((comment, index) => (
-          <div
-            key={index}
-            className={`group relative rounded-2xl border bg-white p-4 transition-shadow hover:shadow-sm dark:bg-zinc-900/70 ${
-              isOwn
-                ? "border-[#5e41de]/15 bg-linear-to-br from-[#5e41de]/2 to-white dark:border-[#5e41de]/25 dark:from-[#5e41de]/5 dark:to-zinc-900/70"
-                : "border-zinc-100 dark:border-zinc-800"
-            }`}
-          >
-            {/* own indicator strip */}
-            {isOwn && (
-              <span className="absolute left-0 top-4 h-6 w-0.5 rounded-r-full bg-[#5e41de]/60 dark:bg-[#a78bfa]/60" />
-            )}
+        {comments.map((comment, index) => {
+          const isOwn = comment.userInfo?.email === currentUserEmail;
+          return (
+            <div
+              key={index}
+              className={`group relative rounded-2xl border bg-white p-4 transition-shadow hover:shadow-sm dark:bg-zinc-900/70 ${
+                isOwn
+                  ? "border-[#5e41de]/15 bg-linear-to-br from-[#5e41de]/2 to-white dark:border-[#5e41de]/25 dark:from-[#5e41de]/5 dark:to-zinc-900/70"
+                  : "border-zinc-100 dark:border-zinc-800"
+              }`}
+            >
+              {/* own indicator strip */}
+              {isOwn && (
+                <span className="absolute left-0 top-4 h-6 w-0.5 rounded-r-full bg-[#5e41de]/60 dark:bg-[#a78bfa]/60" />
+              )}
 
-            <div className="flex gap-3">
-              {/* Avatar */}
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
-                {comment?.userInfo?.image ? (
-                  <Image
-                    src={comment.userInfo.image}
-                    alt={comment.userInfo?.name || "Author"}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
-                    {comment.userInfo?.name?.charAt(0)?.toUpperCase() ?? "?"}
-                  </span>
-                )}
-              </div>
-
-              {/* Body */}
-              <div className="min-w-0 flex-1">
-                {/* Name row */}
-                <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                  <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-                    {comment.userInfo?.name || "Unknown User"}
-                  </span>
-                  {isOwn && (
-                    <span className="rounded-full bg-[#5e41de]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#5e41de] dark:bg-[#5e41de]/20 dark:text-[#a78bfa]">
-                      You
+              <div className="flex gap-3">
+                {/* Avatar */}
+                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
+                  {comment?.userInfo?.image ? (
+                    <Image
+                      src={comment.userInfo.image}
+                      alt={comment.userInfo?.name || "Author"}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
+                      {comment.userInfo?.name?.charAt(0)?.toUpperCase() ?? "?"}
                     </span>
                   )}
-                  <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
-                    {comment.commentedAt}
-                  </span>
+                </div>
+
+                {/* Body */}
+                <div className="min-w-0 flex-1">
+                  {/* Name row */}
+                  <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+                      {comment.userInfo?.name || "Unknown User"}
+                    </span>
+                    {isOwn && (
+                      <span className="rounded-full bg-[#5e41de]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#5e41de] dark:bg-[#5e41de]/20 dark:text-[#a78bfa]">
+                        You
+                      </span>
+                    )}
+                    <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
+                      {comment.commentedAt}
+                      {comment.editedAt && (
+                        <span className="ml-1 italic">(edited)</span>
+                      )}
+                    </span>
+                  </div>
+
+                  {/* Comment text */}
+                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                    {comment.comment}
+                  </p>
+
+                  {/* Edit / Delete for comment owner */}
+                  {isOwn && (
+                    <CommentActions
+                      ideasId={ideasId}
+                      commentIndex={index}
+                      initialText={comment.comment}
+                    />
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* ── Add comment form ── */}
@@ -140,19 +150,10 @@ export default async function CommentsSection({ ideasDetails }) {
             className="w-full resize-none bg-transparent px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none dark:text-zinc-200 dark:placeholder-zinc-500"
           />
           <div className="flex items-center justify-between border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">
-            <p className="text-[11px] text-zinc-400 dark:text-zinc-600">
-              <kbd className="rounded border border-zinc-200 px-1 py-0.5 font-mono text-[10px] dark:border-zinc-700">
-                Ctrl
-              </kbd>{" "}
-              +{" "}
-              <kbd className="rounded border border-zinc-200 px-1 py-0.5 font-mono text-[10px] dark:border-zinc-700">
-                Enter
-              </kbd>{" "}
-              to post
-            </p>
+
             <button
               type="submit"
-              className="flex items-center gap-2 rounded-xl bg-[#5e41de] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#4f37c8] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex items-center gap-2 rounded-xl bg-[#5e41de] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#4f37c8] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
             >
               <FiSend size={13} />
               Post

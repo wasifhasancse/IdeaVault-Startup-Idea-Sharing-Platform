@@ -1,7 +1,7 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "../auth";
-import { revalidatePath } from "next/cache";
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -152,7 +152,6 @@ export const UpdateIdeasAction = async (formData, ideasId) => {
 //   const ideasData = await existingRes.json();
 //   ideasData.comments = [...(ideasData.comments || []), commentData];
 
-
 //   const updateData = await fetch(
 //     `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
 //     {
@@ -202,12 +201,12 @@ export const CommentIdeasAction = async (formData, ideasId) => {
       image: session?.user?.image,
     },
     commentedAt: new Date().toLocaleString("us-EN", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }),
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
   };
 
   ideasData.comments = [...(ideasData.comments || []), commentData];
@@ -225,13 +224,13 @@ export const CommentIdeasAction = async (formData, ideasId) => {
   );
 
   const data = await updateData.json();
+   revalidatePath(`/ideas/${ideasId}`);
   if (data.modifiedCount > 0) {
     return { success: true, message: "Your comment posted successfully!" };
   } else {
     return { success: false, message: "Failed to post comment!" };
   }
 };
-
 
 export const DeleteIdeasAction = async (ideasId) => {
   "use server";
@@ -242,10 +241,99 @@ export const DeleteIdeasAction = async (ideasId) => {
     },
   );
   const data = await res.json();
+
   if (data.deletedCount > 0) {
     return { success: true, message: "Idea deleted successfully!" };
   } else {
     return { success: false, message: "Failed to delete Idea!" };
+  }
+};
+
+export const DeleteCommentAction = async (ideasId, commentIndex) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  const existingRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    { headers: { authorization: `Bearer ${token}` } },
+  );
+  const ideasData = await existingRes.json();
+  delete ideasData._id;
+
+  const comment = ideasData.comments?.[commentIndex];
+  if (!comment || comment.userInfo?.email !== session?.user?.email) {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  ideasData.comments = ideasData.comments.filter((_, i) => i !== commentIndex);
+
+  const updateData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ideasData),
+    },
+  );
+  const data = await updateData.json();
+  revalidatePath(`/ideas/${ideasId}`);
+  if (data.modifiedCount > 0) {
+    return { success: true, message: "Comment deleted successfully!" };
+  } else {
+    return { success: false, message: "Failed to delete comment!" };
+  }
+};
+
+export const EditCommentAction = async (ideasId, commentIndex, newText) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!newText?.trim()) return { success: false, message: "Comment is empty" };
+
+  const existingRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    { headers: { authorization: `Bearer ${token}` } },
+  );
+  const ideasData = await existingRes.json();
+  delete ideasData._id;
+
+  const comment = ideasData.comments?.[commentIndex];
+  if (!comment || comment.userInfo?.email !== session?.user?.email) {
+    return { success: false, message: "Unauthorized" };
+  }
+
+  ideasData.comments[commentIndex] = {
+    ...comment,
+    comment: newText.trim(),
+    editedAt: new Date().toLocaleString("us-EN", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+
+  const updateData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ideasData),
+    },
+  );
+  const data = await updateData.json();
+  revalidatePath(`/ideas/${ideasId}`);
+  if (data.modifiedCount > 0) {
+    return { success: true, message: "Comment updated successfully!" };
+  } else {
+    return { success: false, message: "Failed to update comment!" };
   }
 };
 
