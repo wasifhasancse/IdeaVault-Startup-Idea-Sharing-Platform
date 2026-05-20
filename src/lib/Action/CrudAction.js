@@ -13,7 +13,7 @@ export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   return data;
 };
 
-export const UpdateIdeasAction = async (formData) => {
+export const AddIdeasPostAction = async (formData) => {
   const ideasData = Object.fromEntries(formData.entries());
   ideasData.tags = formData.getAll("tags");
   ideasData.targetAudience = formData.getAll("targetAudience");
@@ -40,7 +40,8 @@ export const UpdateIdeasAction = async (formData) => {
     // redirect("/");
   }
 };
-export const AddIdeasPostAction = async (formData) => {
+
+export const UpdateIdeasAction = async (formData, ideasId) => {
   const ideasData = Object.fromEntries(formData.entries());
   ideasData.tags = formData.getAll("tags");
   ideasData.targetAudience = formData.getAll("targetAudience");
@@ -53,16 +54,16 @@ export const AddIdeasPostAction = async (formData) => {
   });
   ideasData.userInfo = session.user;
 
-  const postData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
-    method: "POST",
+  const updateData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`, {
+    method: "PATCH",
     headers: {
       "content-type": "application/json",
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(ideasData),
   });
-  const data = await postData.json();
-  if (data.insertedId) {
+  const data = await updateData.json();
+  if (data.modifiedCount > 0) {
     // revalidatePath("/");
     // redirect("/");
   }
