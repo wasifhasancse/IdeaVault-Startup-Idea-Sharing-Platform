@@ -84,3 +84,18 @@ export const DeleteIdeasAction = async (ideasId) => {
   // }
   return data;
 };
+
+export const GetMyIdeas = async (id) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
+  const getData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/my-ideas/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }
+  );
+  const data = await getData.json();
+  return data;
+};

@@ -1,4 +1,5 @@
-import { GetMyIdeas } from "@/lib/Action/GetData";
+
+import { GetMyIdeas } from "@/lib/Action/CrudAction";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -19,69 +20,6 @@ import {
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
 
-/* ── Static seed data ── */
-const MY_IDEAS = [
-  {
-    id: "1",
-    title: "EcoRoute — AI-Powered Sustainable Delivery Network",
-    shortDescription:
-      "A logistics platform that optimises last-mile delivery routes to minimise carbon emissions while cutting operational costs for e-commerce brands.",
-    category: "Environment",
-    imageUrl:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop",
-    tags: ["SaaS", "B2B", "Sustainability"],
-    estimatedBudget: "$42,000",
-    upvotes: 38,
-    comments: 12,
-    status: "published",
-    createdAt: "May 12, 2026",
-  },
-  {
-    id: "2",
-    title: "MindBridge — Mental Health Peer Support App",
-    shortDescription:
-      "An anonymous community platform connecting people experiencing similar mental health challenges with trained peer supporters and licensed therapists.",
-    category: "Health",
-    imageUrl:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop",
-    tags: ["Mobile App", "B2C", "FinTech"],
-    estimatedBudget: "$28,500",
-    upvotes: 61,
-    comments: 24,
-    status: "published",
-    createdAt: "Apr 29, 2026",
-  },
-  {
-    id: "3",
-    title: "SkillSwap — Peer-to-Peer Skill Exchange Marketplace",
-    shortDescription:
-      "A barter-style platform where professionals trade skills—graphic design for coding lessons, language tutoring for accounting help—without money changing hands.",
-    category: "Education",
-    imageUrl:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop",
-    tags: ["Marketplace", "B2C", "EdTech"],
-    estimatedBudget: "$15,000",
-    upvotes: 24,
-    comments: 9,
-    status: "draft",
-    createdAt: "May 17, 2026",
-  },
-  {
-    id: "4",
-    title: "FarmLedger — Blockchain Crop Insurance for Smallholders",
-    shortDescription:
-      "Smart-contract-based micro-insurance that automatically triggers payouts when verified weather events affect farmers' yields, removing the slow manual claims process.",
-    category: "Finance",
-    imageUrl:
-      "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&auto=format&fit=crop",
-    tags: ["Blockchain", "B2C", "FinTech"],
-    estimatedBudget: "$95,000",
-    upvotes: 17,
-    comments: 5,
-    status: "published",
-    createdAt: "Mar 3, 2026",
-  },
-];
 
 const CATEGORY_PILL = {
   Tech: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
@@ -114,12 +52,9 @@ const CATEGORY_BAR = {
   Other: "from-[#5e41de] to-[#a78bfa]",
 };
 
-const totalUpvotes = MY_IDEAS.reduce((s, i) => s + i.upvotes, 0);
-const totalComments = MY_IDEAS.reduce((s, i) => s + i.comments, 0);
-
 const MyIdeas = async () => {
   const { session } = await auth.api.getSession({ headers: await headers() });
-  // console.log(session);
+
   const myIdeas = await GetMyIdeas(session?.userId);
   console.log(myIdeas);
   console.log(myIdeas?.length);
