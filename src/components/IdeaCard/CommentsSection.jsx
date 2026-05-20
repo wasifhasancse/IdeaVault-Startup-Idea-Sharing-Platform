@@ -12,8 +12,7 @@ export default async function CommentsSection({ ideasDetails }) {
 
   const formAction = async (formData) => {
     'use server';
-
-    await CommentIdeasAction(formData, ideasDetails?._id);
+     await CommentIdeasAction(formData, ideasDetails?._id);
     console.log(CommentIdeasAction);
 }
 

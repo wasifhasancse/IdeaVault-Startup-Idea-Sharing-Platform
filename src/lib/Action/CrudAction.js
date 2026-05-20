@@ -127,31 +127,84 @@ export const UpdateIdeasAction = async (formData, ideasId) => {
 };
 
 // Comments action:
+// export const CommentIdeasAction = async (formData, ideasId) => {
+//   const { token } = await auth.api.getToken({ headers: await headers() });
+//   const session = await auth.api.getSession({ headers: await headers() });
+
+//   const { comment } = Object.fromEntries(formData.entries());
+
+//   const commentData = {
+//     comment,
+//     userInfo: session.user,
+//     commentedAt: new Date().toLocaleString("us-EN", {
+//       month: "long",
+//       day: "numeric",
+//       year: "numeric",
+//       hour: "2-digit",
+//       minute: "2-digit",
+//     }),
+//   };
+
+//   const existingRes = await fetch(
+//     `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+//     { headers: { authorization: `Bearer ${token}` } },
+//   );
+//   const ideasData = await existingRes.json();
+//   ideasData.comments = [...(ideasData.comments || []), commentData];
+
+
+//   const updateData = await fetch(
+//     `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+//     {
+//       method: "PATCH",
+//       headers: {
+//         "content-type": "application/json",
+//         authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify(ideasData),
+//     },
+//   );
+//   const data = await updateData.json();
+// };
 export const CommentIdeasAction = async (formData, ideasId) => {
-  const { token } = await auth.api.getToken({ headers: await headers() });
-  const session = await auth.api.getSession({ headers: await headers() });
-  // in ideasData.comments = []; we will push the new comment with user info and timestamp
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   const { comment } = Object.fromEntries(formData.entries());
+
+  if (!comment?.trim()) return;
+
+  // get existing idea
+  const existingRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  const ideasData = await existingRes.json();
+
+  // IMPORTANT FIX
+  delete ideasData._id;
 
   const commentData = {
     comment,
-    userInfo: session.user,
-    commentedAt: new Date().toLocaleString("us-EN", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
+    userInfo: {
+      name: session?.user?.name,
+      email: session?.user?.email,
+      image: session?.user?.image,
+    },
+    commentedAt: new Date(),
   };
 
-  const existingRes = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
-    { headers: { authorization: `Bearer ${token}` } },
-  );
-  const ideasData = await existingRes.json();
   ideasData.comments = [...(ideasData.comments || []), commentData];
-
 
   const updateData = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
@@ -164,8 +217,10 @@ export const CommentIdeasAction = async (formData, ideasId) => {
       body: JSON.stringify(ideasData),
     },
   );
-  const data = await updateData.json();
+
+  return await updateData.json();
 };
+
 
 export const DeleteIdeasAction = async (ideasId) => {
   "use server";
