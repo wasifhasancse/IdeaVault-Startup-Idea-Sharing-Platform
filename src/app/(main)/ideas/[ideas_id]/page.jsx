@@ -1,4 +1,4 @@
-import { GetIdeasById } from "@/lib/Action/GetData";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -16,6 +16,7 @@ import {
 import { RiLightbulbFlashLine } from "react-icons/ri";
 import { TbCategoryFilled } from "react-icons/tb";
 import CommentsSection from "./CommentsSection";
+import { GetIdeasById } from "@/lib/Action/CrudAction";
 
 const IdeasDetailsPage = async ({ params }) => {
   const { ideas_id } = await params;

@@ -28,11 +28,14 @@ export default function SignIn() {
       const formData = new FormData(event.target);
       const email = formData.get("email");
       const password = formData.get("password");
-      const { error } = await authClient.signIn.email({
+      const { data, error } = await authClient.signIn.email({
         email,
         password,
         callbackURL: "/",
       });
+      if (data?.token) {
+        toast.success("Signed in successfully!");
+      }
       if (error) {
         toast.danger("Failed to sign in. " + error.message);
       }

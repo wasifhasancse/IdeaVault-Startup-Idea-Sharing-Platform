@@ -1,8 +1,9 @@
 "use server";
 import { headers } from "next/headers";
 import { auth } from "../auth";
-
-
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { toast } from "@heroui/react";
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -12,12 +13,62 @@ export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   return data;
 };
 
-export const AddIdeasPostAction = async (formData) => {
+export const GetIdeasById = async (id) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const getData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await getData.json();
+  return data;
+};
+
+
+
+export const AddIdeasPostAction = async (prevState, formData) => {
+  // ── Server-side validation ──
+  const title = formData.get("title")?.trim();
+  const shortDescription = formData.get("shortDescription")?.trim();
+  const category = formData.get("category");
+  const tags = formData.getAll("tags");
+  const imageUrl = formData.get("imageUrl")?.trim();
+  const estimatedBudget = formData.get("estimatedBudget")?.trim();
+  const targetAudience = formData.getAll("targetAudience");
+  const detailedDescription = formData.get("detailedDescription")?.trim();
+  const problemStatement = formData.get("problemStatement")?.trim();
+  const proposedSolution = formData.get("proposedSolution")?.trim();
+
+  const errors = {};
+  if (!title) errors.title = "Idea title is required.";
+  if (!shortDescription)
+    errors.shortDescription = "Short description is required.";
+  if (!category) errors.category = "Please select a category.";
+  if (tags.length === 0) errors.tags = "Please select at least one tag.";
+  if (!imageUrl) errors.imageUrl = "Image URL is required.";
+  if (!estimatedBudget)
+    errors.estimatedBudget = "Estimated budget is required.";
+  if (targetAudience.length === 0)
+    errors.targetAudience = "Please select at least one target audience.";
+  if (!detailedDescription)
+    errors.detailedDescription = "Detailed description is required.";
+  if (!problemStatement)
+    errors.problemStatement = "Problem statement is required.";
+  if (!proposedSolution)
+    errors.proposedSolution = "Proposed solution is required.";
+
+  if (Object.keys(errors).length > 0) {
+    return { errors };
+  }
+
   const { token } = await auth.api.getToken({ headers: await headers() });
   const session = await auth.api.getSession({ headers: await headers() });
   const ideasData = Object.fromEntries(formData.entries());
-  ideasData.tags = formData.getAll("tags");
-  ideasData.targetAudience = formData.getAll("targetAudience");
+  ideasData.tags = tags;
+  ideasData.targetAudience = targetAudience;
   ideasData.createTime = new Date().toLocaleString("us-EN", {
     month: "long",
     day: "numeric",
@@ -36,10 +87,13 @@ export const AddIdeasPostAction = async (formData) => {
     body: JSON.stringify(ideasData),
   });
   const data = await postData.json();
+  console.log(data);
   if (data.insertedId) {
-    // revalidatePath("/");
-    // redirect("/");
+    toast.success("Idea submitted successfully!");
+    revalidatePath("/ideas");
+    redirect("/ideas");
   }
+  return { success: true };
 };
 
 export const UpdateIdeasAction = async (formData, ideasId) => {
@@ -57,26 +111,32 @@ export const UpdateIdeasAction = async (formData, ideasId) => {
   });
   ideasData.userInfo = session.user;
 
-  const updateData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`, {
-    method: "PATCH",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${token}`,
+  const updateData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ideasData),
     },
-    body: JSON.stringify(ideasData),
-  });
+  );
   const data = await updateData.json();
   if (data.modifiedCount > 0) {
-    // revalidatePath("/");
-    // redirect("/");
+    toast("Idea updated successfully!");
+    redirect("/my-ideas");
   }
 };
 
 export const DeleteIdeasAction = async (ideasId) => {
   "use server";
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`, {
-    method: "DELETE",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      method: "DELETE",
+    },
+  );
   const data = await res.json();
   // revalidation
   // if (data.deletedCount > 0) {
@@ -93,8 +153,8 @@ export const GetMyIdeas = async (id) => {
     {
       headers: {
         authorization: `Bearer ${token}`,
-      }
-    }
+      },
+    },
   );
   const data = await getData.json();
   return data;

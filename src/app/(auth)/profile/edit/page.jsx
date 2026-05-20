@@ -37,7 +37,6 @@ const UpdateProfile = () => {
 
     try {
       await authClient.updateUser(updateInfo);
-
       toast.success("Profile updated successfully");
       router.push("/profile");
     } catch {
@@ -227,7 +226,7 @@ const UpdateProfile = () => {
 
               {/* Buttons */}
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                
+
                 <span onClick={() => {
                     setName("");
                     setImageUrl("");
