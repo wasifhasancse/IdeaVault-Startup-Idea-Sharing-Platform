@@ -7,7 +7,8 @@ import { RiLightbulbFlashLine } from "react-icons/ri";
 
 const Ideas = async ({ searchParams }) => {
   const searchQuery = await searchParams;
-  const ideas = await GetIdeasAction(searchQuery?.search || "");
+  console.log(searchQuery);
+  const ideas = await GetIdeasAction(searchQuery?.search || "", searchQuery?.category || "");
 
   return (
     <section className="relative min-h-[calc(100vh-64px)] overflow-hidden bg-linear-to-br from-white via-[#5e41de]/4 to-[#a78bfa]/8 py-10 dark:from-zinc-950 dark:via-[#5e41de]/8 dark:to-[#a78bfa]/4 md:py-14">

@@ -5,8 +5,8 @@ import { auth } from "../auth";
 const { token } = await auth.api.getToken({ headers: await headers() });
 const session = await auth.api.getSession({ headers: await headers() });
 
-export const GetIdeasAction = async (searchQuery) => {
-  const getData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?search=${searchQuery || ""}`);
+export const GetIdeasAction = async (searchQuery, categoryQuery) => {
+  const getData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?search=${searchQuery || ""}&category=${categoryQuery || ""}`);
   const data = await getData.json();
   return data;
 };

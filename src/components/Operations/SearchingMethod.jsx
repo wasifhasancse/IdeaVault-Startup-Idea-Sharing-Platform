@@ -23,7 +23,7 @@ const SearchingMethod = () => {
         className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
       />
       <input
-        type="text"
+        type="search"
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search ideas by title, description, or category…"
         className="w-full rounded-xl rounded-r-none border border-r-0 border-[#5e41de]/18 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
