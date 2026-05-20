@@ -53,6 +53,8 @@ const CATEGORY_BAR = {
 const MyIdeas = async () => {
   const { session } = await auth.api.getSession({ headers: await headers() });
   const myIdeas = await GetMyIdeas(session?.userId);
+  const totalUpvotes = myIdeas.reduce((sum, idea) => sum + (idea.upvotes || 0), 0);
+  const totalComments = myIdeas.reduce((sum, idea) => sum + (idea.comments?.length || 0), 0);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
@@ -122,7 +124,7 @@ const MyIdeas = async () => {
             </span>
             <div>
               <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
-                {/* {idea?.upvotes ?? 0} */}
+                {totalUpvotes}
               </p>
               <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
                 Total Upvotes
@@ -141,7 +143,7 @@ const MyIdeas = async () => {
             </span>
             <div>
               <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
-                {/* {idea?.comments ?? 0} */}
+                {totalComments}
               </p>
               <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
                 Comments
@@ -153,76 +155,6 @@ const MyIdeas = async () => {
           </div>
         </div>
 
-        {/* ── Filter bar ── */}
-        <div className="mb-7 rounded-2xl border border-[#5e41de]/12 bg-white/80 p-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/70 sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            {/* Search */}
-            <div className="relative min-w-0 flex-1">
-              <FiSearch
-                size={15}
-                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
-              />
-              <input
-                type="text"
-                placeholder="Search your ideas…"
-                className="w-full rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
-              />
-            </div>
-
-            {/* Category */}
-            <div className="flex items-center gap-2">
-              <FiLayers size={13} className="shrink-0 text-[#5e41de]" />
-              <select className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200">
-                <option value="">All Categories</option>
-                {[
-                  "Tech",
-                  "Health",
-                  "AI",
-                  "Education",
-                  "Finance",
-                  "Environment",
-                  "Social",
-                  "Entertainment",
-                  "Retail",
-                  "Other",
-                ].map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Status */}
-            <div className="flex items-center gap-2">
-              <FiZap size={13} className="shrink-0 text-[#5e41de]" />
-              <select className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200">
-                <option value="">All Status</option>
-                <option value="published">Published</option>
-                <option value="draft">Draft</option>
-              </select>
-            </div>
-
-            {/* Sort */}
-            <div className="flex items-center gap-2">
-              <FiCalendar size={13} className="shrink-0 text-[#5e41de]" />
-              <select className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200">
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="upvotes">Most Upvotes</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Result count */}
-          <p className="mt-3 text-[11px] font-medium text-zinc-400 dark:text-zinc-500">
-            Showing{" "}
-            <span className="font-bold text-[#5e41de] dark:text-[#a78bfa]">
-              {myIdeas?.length}
-            </span>{" "}
-            {myIdeas?.length === 1 ? "idea" : "ideas"}
-          </p>
-        </div>
 
         {/* ── Idea cards grid ── */}
         {myIdeas?.length === 0 ? (
@@ -254,7 +186,6 @@ const MyIdeas = async () => {
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {myIdeas?.map((idea) => {
-                console.log(idea);
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;
               const barCls = CATEGORY_BAR[idea.category] ?? CATEGORY_BAR.Other;
