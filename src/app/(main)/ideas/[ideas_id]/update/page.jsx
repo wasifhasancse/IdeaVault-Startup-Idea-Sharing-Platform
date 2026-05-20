@@ -1,6 +1,9 @@
 import { UpdateIdeasAction } from "@/lib/Action/CrudAction";
 import { GetIdeasById } from "@/lib/Action/GetData";
+import { auth } from "@/lib/auth";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import {
   FiAlertCircle,
   FiBookOpen,
@@ -92,6 +95,7 @@ const CheckboxGroup = ({ items, name, cols = 3 }) => (
 
 const UpdateIdeas = async ({ params }) => {
   const { ideas_id } = await params;
+  const session = await auth.api.getSession({ headers: await headers() });
   const ideasDetails = await GetIdeasById(ideas_id);
   const {
     _id,
@@ -108,6 +112,9 @@ const UpdateIdeas = async ({ params }) => {
     targetAudience,
     userInfo,
   } = ideasDetails;
+  if (session?.user?.email !== userInfo.email) {
+    return redirect('/protected');
+  }
   const formAction = async (formData) => {
     "use server";
     await UpdateIdeasAction(formData, ideas_id);
