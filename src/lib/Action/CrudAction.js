@@ -201,7 +201,13 @@ export const CommentIdeasAction = async (formData, ideasId) => {
       email: session?.user?.email,
       image: session?.user?.image,
     },
-    commentedAt: new Date(),
+    commentedAt: new Date().toLocaleString("us-EN", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }),
   };
 
   ideasData.comments = [...(ideasData.comments || []), commentData];
@@ -218,7 +224,12 @@ export const CommentIdeasAction = async (formData, ideasId) => {
     },
   );
 
-  return await updateData.json();
+  const data = await updateData.json();
+  if (data.modifiedCount > 0) {
+    return { success: true, message: "Your comment posted successfully!" };
+  } else {
+    return { success: false, message: "Failed to post comment!" };
+  }
 };
 
 

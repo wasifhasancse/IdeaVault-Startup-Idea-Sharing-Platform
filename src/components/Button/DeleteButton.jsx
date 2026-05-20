@@ -6,10 +6,13 @@ import { useRouter } from "next/navigation";
 const DeleteButton = ({ idea }) => {
   const router = useRouter();
   const manageDelete = async () => {
-    const comfirm = await DeleteIdeasAction(idea._id);
-    if (comfirm?.success) {
-      toast.success(comfirm.message);
+    const confirm = await DeleteIdeasAction(idea._id);
+    if (confirm?.success) {
+      toast.success(confirm.message);
       router.refresh();
+    }
+    if(confirm.success === false) {
+      toast.error(confirm.message);
     }
   };
   return (

@@ -5,16 +5,25 @@ import Image from "next/image";
 import { FiMessageCircle, FiSend } from "react-icons/fi";
 
 export default async function CommentsSection({ ideasDetails }) {
-  const { comments,userInfo } = ideasDetails;
+  const { comments, userInfo } = ideasDetails;
   console.log(ideasDetails);
+
+  console.log(comments);
   const session = await auth.api.getSession({ headers: await headers() });
   console.log(session);
-
+  const isOwn = userInfo?.email === session?.user?.email;
+  console.log(isOwn);
   const formAction = async (formData) => {
-    'use server';
-     await CommentIdeasAction(formData, ideasDetails?._id);
+    "use server";
+    const confirm = await CommentIdeasAction(formData, ideasDetails?._id);
     console.log(CommentIdeasAction);
-}
+    // if (confirm?.success) {
+    //   toast.success(confirm.message);
+    // }
+    // if (confirm.success === false) {
+    //   toast.error(confirm.message);
+    // }
+  };
 
   return (
     <section className="mt-12">
@@ -40,6 +49,59 @@ export default async function CommentsSection({ ideasDetails }) {
         <span className="rounded-full bg-[#5e41de]/8 px-3 py-1 text-xs font-semibold text-[#5e41de] dark:bg-[#5e41de]/15 dark:text-[#a78bfa]">
           {comments.length}
         </span>
+      </div>
+      <div className="flex flex-col gap-3">
+        {comments.map((comment, index) => (
+          <div
+            key={index}
+            className={`group relative rounded-2xl border bg-white p-4 transition-shadow hover:shadow-sm dark:bg-zinc-900/70 ${
+              isOwn
+                ? "border-[#5e41de]/15 bg-linear-to-br from-[#5e41de]/2 to-white dark:border-[#5e41de]/25 dark:from-[#5e41de]/5 dark:to-zinc-900/70"
+                : "border-zinc-100 dark:border-zinc-800"
+            }`}
+          >
+            {/* own indicator strip */}
+            {isOwn && (
+              <span className="absolute left-0 top-4 h-6 w-0.5 rounded-r-full bg-[#5e41de]/60 dark:bg-[#a78bfa]/60" />
+            )}
+
+            <div className="flex gap-3">
+              {/* Avatar */}
+              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
+                {comment?.userInfo?.image ? (
+                  <Image
+                    src={comment.userInfo.image}
+                    alt={comment.userInfo?.name || "Author"}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-yellow-500 to-amber-600 text-sm font-bold text-white">
+                    {comment.userInfo?.name?.charAt(0)?.toUpperCase() ?? "?"}
+                  </span>
+                )}
+              </div>
+
+              {/* Body */}
+              <div className="min-w-0 flex-1">
+                {/* Name row */}
+                <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                  <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+                    {comment.userInfo?.name || "Unknown User"}
+                  </span>
+                  {isOwn && (
+                    <span className="rounded-full bg-[#5e41de]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#5e41de] dark:bg-[#5e41de]/20 dark:text-[#a78bfa]">
+                      You
+                    </span>
+                  )}
+                  <span className="text-[11px] text-zinc-400 dark:text-zinc-500">
+                    {comment.commentedAt}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* ── Add comment form ── */}

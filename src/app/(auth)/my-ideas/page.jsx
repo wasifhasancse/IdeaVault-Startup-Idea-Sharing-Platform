@@ -254,7 +254,6 @@ const MyIdeas = async () => {
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {myIdeas?.map((idea) => {
-              console.log(idea);
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;
               const barCls = CATEGORY_BAR[idea.category] ?? CATEGORY_BAR.Other;
