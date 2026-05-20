@@ -427,7 +427,7 @@ const MyIdeas = async () => {
                         View
                       </Link>
                       <Link
-                        href={`/ideas/${idea._id}/edit`}
+                        href={`/ideas/${idea._id}/update`}
                         className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 py-2 text-xs font-semibold text-zinc-600 transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                       >
                         <FiEdit3 size={12} />

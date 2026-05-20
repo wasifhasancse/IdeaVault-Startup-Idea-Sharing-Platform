@@ -2,8 +2,7 @@
 import { headers } from "next/headers";
 import { auth } from "../auth";
 
-const { token } = await auth.api.getToken({ headers: await headers() });
-const session = await auth.api.getSession({ headers: await headers() });
+
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -14,6 +13,8 @@ export const GetIdeasAction = async (searchQuery, categoryQuery) => {
 };
 
 export const AddIdeasPostAction = async (formData) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
   const ideasData = Object.fromEntries(formData.entries());
   ideasData.tags = formData.getAll("tags");
   ideasData.targetAudience = formData.getAll("targetAudience");
@@ -42,6 +43,8 @@ export const AddIdeasPostAction = async (formData) => {
 };
 
 export const UpdateIdeasAction = async (formData, ideasId) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
   const ideasData = Object.fromEntries(formData.entries());
   ideasData.tags = formData.getAll("tags");
   ideasData.targetAudience = formData.getAll("targetAudience");
