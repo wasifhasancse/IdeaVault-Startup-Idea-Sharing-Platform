@@ -253,7 +253,8 @@ const MyIdeas = async () => {
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {myIdeas?.map((idea) => {
+              {myIdeas?.map((idea) => {
+                console.log(idea);
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;
               const barCls = CATEGORY_BAR[idea.category] ?? CATEGORY_BAR.Other;
@@ -334,11 +335,11 @@ const MyIdeas = async () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <FiThumbsUp size={10} />
-                        {idea?.upvotes} upvotes
+                        {idea?.likes} likes
                       </span>
                       <span className="flex items-center gap-1">
                         <FiMessageSquare size={10} />
-                        {idea?.comments} comments
+                        {idea?.comments?.length} comments
                       </span>
                       <span className="ml-auto flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400">
                         <FiDollarSign size={10} />
