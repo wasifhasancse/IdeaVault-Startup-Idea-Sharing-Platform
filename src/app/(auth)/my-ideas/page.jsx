@@ -1,3 +1,6 @@
+import { GetMyIdeas } from "@/lib/Action/GetData";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -136,6 +139,10 @@ const STATS = [
 ];
 
 const MyIdeas = async () => {
+  const {session} = await auth.api.getSession({ headers: await headers() });
+  console.log(session);
+  const myIdeas = await GetMyIdeas(session?.userId)
+  console.log(myIdeas);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
