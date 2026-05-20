@@ -1,7 +1,8 @@
 "use client";
-
 import { AddIdeasPostAction } from "@/lib/Action/CrudAction";
-import { useActionState } from "react";
+import { toast } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import {
     FiAlertCircle,
     FiBookOpen,
@@ -102,7 +103,20 @@ const CheckboxGroup = ({ items, name, cols = 3 }) => (
 );
 
 export default function AddIdeaForm() {
+  const router = useRouter()
   const [state, formAction] = useActionState(AddIdeasPostAction, null);
+  useEffect(() => {
+  if (state?.success) {
+    toast.success(state.message);
+
+    router.refresh();
+    router.push("/my-ideas");
+  }
+
+  if (state?.errors) {
+    toast.error(state.message);
+  }
+}, [state, router]);
   const errors = state?.errors ?? {};
   const hasErrors = Object.keys(errors).length > 0;
 

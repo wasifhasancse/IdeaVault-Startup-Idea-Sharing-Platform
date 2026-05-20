@@ -1,6 +1,6 @@
+import AddIdeaForm from "@/components/Operations/AddIdeaForm";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { RiLightbulbFlashFill } from "react-icons/ri";
-import AddIdeaForm from "./AddIdeaForm";
 
 const AddIdea = () => {
   return (

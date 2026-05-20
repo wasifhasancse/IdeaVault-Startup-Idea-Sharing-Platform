@@ -15,7 +15,6 @@ import {
   FiSearch,
   FiTag,
   FiThumbsUp,
-  FiTrash2,
   FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";

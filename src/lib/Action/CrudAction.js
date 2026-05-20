@@ -1,9 +1,7 @@
 "use server";
 import { headers } from "next/headers";
-import { auth } from "../auth";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { toast } from "@heroui/react";
+import { auth } from "../auth";
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -21,13 +19,11 @@ export const GetIdeasById = async (id) => {
       headers: {
         authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   const data = await getData.json();
   return data;
 };
-
-
 
 export const AddIdeasPostAction = async (prevState, formData) => {
   // ── Server-side validation ──
@@ -87,13 +83,11 @@ export const AddIdeasPostAction = async (prevState, formData) => {
     body: JSON.stringify(ideasData),
   });
   const data = await postData.json();
-  console.log(data);
   if (data.insertedId) {
-    toast.success("Idea submitted successfully!");
-    revalidatePath("/ideas");
-    redirect("/ideas");
+    return { success: true, message: "Idea submitted successfully!" };
+  } else {
+    return { success: false, message: "Failed to submit Idea!" };
   }
-  return { success: true };
 };
 
 export const UpdateIdeasAction = async (formData, ideasId) => {
@@ -123,9 +117,10 @@ export const UpdateIdeasAction = async (formData, ideasId) => {
     },
   );
   const data = await updateData.json();
-  if (data.modifiedCount > 0) {
-    toast("Idea updated successfully!");
-    redirect("/my-ideas");
+  if (data.insertedId) {
+    return { success: true, message: "Idea submitted successfully!" };
+  } else {
+    return { success: false, message: "Failed to submit Idea!" };
   }
 };
 

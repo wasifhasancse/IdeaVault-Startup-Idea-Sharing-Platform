@@ -22,6 +22,7 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [imgError, setImgError] = useState(false);
+  const { data: session, isPending } = authClient.useSession();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -192,7 +193,7 @@ const UpdateProfile = () => {
                 <input
                   name="name"
                   type="text"
-                  value={name}
+                  defaultValue={session?.user?.name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Wasif Hasan"
                   className="w-full rounded-xl border border-[#5e41de]/20 bg-white/80 px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
@@ -211,7 +212,7 @@ const UpdateProfile = () => {
                 <input
                   name="image"
                   type="url"
-                  value={imageUrl}
+                  defaultValue={session?.user?.image}
                   onChange={handleImageChange}
                   placeholder="https://example.com/your-photo.jpg"
                   className="w-full rounded-xl border border-[#5e41de]/20 bg-white/80 px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
@@ -226,12 +227,13 @@ const UpdateProfile = () => {
 
               {/* Buttons */}
               <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-
-                <span onClick={() => {
+                <span
+                  onClick={() => {
                     setName("");
                     setImageUrl("");
                     setImgError(false);
-                  }}>
+                  }}
+                >
                   <PrimaryButton
                     type="reset"
                     label="Reset"
