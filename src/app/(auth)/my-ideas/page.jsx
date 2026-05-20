@@ -167,7 +167,7 @@ const MyIdeas = async () => {
 
         {/* ── Stats row ── */}
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4  backdrop-blur-sm shadow-xl shadow-[#5e41de]/8 dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/15">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <FiZap size={18} className="text-[#5e41de] dark:text-[#a78bfa]" />
             </span>
@@ -183,7 +183,7 @@ const MyIdeas = async () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4  backdrop-blur-sm shadow-xl shadow-[#5e41de]/8 dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/15">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <FiThumbsUp
                 size={18}
@@ -202,7 +202,7 @@ const MyIdeas = async () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 backdrop-blur-sm  shadow-xl shadow-[#5e41de]/8 dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/15">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <FiMessageSquare
                 size={18}
