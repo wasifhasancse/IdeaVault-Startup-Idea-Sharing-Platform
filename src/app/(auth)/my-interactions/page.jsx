@@ -1,3 +1,6 @@
+import { GetIdeasAction, GetMyIdeas } from "@/lib/Action/CrudAction";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -147,7 +150,16 @@ const STATS = [
   },
 ];
 
-const MyInteractions = () => {
+const MyInteractions = async() => {
+  const session  = await auth.api.getSession({ headers: await headers() });
+
+  const myIdeas = await GetMyIdeas(session?.userId);
+  const allExistingIdeas = await GetIdeasAction();
+console.log(allExistingIdeas);
+  const myCommentedIdeas = allExistingIdeas.filter(idea => idea.comments?.some(comment => comment.userInfo?.email === session?.user?.email));
+  console.log(myCommentedIdeas);
+    const totalUpvotes = myIdeas.reduce((sum, idea) => sum + (idea.upvotes || 0), 0);
+    const totalComments = myIdeas.reduce((sum, idea) => sum + (idea.comments?.length || 0), 0);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
@@ -206,49 +218,6 @@ const MyInteractions = () => {
           ))}
         </div>
 
-        {/* ── Filter bar ── */}
-        <div className="mb-7 rounded-2xl border border-[#5e41de]/12 bg-white/80 p-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/70 sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="relative min-w-0 flex-1">
-              <FiSearch
-                size={15}
-                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
-              />
-              <input
-                type="text"
-                placeholder="Search interactions by idea title or author…"
-                className="w-full rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-9 pr-4 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <FiCalendar size={13} className="shrink-0 text-[#5e41de]" />
-              <select className="rounded-xl border border-[#5e41de]/18 bg-white py-2.5 pl-3 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/12 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200">
-                <option>Newest First</option>
-                <option>Oldest First</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Tabs ── */}
-        <div className="mb-6 flex gap-1 rounded-2xl border border-[#5e41de]/12 bg-white/80 p-1.5 shadow-sm backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/70">
-          {/* Active tab — Upvoted */}
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#5e41de] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200">
-            <FiThumbsUp size={14} />
-            <span>Upvoted</span>
-            <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold">
-              {UPVOTED.length}
-            </span>
-          </button>
-          {/* Inactive tab — Commented */}
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-zinc-500 transition-all duration-200 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800/60">
-            <FiMessageSquare size={14} />
-            <span>Commented</span>
-            <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-              {COMMENTED.length}
-            </span>
-          </button>
-        </div>
 
         {/* ── Upvoted section ── */}
         <div className="mb-10">
@@ -352,17 +321,20 @@ const MyInteractions = () => {
               Ideas You&apos;ve Commented On
             </h2>
             <span className="rounded-full border border-[#5e41de]/20 bg-[#5e41de]/8 px-2.5 py-0.5 text-[11px] font-bold text-[#5e41de] dark:text-[#a78bfa]">
-              {COMMENTED.length}
+              {myCommentedIdeas.length}
             </span>
           </div>
 
           <div className="flex flex-col gap-4">
-            {COMMENTED.map((item) => {
+            {myCommentedIdeas.map((item, index) => {
+
+              const myComment = item.comments.find(comment => comment.userInfo?.email === session?.user?.email);
+
               const pillCls =
                 CATEGORY_PILL[item.category] ?? CATEGORY_PILL.Other;
               return (
                 <article
-                  key={item.id}
+                  key={index}
                   className="group overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#5e41de]/35 hover:shadow-xl hover:shadow-[#5e41de]/10 dark:border-zinc-700/60 dark:bg-zinc-900 dark:hover:border-[#5e41de]/45 sm:flex"
                 >
                   {/* Hover top bar */}
@@ -403,7 +375,7 @@ const MyInteractions = () => {
                         Your Comment
                       </span>
                       <p className="line-clamp-2 text-[12px] italic leading-relaxed text-zinc-600 dark:text-zinc-300">
-                        &ldquo;{item.commentText}&rdquo;
+                        &ldquo;{myComment?.comment}&rdquo;
                       </p>
                     </div>
 
@@ -411,18 +383,19 @@ const MyInteractions = () => {
                     <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">
                       <span className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-500">
                         <FiUser size={10} />
-                        {item.author}
+                        Posted By: {item?.userInfo?.name}
+                      </span>
+
+                      <span className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-500">
+                        <FiCalendar size={10} />
+                        {item.createTime}
                       </span>
                       <span className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-500">
                         <FiMessageSquare size={10} />
-                        {item.totalComments} comments
-                      </span>
-                      <span className="flex items-center gap-1 text-[11px] text-zinc-400 dark:text-zinc-500">
-                        <FiCalendar size={10} />
-                        {item.commentedAt}
+                        {item.comments.length} comments
                       </span>
                       <Link
-                        href={`/ideas/${item.ideaId}`}
+                        href={`/ideas/${item._id}`}
                         className="ml-auto flex items-center gap-1.5 rounded-xl border border-[#5e41de]/25 px-3 py-1.5 text-[11px] font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15"
                       >
                         <RiLightbulbFlashLine size={11} />
@@ -437,7 +410,7 @@ const MyInteractions = () => {
         </div>
 
         {/* Empty state (shown when both lists are empty) */}
-        {UPVOTED.length === 0 && COMMENTED.length === 0 && (
+        {myCommentedIdeas.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <RiLightbulbFlashLine
