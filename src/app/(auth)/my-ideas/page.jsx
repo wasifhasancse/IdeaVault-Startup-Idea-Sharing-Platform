@@ -1,4 +1,4 @@
-
+import DeleteButton from "@/components/Button/DeleteButton";
 import { GetMyIdeas } from "@/lib/Action/CrudAction";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -19,7 +19,6 @@ import {
   FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
-
 
 const CATEGORY_PILL = {
   Tech: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
@@ -54,10 +53,7 @@ const CATEGORY_BAR = {
 
 const MyIdeas = async () => {
   const { session } = await auth.api.getSession({ headers: await headers() });
-
   const myIdeas = await GetMyIdeas(session?.userId);
-  console.log(myIdeas);
-  console.log(myIdeas?.length);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
@@ -368,9 +364,8 @@ const MyIdeas = async () => {
                         <FiEdit3 size={12} />
                         Edit
                       </Link>
-                      <button className="flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 px-3 py-2 text-xs font-semibold text-rose-500 transition-all duration-200 hover:border-rose-300 hover:bg-rose-50 dark:border-rose-500/30 dark:text-rose-400 dark:hover:bg-rose-500/10">
-                        <FiTrash2 size={12} />
-                      </button>
+                      {/* <DeleteButton idea={idea} /> */}
+
                     </div>
                   </div>
                 </article>

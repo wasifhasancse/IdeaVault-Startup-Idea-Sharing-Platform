@@ -220,7 +220,7 @@ const AddIdea = async () => {
                   <div className="flex flex-col gap-1.5">
                     <FieldLabel icon={FiLayers}>Category</FieldLabel>
                     <select name="category" required className={inputCls}>
-                      <option value="" disabled defaultValue>
+                      <option value=""  defaultValue>
                         Select a category…
                       </option>
                       {CATEGORIES.map((cat) => (
