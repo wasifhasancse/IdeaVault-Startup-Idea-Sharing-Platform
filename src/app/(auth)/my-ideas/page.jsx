@@ -15,7 +15,7 @@ import {
   FiTag,
   FiThumbsUp,
   FiTrash2,
-  FiZap
+  FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
 
@@ -117,32 +117,12 @@ const CATEGORY_BAR = {
 const totalUpvotes = MY_IDEAS.reduce((s, i) => s + i.upvotes, 0);
 const totalComments = MY_IDEAS.reduce((s, i) => s + i.comments, 0);
 
-const STATS = [
-  {
-    label: "Total Ideas",
-    value: MY_IDEAS.length,
-    icon: FiZap,
-    tip: "Ideas you've submitted",
-  },
-  {
-    label: "Total Upvotes",
-    value: totalUpvotes,
-    icon: FiThumbsUp,
-    tip: "Community recognition",
-  },
-  {
-    label: "Comments",
-    value: totalComments,
-    icon: FiMessageSquare,
-    tip: "Discussions on your ideas",
-  },
-];
-
 const MyIdeas = async () => {
-  const {session} = await auth.api.getSession({ headers: await headers() });
-  console.log(session);
-  const myIdeas = await GetMyIdeas(session?.userId)
+  const { session } = await auth.api.getSession({ headers: await headers() });
+  // console.log(session);
+  const myIdeas = await GetMyIdeas(session?.userId);
   console.log(myIdeas);
+  console.log(myIdeas?.length);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
@@ -187,30 +167,60 @@ const MyIdeas = async () => {
 
         {/* ── Stats row ── */}
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {STATS.map(({ label, value, icon: Icon, tip }) => (
-            <div
-              key={label}
-              className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10"
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
-                <Icon
-                  size={18}
-                  className="text-[#5e41de] dark:text-[#a78bfa]"
-                />
-              </span>
-              <div>
-                <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
-                  {value}
-                </p>
-                <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
-                  {label}
-                </p>
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
-                  {tip}
-                </p>
-              </div>
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+              <FiZap size={18} className="text-[#5e41de] dark:text-[#a78bfa]" />
+            </span>
+            <div>
+              <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
+                {myIdeas?.length ?? 0}
+              </p>
+              <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
+                Total Ideas
+              </p>
+              <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                Ideas you&apos;ve submitted
+              </p>
             </div>
-          ))}
+          </div>
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+              <FiThumbsUp
+                size={18}
+                className="text-[#5e41de] dark:text-[#a78bfa]"
+              />
+            </span>
+            <div>
+              <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
+                {/* {idea?.upvotes ?? 0} */}
+              </p>
+              <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
+                Total Upvotes
+              </p>
+              <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                Community recognition
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm shadow-[#5e41de]/6 backdrop-blur-sm dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/10">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+              <FiMessageSquare
+                size={18}
+                className="text-[#5e41de] dark:text-[#a78bfa]"
+              />
+            </span>
+            <div>
+              <p className="text-2xl font-extrabold leading-none text-[#5e41de] dark:text-[#a78bfa]">
+                {/* {idea?.comments ?? 0} */}
+              </p>
+              <p className="mt-0.5 text-[12px] font-semibold text-zinc-700 dark:text-zinc-300">
+                Comments
+              </p>
+              <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                Comments on your ideas
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* ── Filter bar ── */}
@@ -278,14 +288,14 @@ const MyIdeas = async () => {
           <p className="mt-3 text-[11px] font-medium text-zinc-400 dark:text-zinc-500">
             Showing{" "}
             <span className="font-bold text-[#5e41de] dark:text-[#a78bfa]">
-              {MY_IDEAS.length}
+              {myIdeas?.length}
             </span>{" "}
-            {MY_IDEAS.length === 1 ? "idea" : "ideas"}
+            {myIdeas?.length === 1 ? "idea" : "ideas"}
           </p>
         </div>
 
         {/* ── Idea cards grid ── */}
-        {MY_IDEAS.length === 0 ? (
+        {myIdeas?.length === 0 ? (
           /* Empty state */
           <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
@@ -313,13 +323,14 @@ const MyIdeas = async () => {
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {MY_IDEAS.map((idea) => {
+            {myIdeas?.map((idea) => {
+              console.log(idea);
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;
               const barCls = CATEGORY_BAR[idea.category] ?? CATEGORY_BAR.Other;
               return (
                 <article
-                  key={idea.id}
+                  key={idea._id}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#5e41de]/35 hover:shadow-xl hover:shadow-[#5e41de]/10 dark:border-zinc-700/60 dark:bg-zinc-900 dark:hover:border-[#5e41de]/45"
                 >
                   {/* Hover accent bar */}
@@ -329,10 +340,10 @@ const MyIdeas = async () => {
                   <div
                     className={`relative h-44 w-full shrink-0 overflow-hidden bg-linear-to-br ${barCls}`}
                   >
-                    {idea.imageUrl && (
+                    {idea?.imageUrl && (
                       <Image
-                        src={idea.imageUrl}
-                        alt={idea.title}
+                        src={idea?.imageUrl}
+                        alt={idea?.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
@@ -344,18 +355,18 @@ const MyIdeas = async () => {
                     <span
                       className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm ${pillCls}`}
                     >
-                      {idea.category}
+                      {idea?.category}
                     </span>
 
                     {/* Status badge */}
                     <span
                       className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm ${
-                        idea.status === "published"
+                        idea?.status === "published"
                           ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300"
                           : "bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300"
                       }`}
                     >
-                      {idea.status}
+                      {idea?.status}
                     </span>
                   </div>
 
@@ -363,18 +374,18 @@ const MyIdeas = async () => {
                   <div className="flex flex-1 flex-col gap-3 px-5 pb-4 pt-4">
                     {/* Title */}
                     <h3 className="line-clamp-2 text-[15px] font-bold leading-snug text-zinc-800 transition-colors duration-200 group-hover:text-[#5e41de] dark:text-zinc-100 dark:group-hover:text-[#a78bfa]">
-                      {idea.title}
+                      {idea?.title}
                     </h3>
 
                     {/* Description */}
                     <p className="line-clamp-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                      {idea.shortDescription}
+                      {idea?.shortDescription}
                     </p>
 
                     {/* Tags */}
-                    {idea.tags.length > 0 && (
+                    {idea?.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
-                        {idea.tags.map((tag) => (
+                        {idea?.tags.map((tag) => (
                           <span
                             key={tag}
                             className="inline-flex items-center gap-1 rounded-lg border border-[#5e41de]/15 bg-[#5e41de]/6 px-2 py-0.5 text-[10px] font-semibold text-[#5e41de] dark:border-[#5e41de]/25 dark:bg-[#5e41de]/15 dark:text-[#a78bfa]"
@@ -390,33 +401,33 @@ const MyIdeas = async () => {
                     <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-zinc-100 pt-3 text-[11px] text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
                       <span className="flex items-center gap-1">
                         <FiCalendar size={10} />
-                        {idea.createdAt}
+                        {idea?.createTime}
                       </span>
                       <span className="flex items-center gap-1">
                         <FiThumbsUp size={10} />
-                        {idea.upvotes} upvotes
+                        {idea?.upvotes} upvotes
                       </span>
                       <span className="flex items-center gap-1">
                         <FiMessageSquare size={10} />
-                        {idea.comments} comments
+                        {idea?.comments} comments
                       </span>
                       <span className="ml-auto flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400">
                         <FiDollarSign size={10} />
-                        {idea.estimatedBudget}
+                        {idea?.estimatedBudget}
                       </span>
                     </div>
 
                     {/* Action buttons */}
                     <div className="mt-1 flex items-center gap-2">
                       <Link
-                        href={`/ideas/${idea.id}`}
+                        href={`/ideas/${idea._id}`}
                         className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#5e41de]/25 py-2 text-xs font-semibold text-[#5e41de] transition-all duration-200 hover:border-[#5e41de]/50 hover:bg-[#5e41de]/8 dark:border-[#5e41de]/35 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/15"
                       >
                         <FiEye size={12} />
                         View
                       </Link>
                       <Link
-                        href={`/ideas/${idea.id}/edit`}
+                        href={`/ideas/${idea._id}/edit`}
                         className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-zinc-200 py-2 text-xs font-semibold text-zinc-600 transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                       >
                         <FiEdit3 size={12} />
