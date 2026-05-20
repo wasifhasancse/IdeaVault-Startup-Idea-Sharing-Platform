@@ -1,17 +1,25 @@
 "use client";
-import { AlertDialog, Button } from "@heroui/react";
-import { FiTrash2 } from "react-icons/fi";
+import { DeleteIdeasAction } from "@/lib/Action/CrudAction";
+import { AlertDialog, Button, toast } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 const DeleteButton = ({ idea }) => {
-  console.log(idea);
+  const router = useRouter();
   const manageDelete = async () => {
-    // await DeleteIdeasAction(idea._id);
+    const comfirm = await DeleteIdeasAction(idea._id);
+    if (comfirm?.success) {
+      toast.success(comfirm.message);
+      router.refresh();
+    }
   };
   return (
     <AlertDialog>
-      <button className="flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 px-3 py-2 text-xs font-semibold text-rose-500 transition-all duration-200 hover:border-rose-300 hover:bg-rose-50 dark:border-rose-500/30 dark:text-rose-400 dark:hover:bg-rose-500/10 cursor-pointer">
-        <FiTrash2 size={12} />
-      </button>
+      <Button
+        variant="danger"
+        className="flex items-center justify-center gap-1.5 rounded-xl border border-rose-200 px-3 py-2 text-xs font-semibold text-rose-200 hover:text-rose-600 transition-all duration-200 hover:border-rose-300 hover:bg-rose-50 dark:border-rose-500/30 dark:text-rose-200 dark:hover:bg-rose-500/10 cursor-pointer"
+      >
+        Delete Project{" "}
+      </Button>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
           <AlertDialog.Dialog className="sm:max-w-100">
@@ -24,8 +32,8 @@ const DeleteButton = ({ idea }) => {
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently delete <strong>{idea?.title}</strong> and all of
-                its data. This action cannot be undone.
+                This will permanently delete <strong>{idea?.title}</strong> and
+                all of its data. This action cannot be undone.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -33,7 +41,7 @@ const DeleteButton = ({ idea }) => {
                 Cancel
               </Button>
               <Button
-                onClick={() => manageDelete()}
+                onClick={() => manageDelete(idea._id)}
                 slot="close"
                 variant="danger"
               >

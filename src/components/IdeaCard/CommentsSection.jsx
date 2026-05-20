@@ -1,13 +1,21 @@
+import { CommentIdeasAction } from "@/lib/Action/CrudAction";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { FiMessageCircle, FiSend } from "react-icons/fi";
 
-export default async function CommentsSection() {
+export default async function CommentsSection({ ideasDetails }) {
+  const { comments,userInfo } = ideasDetails;
+  console.log(ideasDetails);
   const session = await auth.api.getSession({ headers: await headers() });
   console.log(session);
 
-  /* ── Actions ── */
+  const formAction = async (formData) => {
+    'use server';
+
+    await CommentIdeasAction(formData, ideasDetails?._id);
+    console.log(CommentIdeasAction);
+}
 
   return (
     <section className="mt-12">
@@ -25,13 +33,13 @@ export default async function CommentsSection() {
               Discussion
             </h2>
             <p className="text-xs text-zinc-400 dark:text-zinc-500">
-              {/* {comments.length} {comments.length === 1 ? "comment" : "comments"} */}
+              {comments.length} {comments.length === 1 ? "comment" : "comments"}
             </p>
           </div>
         </div>
         {/* count pill */}
         <span className="rounded-full bg-[#5e41de]/8 px-3 py-1 text-xs font-semibold text-[#5e41de] dark:bg-[#5e41de]/15 dark:text-[#a78bfa]">
-          {/* {comments.length} */}
+          {comments.length}
         </span>
       </div>
 
@@ -63,10 +71,11 @@ export default async function CommentsSection() {
           </div>
         </div>
 
-        <form className="flex flex-col">
+        <form action={formAction} className="flex flex-col">
           <textarea
             placeholder="Share your thoughts, feedback, or questions…"
             rows={3}
+            name="comment"
             className="w-full resize-none bg-transparent px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none dark:text-zinc-200 dark:placeholder-zinc-500"
           />
           <div className="flex items-center justify-between border-t border-zinc-100 px-4 py-3 dark:border-zinc-800">

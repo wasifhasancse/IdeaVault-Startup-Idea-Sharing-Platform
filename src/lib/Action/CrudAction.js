@@ -1,8 +1,7 @@
 "use server";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { auth } from "../auth";
-import { id } from "date-fns/locale";
+import { revalidatePath } from "next/cache";
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -120,11 +119,52 @@ export const UpdateIdeasAction = async (formData, ideasId) => {
     },
   );
   const data = await updateData.json();
-  if (data.insertedId) {
-    return { success: true, message: "Idea submitted successfully!" };
+  if (data.modifiedCount > 0) {
+    return { success: true, message: "Idea updated successfully!" };
   } else {
-    return { success: false, message: "Failed to submit Idea!" };
+    return { success: false, message: "Failed to update Idea!" };
   }
+};
+
+// Comments action:
+export const CommentIdeasAction = async (formData, ideasId) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
+  // in ideasData.comments = []; we will push the new comment with user info and timestamp
+  const { comment } = Object.fromEntries(formData.entries());
+
+  const commentData = {
+    comment,
+    userInfo: session.user,
+    commentedAt: new Date().toLocaleString("us-EN", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+
+  const existingRes = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    { headers: { authorization: `Bearer ${token}` } },
+  );
+  const ideasData = await existingRes.json();
+  ideasData.comments = [...(ideasData.comments || []), commentData];
+
+
+  const updateData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideasId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ideasData),
+    },
+  );
+  const data = await updateData.json();
 };
 
 export const DeleteIdeasAction = async (ideasId) => {
@@ -136,11 +176,11 @@ export const DeleteIdeasAction = async (ideasId) => {
     },
   );
   const data = await res.json();
-  // revalidation
-  // if (data.deletedCount > 0) {
-  //   revalidatePath("/users");
-  // }
-  return data;
+  if (data.deletedCount > 0) {
+    return { success: true, message: "Idea deleted successfully!" };
+  } else {
+    return { success: false, message: "Failed to delete Idea!" };
+  }
 };
 
 export const GetMyIdeas = async (id) => {

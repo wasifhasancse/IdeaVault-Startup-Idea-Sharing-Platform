@@ -62,7 +62,7 @@ const IdeaCard = ({ idea }) => {
       <div className="relative h-44 w-full shrink-0 overflow-hidden">
         <Image
           src={idea?.imageUrl}
-          alt={idea?.title}
+          alt={idea?.title|| "Idea Image"}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           height={300}
           width={400}

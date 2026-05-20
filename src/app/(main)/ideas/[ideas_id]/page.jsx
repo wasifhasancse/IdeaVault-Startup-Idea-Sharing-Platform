@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -391,7 +390,7 @@ const IdeasDetailsPage = async ({ params }) => {
         <div className="my-10 h-px w-full bg-linear-to-r from-transparent via-zinc-200 to-transparent dark:via-[#5e41de]/30" />
 
         {/* ── Comments ── */}
-        <CommentsSection />
+        <CommentsSection ideasDetails={ideasDetails} />
       </div>
     </div>
   );

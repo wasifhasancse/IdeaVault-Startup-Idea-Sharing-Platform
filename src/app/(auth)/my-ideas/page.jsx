@@ -363,7 +363,7 @@ const MyIdeas = async () => {
                         <FiEdit3 size={12} />
                         Edit
                       </Link>
-                      {/* <DeleteButton idea={idea} /> */}
+                      <DeleteButton idea={idea} />
 
                     </div>
                   </div>
