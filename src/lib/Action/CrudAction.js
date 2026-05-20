@@ -2,6 +2,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "../auth";
+import { id } from "date-fns/locale";
 
 export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const getData = await fetch(
@@ -73,6 +74,8 @@ export const AddIdeasPostAction = async (prevState, formData) => {
     minute: "2-digit",
   });
   ideasData.userInfo = session.user;
+  ideasData.likes = 0;
+  ideasData.comments = [];
 
   const postData = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
     method: "POST",

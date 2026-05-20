@@ -15,8 +15,8 @@ import {
 } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 import { TbCategoryFilled } from "react-icons/tb";
-import CommentsSection from "./CommentsSection";
 import { GetIdeasById } from "@/lib/Action/CrudAction";
+import CommentsSection from "@/components/IdeaCard/CommentsSection";
 
 const IdeasDetailsPage = async ({ params }) => {
   const { ideas_id } = await params;
