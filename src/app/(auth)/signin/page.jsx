@@ -186,12 +186,12 @@ export default function SignIn() {
                   <FieldError className="mt-1 text-xs text-red-500" />
                 </TextField>
 
-                <button
-                  type="button"
+                <Link
+                  href="/forget-password"
                   className="-mt-2 self-start text-xs font-semibold text-[#5e41de] underline-offset-4 transition hover:underline hover:text-[#4930b8] dark:text-[#a78bfa]"
                 >
                   Forgot Password?
-                </button>
+                </Link>
 
                 <button
                   type="submit"
