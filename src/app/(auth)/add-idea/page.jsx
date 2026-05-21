@@ -2,6 +2,12 @@ import AddIdeaForm from "@/components/Operations/AddIdeaForm";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
+export const metadata = {
+  title: "Add Idea",
+  description:
+    "Share your startup idea with the IdeaVault community and get feedback from fellow innovators.",
+};
+
 const AddIdea = () => {
   return (
     <section className="relative min-h-[calc(100vh-64px)] overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">

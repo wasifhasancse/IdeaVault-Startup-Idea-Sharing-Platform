@@ -1,10 +1,8 @@
+import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Navbar/Navbar";
+import { Toast } from "@heroui/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar/Navbar";
-import BackToTop from "@/components/BackToTop/BackToTop";
-import { Toast } from "@heroui/react";
-import Footer from "@/components/Footer/Footer";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "IdeaVault – Startup Idea Sharing Platform",
-  description: "Discover and share innovative startup ideas on IdeaVault, the ultimate platform for entrepreneurs and innovators. Join our community to explore, discuss, and collaborate on groundbreaking concepts that can shape the future of business. Whether you're an aspiring founder or a seasoned entrepreneur, IdeaVault is your go-to destination for inspiration and connection in the world of startups.",
+  title: {
+    template: "%s | IdeaVault",
+    default: "IdeaVault – Startup Idea Sharing Platform",
+  },
+  description:
+    "Discover and share innovative startup ideas on IdeaVault, the ultimate platform for entrepreneurs and innovators. Join our community to explore, discuss, and collaborate on groundbreaking concepts that can shape the future of business. Whether you're an aspiring founder or a seasoned entrepreneur, IdeaVault is your go-to destination for inspiration and connection in the world of startups.",
 };
 
 export default function RootLayout({ children }) {
@@ -31,7 +33,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         {children}
-        <Footer/>
+        <Footer />
         <Toast.Provider />
       </body>
     </html>

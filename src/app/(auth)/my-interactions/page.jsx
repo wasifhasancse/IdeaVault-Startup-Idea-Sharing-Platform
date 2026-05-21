@@ -13,6 +13,12 @@ import {
 import { MdOutlineInterests } from "react-icons/md";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
 
+export const metadata = {
+  title: "My Interactions",
+  description:
+    "View your votes, comments, and other interactions on IdeaVault.",
+};
+
 /* ── Static seed data ── */
 const UPVOTED = [
   {

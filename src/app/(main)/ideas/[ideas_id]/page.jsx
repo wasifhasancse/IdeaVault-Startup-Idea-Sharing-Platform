@@ -1,3 +1,5 @@
+import CommentsSection from "@/components/IdeaCard/CommentsSection";
+import { GetIdeasById } from "@/lib/Action/CrudAction";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -14,8 +16,24 @@ import {
 } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 import { TbCategoryFilled } from "react-icons/tb";
-import { GetIdeasById } from "@/lib/Action/CrudAction";
-import CommentsSection from "@/components/IdeaCard/CommentsSection";
+
+export async function generateMetadata({ params }) {
+  const { ideas_id } = await params;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${ideas_id}`,
+      { cache: "no-store" },
+    );
+    const idea = await res.json();
+    return {
+      title: idea?.title ?? "Idea Details",
+      description:
+        idea?.shortDescription ?? "View this startup idea on IdeaVault.",
+    };
+  } catch {
+    return { title: "Idea Details" };
+  }
+}
 
 const IdeasDetailsPage = async ({ params }) => {
   const { ideas_id } = await params;

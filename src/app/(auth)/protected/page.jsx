@@ -2,6 +2,10 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
 import { FiHome, FiLock, FiLogIn } from "react-icons/fi";
 
+export const metadata = {
+  title: "Access Restricted",
+};
+
 const ProtectedRoute = async ({ searchParams }) => {
   const { redirect } = await searchParams;
   const signInHref = redirect

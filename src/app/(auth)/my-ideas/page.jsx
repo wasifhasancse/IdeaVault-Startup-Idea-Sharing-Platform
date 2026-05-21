@@ -9,15 +9,19 @@ import {
   FiDollarSign,
   FiEdit3,
   FiEye,
-  FiLayers,
   FiMessageSquare,
   FiPlus,
-  FiSearch,
   FiTag,
   FiThumbsUp,
-  FiZap,
+  FiZap
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
+
+export const metadata = {
+  title: "My Ideas",
+  description:
+    "Manage and track all the startup ideas you have submitted on IdeaVault.",
+};
 
 const CATEGORY_PILL = {
   Tech: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
@@ -53,8 +57,14 @@ const CATEGORY_BAR = {
 const MyIdeas = async () => {
   const { session } = await auth.api.getSession({ headers: await headers() });
   const myIdeas = await GetMyIdeas(session?.userId);
-  const totalUpvotes = myIdeas?.reduce((sum, idea) => sum + (idea.upvotes || 0), 0);
-  const totalComments = myIdeas?.reduce((sum, idea) => sum + (idea.comments?.length || 0), 0);
+  const totalUpvotes = myIdeas?.reduce(
+    (sum, idea) => sum + (idea.upvotes || 0),
+    0,
+  );
+  const totalComments = myIdeas?.reduce(
+    (sum, idea) => sum + (idea.comments?.length || 0),
+    0,
+  );
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
@@ -155,7 +165,6 @@ const MyIdeas = async () => {
           </div>
         </div>
 
-
         {/* ── Idea cards grid ── */}
         {myIdeas?.length === 0 ? (
           /* Empty state */
@@ -185,7 +194,7 @@ const MyIdeas = async () => {
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {myIdeas?.map((idea) => {
+            {myIdeas?.map((idea) => {
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;
               const barCls = CATEGORY_BAR[idea.category] ?? CATEGORY_BAR.Other;
@@ -295,7 +304,6 @@ const MyIdeas = async () => {
                         Edit
                       </Link>
                       <DeleteButton idea={idea} />
-
                     </div>
                   </div>
                 </article>

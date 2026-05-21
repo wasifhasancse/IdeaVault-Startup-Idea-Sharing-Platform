@@ -2,6 +2,10 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
 import { FiCompass, FiHome, FiLogIn } from "react-icons/fi";
 
+export const metadata = {
+  title: "Page Not Found",
+};
+
 const NotFound = () => {
   return (
     <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 px-4 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5">

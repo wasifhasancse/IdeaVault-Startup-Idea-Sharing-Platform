@@ -4,20 +4,26 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FiCalendar,
-  FiChevronRight,
-  FiEdit3,
-  FiMessageSquare,
-  FiShield,
-  FiThumbsUp,
-  FiZap,
+    FiCalendar,
+    FiChevronRight,
+    FiEdit3,
+    FiMessageSquare,
+    FiShield,
+    FiThumbsUp,
+    FiZap,
 } from "react-icons/fi";
 import {
-  MdOutlineExplore,
-  MdOutlineInterests,
-  MdOutlineTipsAndUpdates,
+    MdOutlineExplore,
+    MdOutlineInterests,
+    MdOutlineTipsAndUpdates,
 } from "react-icons/md";
 import { RiLightbulbFlashFill } from "react-icons/ri";
+
+export const metadata = {
+  title: "Profile",
+  description:
+    "Manage your IdeaVault profile, view your stats, and access your ideas.",
+};
 
 const Profile = async () => {
   const session = await auth.api.getSession({
