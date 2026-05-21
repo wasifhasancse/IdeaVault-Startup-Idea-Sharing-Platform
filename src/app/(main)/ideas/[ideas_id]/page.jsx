@@ -155,7 +155,7 @@ const IdeasDetailsPage = async ({ params }) => {
                   AUDIENCE
                 </p>
                 <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
-                  {targetAudience.length} groups
+                  {targetAudience?.length} groups
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ const IdeasDetailsPage = async ({ params }) => {
                   TAGS
                 </p>
                 <p className="truncate text-[13px] font-bold text-zinc-800 dark:text-zinc-100">
-                  {tags.length} tags
+                  {tags?.length} tags
                 </p>
               </div>
             </div>
@@ -265,7 +265,7 @@ const IdeasDetailsPage = async ({ params }) => {
                 <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full">
                   {userInfo?.image ? (
                     <Image
-                      src={userInfo.image}
+                      src={userInfo?.image}
                       alt={userInfo?.name || "Author"}
                       fill
                       className="object-cover"
@@ -343,7 +343,7 @@ const IdeasDetailsPage = async ({ params }) => {
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {tags.map((tag) => (
+                {tags?.map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1 rounded-lg border border-[#5e41de]/15 bg-[#5e41de]/6 px-2.5 py-1 text-xs font-semibold text-[#5e41de] dark:border-[#5e41de]/25 dark:bg-[#5e41de]/15 dark:text-[#a78bfa]"
@@ -367,7 +367,7 @@ const IdeasDetailsPage = async ({ params }) => {
                 </p>
               </div>
               <div className="flex flex-col gap-1.5">
-                {targetAudience.map((item) => (
+                {targetAudience?.map((item) => (
                   <div
                     key={item}
                     className="flex items-center gap-2 rounded-lg bg-zinc-100/60 px-3 py-2 dark:border dark:border-[#5e41de]/10 dark:bg-[#5e41de]/8"

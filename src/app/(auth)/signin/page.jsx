@@ -11,15 +11,18 @@ import {
 } from "@heroui/react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { ImPower } from "react-icons/im";
 import { IoMdLogIn } from "react-icons/io";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
-export default function SignIn() {
+function SignInForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -31,7 +34,7 @@ export default function SignIn() {
       const { data, error } = await authClient.signIn.email({
         email,
         password,
-        callbackURL: "/",
+        callbackURL: redirectTo,
       });
       if (data?.token) {
         toast.success("Signed in successfully!");
@@ -46,7 +49,10 @@ export default function SignIn() {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: redirectTo,
+    });
   };
 
   return (
@@ -223,5 +229,13 @@ export default function SignIn() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
   );
 }

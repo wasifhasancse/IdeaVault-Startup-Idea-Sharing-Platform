@@ -2,7 +2,12 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
 import { FiHome, FiLock, FiLogIn } from "react-icons/fi";
 
-const ProtectedRoute = () => {
+const ProtectedRoute = async ({ searchParams }) => {
+  const { redirect } = await searchParams;
+  const signInHref = redirect
+    ? `/signin?redirect=${encodeURIComponent(redirect)}`
+    : "/signin";
+
   return (
     <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 px-4 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5">
       {/* Background blobs */}
@@ -43,7 +48,7 @@ const ProtectedRoute = () => {
         {/* CTA buttons */}
         <div className="flex w-full flex-col gap-3 sm:flex-row">
           <Link
-            href="/signin"
+            href={signInHref}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#5e41de] px-6 py-3 text-sm font-bold text-white shadow-md shadow-[#5e41de]/30 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-lg hover:shadow-[#5e41de]/30"
           >
             <FiLogIn size={15} />
