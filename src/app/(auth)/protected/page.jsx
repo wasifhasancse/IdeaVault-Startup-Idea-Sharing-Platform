@@ -40,7 +40,7 @@ const ProtectedRoute = async ({ searchParams }) => {
           <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-3xl">
             Access{" "}
             <span className="text-[#5e41de] dark:text-[#a78bfa]">
-              Restricted
+              Restricted!
             </span>
           </h1>
           <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
