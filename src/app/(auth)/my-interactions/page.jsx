@@ -242,49 +242,50 @@ const MyInteractions = async () => {
         </div>
 
         {/* ── Upvoted section ── */}
-        {myUpvotedIdeas.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
-              <RiLightbulbFlashLine
-                size={36}
-                className="text-[#5e41de]/50 dark:text-[#a78bfa]/50"
+        <div className="mb-10">
+          {/* Section title */}
+          <div className="mb-4 flex items-center gap-3">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+              <FiThumbsUp
+                size={13}
+                className="text-[#5e41de] dark:text-[#a78bfa]"
               />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-zinc-700 dark:text-zinc-300">
-                No interactions yet
-              </h3>
-              <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
-                Start exploring ideas and engage with the community!
-              </p>
-            </div>
-            <Link
-              href="/ideas"
-              className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-[#5e41de] to-[#7c5ce7] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#5e41de]/30 transition hover:brightness-110"
-            >
-              <RiLightbulbFlashFill size={14} />
-              Explore Ideas
-            </Link>
+            </span>
+            <h2 className="text-base font-bold text-zinc-800 dark:text-zinc-100">
+              Ideas You&apos;ve Upvoted
+            </h2>
+            <span className="rounded-full border border-[#5e41de]/20 bg-[#5e41de]/8 px-2.5 py-0.5 text-[11px] font-bold text-[#5e41de] dark:text-[#a78bfa]">
+              {myUpvotedIdeas.length}
+            </span>
           </div>
-        ) : (
-          <div className="mb-10">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
-                <FiThumbsUp
-                  size={13}
-                  className="text-[#5e41de] dark:text-[#a78bfa]"
-                />
-              </span>
-              <h2 className="text-base font-bold text-zinc-800 dark:text-zinc-100">
-                Ideas You&apos;ve Upvoted
-              </h2>
-              <span className="rounded-full border border-[#5e41de]/20 bg-[#5e41de]/8 px-2.5 py-0.5 text-[11px] font-bold text-[#5e41de] dark:text-[#a78bfa]">
-                {UPVOTED.length}
-              </span>
-            </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {UPVOTED.map((item) => {
+          {myUpvotedIdeas.length === 0 ? (
+            <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-16 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+                <FiThumbsUp
+                  size={28}
+                  className="text-[#5e41de]/50 dark:text-[#a78bfa]/50"
+                />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-zinc-700 dark:text-zinc-300">
+                  No upvotes yet
+                </h3>
+                <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
+                  Upvote ideas you believe in and they&apos;ll appear here.
+                </p>
+              </div>
+              <Link
+                href="/ideas"
+                className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-[#5e41de] to-[#7c5ce7] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#5e41de]/30 transition hover:brightness-110"
+              >
+                <RiLightbulbFlashFill size={14} />
+                Explore Ideas
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {myUpvotedIdeas.map((item) => {
                 const pillCls =
                   CATEGORY_PILL[item.category] ?? CATEGORY_PILL.Other;
                 return (
@@ -307,7 +308,6 @@ const MyInteractions = async () => {
                       >
                         {item.category}
                       </span>
-                      {/* Upvote badge */}
                       <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-[#5e41de] px-2.5 py-1 text-[10px] font-bold text-white shadow-md">
                         <FiThumbsUp size={9} />
                         Upvoted
@@ -349,51 +349,52 @@ const MyInteractions = async () => {
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Commented section */}
-        {myCommentedIdeas.length === 0 ? (
-          <div className="mt-6 flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
-              <RiLightbulbFlashLine
-                size={36}
-                className="text-[#5e41de]/50 dark:text-[#a78bfa]/50"
+        <div className="mb-10">
+          {/* Section title */}
+          <div className="mb-4 flex items-center gap-3">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+              <FiMessageSquare
+                size={13}
+                className="text-[#5e41de] dark:text-[#a78bfa]"
               />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-zinc-700 dark:text-zinc-300">
-                No interactions yet
-              </h3>
-              <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
-                Start exploring ideas and engage with the community!
-              </p>
-            </div>
-            <Link
-              href="/ideas"
-              className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-[#5e41de] to-[#7c5ce7] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#5e41de]/30 transition hover:brightness-110"
-            >
-              <RiLightbulbFlashFill size={14} />
-              Explore Ideas
-            </Link>
+            </span>
+            <h2 className="text-base font-bold text-zinc-800 dark:text-zinc-100">
+              Ideas You&apos;ve Commented On
+            </h2>
+            <span className="rounded-full border border-[#5e41de]/20 bg-[#5e41de]/8 px-2.5 py-0.5 text-[11px] font-bold text-[#5e41de] dark:text-[#a78bfa]">
+              {myCommentedIdeas.length}
+            </span>
           </div>
-        ) : (
-          <div className="mt-6 mb-10">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
-                <FiMessageSquare
-                  size={13}
-                  className="text-[#5e41de] dark:text-[#a78bfa]"
-                />
-              </span>
-              <h2 className="text-base font-bold text-zinc-800 dark:text-zinc-100">
-                Ideas You&apos;ve Commented On
-              </h2>
-              <span className="rounded-full border border-[#5e41de]/20 bg-[#5e41de]/8 px-2.5 py-0.5 text-[11px] font-bold text-[#5e41de] dark:text-[#a78bfa]">
-                {myCommentedIdeas.length}
-              </span>
-            </div>
 
+          {myCommentedIdeas.length === 0 ? (
+            <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-16 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
+                <FiMessageSquare
+                  size={28}
+                  className="text-[#5e41de]/50 dark:text-[#a78bfa]/50"
+                />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-zinc-700 dark:text-zinc-300">
+                  No comments yet
+                </h3>
+                <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
+                  Join the conversation on ideas and they&apos;ll appear here.
+                </p>
+              </div>
+              <Link
+                href="/ideas"
+                className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-[#5e41de] to-[#7c5ce7] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#5e41de]/30 transition hover:brightness-110"
+              >
+                <RiLightbulbFlashFill size={14} />
+                Explore Ideas
+              </Link>
+            </div>
+          ) : (
             <div className="flex flex-col gap-4">
               {myCommentedIdeas.map((item, index) => {
                 const myComment = item.comments.find(
@@ -477,8 +478,8 @@ const MyInteractions = async () => {
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Bottom accent line */}
         <div className="mt-4 h-px w-full bg-linear-to-r from-transparent via-[#5e41de]/50 to-transparent" />

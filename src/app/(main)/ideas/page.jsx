@@ -50,21 +50,21 @@ const Ideas = async ({ searchParams }) => {
         {/* ── Filter bar ── */}
         <div className="mb-8 rounded-2xl border border-[#5e41de]/15 bg-white/85 shadow-sm shadow-[#5e41de]/8 backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/75">
           {/* Main filter row */}
-          <div className="flex flex-col gap-3 p-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:p-5">
+          <div className="flex flex-col gap-3 p-4 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3 lg:p-5">
             {/* Search — takes remaining space */}
             <SearchingMethod />
 
-            {/* Vertical divider (desktop) */}
-            <div className="hidden h-8 w-px bg-[#5e41de]/15 dark:bg-[#5e41de]/20 sm:block" />
+            {/* Vertical divider (desktop only) */}
+            <div className="hidden h-8 w-px bg-[#5e41de]/15 dark:bg-[#5e41de]/20 lg:block" />
 
             {/* Category */}
             <FilterCategory />
 
-            {/* Vertical divider (desktop) */}
-            <div className="hidden h-8 w-px bg-[#5e41de]/15 dark:bg-[#5e41de]/20 sm:block" />
+            {/* Vertical divider (desktop only) */}
+            <div className="hidden h-8 w-px bg-[#5e41de]/15 dark:bg-[#5e41de]/20 lg:block" />
 
             {/* Date range */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <FiCalendar
                 size={13}
                 className="shrink-0 text-[#5e41de] dark:text-[#a78bfa]"
@@ -72,13 +72,13 @@ const Ideas = async ({ searchParams }) => {
               <input
                 type="date"
                 title="From date"
-                className="rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-3 pr-3 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200"
+                className="min-w-0 flex-1 rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-3 pr-3 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 sm:flex-none dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200"
               />
               <span className="text-xs font-medium text-zinc-400">–</span>
               <input
                 type="date"
                 title="To date"
-                className="rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-3 pr-3 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200"
+                className="min-w-0 flex-1 rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-3 pr-3 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 sm:flex-none dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200"
               />
             </div>
 

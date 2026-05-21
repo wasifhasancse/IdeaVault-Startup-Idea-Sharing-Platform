@@ -5,15 +5,15 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FiCalendar,
-  FiDollarSign,
-  FiEdit3,
-  FiEye,
-  FiMessageSquare,
-  FiPlus,
-  FiTag,
-  FiThumbsUp,
-  FiZap
+    FiCalendar,
+    FiDollarSign,
+    FiEdit3,
+    FiEye,
+    FiMessageSquare,
+    FiPlus,
+    FiTag,
+    FiThumbsUp,
+    FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashFill, RiLightbulbFlashLine } from "react-icons/ri";
 
@@ -108,7 +108,7 @@ const MyIdeas = async () => {
         </div>
 
         {/* ── Stats row ── */}
-        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex items-center gap-4 rounded-2xl border border-white/70 bg-white/70 px-5 py-4  backdrop-blur-sm shadow-xl shadow-[#5e41de]/8 dark:border-white/5 dark:bg-zinc-900/60 dark:shadow-[#5e41de]/15">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <FiZap size={18} className="text-[#5e41de] dark:text-[#a78bfa]" />
@@ -193,7 +193,7 @@ const MyIdeas = async () => {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {myIdeas?.map((idea) => {
               const pillCls =
                 CATEGORY_PILL[idea.category] ?? CATEGORY_PILL.Other;

@@ -40,7 +40,7 @@ const FilterCategory = () => {
       <select
         value={currentCategory}
         onChange={manageFilter}
-        className="appearance-none rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-8 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200 cursor-pointer"
+        className="w-full appearance-none rounded-xl border border-[#5e41de]/20 bg-white/90 py-2.5 pl-8 pr-8 text-sm text-zinc-700 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 lg:w-auto dark:border-[#5e41de]/25 dark:bg-zinc-800/70 dark:text-zinc-200 cursor-pointer"
       >
         <option value="">All Categories</option>
         {CategoryData.map((category) => (

@@ -1,112 +1,20 @@
 import UpdateForm from "@/components/Operations/UpdateForm";
-import { GetIdeasById, UpdateIdeasAction } from "@/lib/Action/CrudAction";
+import { GetIdeasById } from "@/lib/Action/CrudAction";
 import { auth } from "@/lib/auth";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-  FiAlertCircle,
-  FiBookOpen,
-  FiDollarSign,
-  FiImage,
-  FiLayers,
-  FiTag,
-  FiTarget,
-  FiType,
-  FiZap,
-} from "react-icons/fi";
-import { RiLightbulbFlashFill } from "react-icons/ri";
-
-const CATEGORIES = [
-  "Tech",
-  "Health",
-  "AI",
-  "Education",
-  "Finance",
-  "Environment",
-  "Social",
-  "Entertainment",
-  "Retail",
-  "Other",
-];
-
-const TAGS = [
-  "MVP",
-  "B2C",
-  "B2B",
-  "SaaS",
-  "Mobile App",
-  "Open Source",
-  "Marketplace",
-  "Blockchain",
-  "Hardware",
-  "Sustainability",
-  "EdTech",
-  "FinTech",
-];
-
-const TARGET_AUDIENCES = [
-  "Students",
-  "Entrepreneurs",
-  "Developers",
-  "Healthcare Professionals",
-  "Small Businesses",
-  "Enterprise",
-  "General Public",
-  "Researchers",
-  "Creators",
-  "Investors",
-];
-
-const inputCls =
-  "w-full rounded-xl border border-[#5e41de]/20 bg-white/80 px-4 py-3 text-sm text-zinc-700 placeholder-zinc-400 outline-none transition-all duration-200 focus:border-[#5e41de]/50 focus:ring-2 focus:ring-[#5e41de]/15 dark:border-[#5e41de]/25 dark:bg-zinc-800/60 dark:text-zinc-200 dark:placeholder-zinc-500 dark:focus:border-[#5e41de]/50";
-
-const labelCls =
-  "flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400";
-
-const FieldLabel = ({ icon: Icon, children }) => (
-  <label className={labelCls}>
-    <Icon size={11} className="text-[#5e41de] dark:text-[#a78bfa]" />
-    {children}
-  </label>
-);
-
-const CheckboxGroup = ({ items, name, cols = 3 }) => (
-  <div className={`grid grid-cols-2 gap-2 sm:grid-cols-${cols}`}>
-    {items.map((item) => (
-      <label
-        key={item}
-        className="group flex cursor-pointer items-center gap-2 rounded-xl border border-[#5e41de]/15 bg-white/60 px-3 py-2 text-xs font-semibold text-zinc-500 transition-all duration-200 hover:border-[#5e41de]/35 hover:bg-[#5e41de]/5 has-checked:border-[#5e41de]/60 has-checked:bg-[#5e41de]/10 has-checked:text-[#5e41de] dark:border-[#5e41de]/20 dark:bg-zinc-800/40 dark:text-zinc-400 dark:has-checked:border-[#5e41de]/50 dark:has-checked:bg-[#5e41de]/20 dark:has-checked:text-[#a78bfa]"
-      >
-        <input type="checkbox" name={name} value={item} className="sr-only" />
-        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-zinc-300 transition-all group-has-checked:border-[#5e41de] group-has-checked:bg-[#5e41de] dark:border-zinc-600">
-          <svg
-            viewBox="0 0 10 8"
-            className="h-2.5 w-2.5 fill-none stroke-white stroke-2 opacity-0 group-has-checked:opacity-100"
-          >
-            <polyline points="1,4 3.5,6.5 9,1" />
-          </svg>
-        </span>
-        {item}
-      </label>
-    ))}
-  </div>
-);
+import { FiArrowLeft, FiZap } from "react-icons/fi";
 
 const UpdateIdeas = async ({ params }) => {
   const { ideas_id } = await params;
   const session = await auth.api.getSession({ headers: await headers() });
   const ideasDetails = await GetIdeasById(ideas_id);
-  const {
-    userInfo,
-  } = ideasDetails;
+  const { userInfo } = ideasDetails;
   if (session?.user?.email !== userInfo.email) {
-    return redirect('/protected');
+    return redirect("/protected");
   }
-  const formAction = async (formData) => {
-    "use server";
-    await UpdateIdeasAction(formData, ideas_id);
-  };
 
   return (
     <section className="relative min-h-[calc(100vh-64px)] overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
@@ -121,18 +29,24 @@ const UpdateIdeas = async ({ params }) => {
         {/* Top accent line */}
         <div className="mb-8 h-px w-full bg-linear-to-r from-transparent via-[#5e41de]/50 to-transparent" />
 
-        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-12">
-          {/* ── Left panel ── */}
-          <div className="flex flex-col gap-6 lg:sticky lg:top-20">
-            {/* Badge */}
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#5e41de]/25 bg-[#5e41de]/10 px-3.5 py-1.5 text-xs font-semibold text-[#5e41de] dark:border-[#5e41de]/30 dark:text-[#a78bfa]">
-              <RiLightbulbFlashFill className="animate-pulse" /> Share Your Idea
-            </span>
+        {/* Back button — visible on all screens */}
+        <div className="mb-6">
+          <Link
+            href="/my-ideas"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-[#5e41de]/25 bg-[#5e41de]/10 px-4 py-2 text-sm font-semibold text-[#5e41de] transition hover:bg-[#5e41de]/20 dark:border-[#5e41de]/30 dark:text-[#a78bfa] dark:hover:bg-[#5e41de]/20"
+          >
+            <FiArrowLeft size={15} />
+            Back to My Ideas
+          </Link>
+        </div>
 
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-12">
+          {/* ── Left panel — desktop only ── */}
+          <div className="hidden flex-col gap-5 lg:flex lg:sticky lg:top-20">
             {/* Lottie */}
-            <div className="mx-auto w-full max-w-xs md:max-w-md lg:mx-0 lg:max-w-lg">
+            <div className="mx-auto w-full max-w-xs lg:mx-0 lg:max-w-lg">
               <DotLottieReact
-                src="https://lottie.host/8401d7bb-a069-41ce-833c-5fb41a6a51c9/J99zf06PTS.lottie"
+                src="https://lottie.host/69f8d24e-6619-4df3-90bf-9e7013cbb84f/ZtsR51S0wX.lottie"
                 loop
                 autoplay
               />
@@ -140,31 +54,30 @@ const UpdateIdeas = async ({ params }) => {
 
             {/* Heading */}
             <div>
-              <h1 className="text-3xl font-extrabold leading-tight text-zinc-800 sm:text-4xl dark:text-zinc-100">
-                Launch Your{" "}
+              <h1 className="text-3xl font-extrabold leading-tight text-zinc-800 xl:text-4xl dark:text-zinc-100">
+                Refine &amp;{" "}
                 <span className="bg-linear-to-r from-[#5e41de] to-[#a78bfa] bg-clip-text text-transparent">
-                  Next Big Idea
+                  Improve Your Idea
                 </span>
               </h1>
               <p className="mt-2 max-w-sm text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                Turn your vision into reality. Submit your startup concept, get
-                community feedback, and connect with co-founders and investors
-                who believe in your idea.
+                Update your idea with fresh details, sharper descriptions, and
+                better visuals to attract more attention from the community.
               </p>
             </div>
 
             {/* Tips card */}
             <div className="rounded-2xl border border-[#5e41de]/15 bg-[#5e41de]/5 p-4 dark:border-[#5e41de]/25 dark:bg-[#5e41de]/10">
               <p className="mb-2.5 text-[10px] font-bold uppercase tracking-widest text-[#5e41de] dark:text-[#a78bfa]">
-                Tips for a great submission
+                Tips for a great update
               </p>
               <ul className="space-y-2 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
                 {[
-                  "Be specific — a clear problem statement gets more traction",
-                  "Use a high-quality image URL to make your idea stand out",
-                  "Select all relevant tags to improve discoverability",
-                  "Estimate your budget realistically to attract the right investors",
-                  "Describe your target audience in as much detail as possible",
+                  "Review feedback you received and address the key concerns",
+                  "Refresh your cover image to keep the idea visually appealing",
+                  "Update tags if your idea has evolved in scope or category",
+                  "Revise your budget estimate if costs have changed",
+                  "Clarify your target audience to attract better co-founders",
                 ].map((tip) => (
                   <li key={tip} className="flex items-start gap-2">
                     <span className="mt-0.5 shrink-0 text-[#5e41de] dark:text-[#a78bfa]">

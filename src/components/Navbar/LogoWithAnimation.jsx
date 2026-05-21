@@ -6,7 +6,10 @@ const LogoWithAnimation = () => {
   return (
     <StyledWrapper>
       <span className="ui-logo">
-        <span className="text-[#5e41de] dark:text-[#a78bfa]">IdeaVault</span>
+        <span className="text-[#5e41de] dark:text-[#a78bfa] uppercase">
+          Idea
+          <span className="text-[#a78bfa] dark:text-[#5e41de]">Vault</span>
+        </span>
       </span>
     </StyledWrapper>
   );
@@ -16,14 +19,21 @@ const StyledWrapper = styled.div`
   /* From Uiverse.io by SteveBloX */
   .ui-logo {
     position: relative;
-    padding: 12px 24px;
+    padding: 8px 12px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 1.375rem;
+    font-size: 1.125rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 768px) {
+    .ui-logo {
+      padding: 12px 24px;
+      font-size: 1.375rem;
+    }
   }
 
   .ui-logo:active {

@@ -44,9 +44,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 flex flex-col gap-5">
             <Link href="/" className="z-10 inline-flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#5e41de] text-white shadow-md shadow-[#5e41de]/30">
-                <FiZap size={18} />
-              </span>
+              
               <LogoWithAnimation />
             </Link>
             <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">

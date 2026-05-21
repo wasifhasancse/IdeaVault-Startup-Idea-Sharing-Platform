@@ -23,15 +23,15 @@ const AddIdea = () => {
         <div className="mb-8 h-px w-full bg-linear-to-r from-transparent via-[#5e41de]/50 to-transparent" />
 
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-12">
-          {/* ── Left panel ── */}
-          <div className="flex flex-col gap-6 lg:sticky lg:top-20">
+          {/* ── Left panel — desktop only ── */}
+          <div className="hidden flex-col gap-6 lg:flex lg:sticky lg:top-20">
             {/* Badge */}
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#5e41de]/25 bg-[#5e41de]/10 px-3.5 py-1.5 text-xs font-semibold text-[#5e41de] dark:border-[#5e41de]/30 dark:text-[#a78bfa]">
               <RiLightbulbFlashFill className="animate-pulse" /> Share Your Idea
             </span>
 
             {/* Lottie */}
-            <div className="mx-auto w-full max-w-xs md:max-w-md lg:mx-0 lg:max-w-lg">
+            <div className="mx-auto w-full max-w-xs lg:mx-0 lg:max-w-lg">
               <DotLottieReact
                 src="https://lottie.host/8401d7bb-a069-41ce-833c-5fb41a6a51c9/J99zf06PTS.lottie"
                 loop
