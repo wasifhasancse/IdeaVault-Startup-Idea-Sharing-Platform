@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero/Hero";
+import TrendingIdeas from "@/components/Home/TrendingIdeas";
 
 export const metadata = {
   title: "Home",
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <div>
       <Hero />
+      <TrendingIdeas />
     </div>
   );
 }

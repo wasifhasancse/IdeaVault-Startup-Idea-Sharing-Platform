@@ -10,7 +10,7 @@ const SearchingMethod = () => {
   const [searchQuery, setSearchQuery] = useState(urlSearch);
   const [prevUrlSearch, setPrevUrlSearch] = useState(urlSearch);
 
-  // Sync input when URL param changes externally (e.g. ClearFilters)
+  // Sync input when URL param changes externally
   if (prevUrlSearch !== urlSearch) {
     setPrevUrlSearch(urlSearch);
     setSearchQuery(urlSearch);

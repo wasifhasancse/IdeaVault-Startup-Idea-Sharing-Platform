@@ -10,6 +10,13 @@ export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const data = await getData.json();
   return data;
 };
+export const GetTrendingIdeasAction = async (searchQuery, categoryQuery) => {
+  const getData = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/trending-ideas`,
+  );
+  const data = await getData.json();
+  return data;
+};
 
 export const GetIdeasById = async (id) => {
   const { token } = await auth.api.getToken({ headers: await headers() });
