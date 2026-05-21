@@ -3,7 +3,8 @@ import ClearFilters from "@/components/Operations/ClearFilters";
 import FilterCategory from "@/components/Operations/FilterCategory";
 import SearchingMethod from "@/components/Operations/SearchingMethod";
 import { GetIdeasAction } from "@/lib/Action/CrudAction";
-import { FiCalendar, FiFilter } from "react-icons/fi";
+import Link from "next/link";
+import { FiCalendar, FiFilter, FiSearch } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 
 export const metadata = {
@@ -97,11 +98,44 @@ const Ideas = async ({ searchParams }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {ideas.map((idea) => (
-            <IdeaCard key={idea._id} idea={idea} />
-          ))}
-        </div>
+        {ideas.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {ideas.map((idea) => (
+              <IdeaCard key={idea._id} idea={idea} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#5e41de]/25 bg-white/60 px-6 py-20 text-center backdrop-blur-sm dark:border-[#5e41de]/20 dark:bg-zinc-900/50">
+            {/* Icon */}
+            <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-[#5e41de]/15 bg-[#5e41de]/6 dark:border-[#5e41de]/20 dark:bg-[#5e41de]/10">
+              <FiSearch
+                size={32}
+                className="text-[#5e41de]/50 dark:text-[#a78bfa]/60"
+              />
+            </div>
+
+            {/* Text */}
+            <h3 className="text-lg font-bold text-zinc-700 dark:text-zinc-200">
+              No ideas found
+            </h3>
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-zinc-400 dark:text-zinc-500">
+              We couldn&apos;t find any ideas matching your current search or
+              filters. Try adjusting them or be the first to share one!
+            </p>
+
+            {/* Actions */}
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <ClearFilters label="Clear Filters" />
+              <Link
+                href="/add-idea"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#5e41de] bg-[#5e41de] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#5e41de]/25 transition-all duration-200 hover:bg-[#4930b8] hover:shadow-md"
+              >
+                <RiLightbulbFlashLine size={15} />
+                Share Your Idea
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

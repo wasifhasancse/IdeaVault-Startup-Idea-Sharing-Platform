@@ -1,9 +1,4 @@
-import {
-  FiEdit3,
-  FiMessageSquare,
-  FiSend,
-  FiTrendingUp,
-} from "react-icons/fi";
+import { FiEdit3, FiMessageSquare, FiSend, FiTrendingUp } from "react-icons/fi";
 
 const STEPS = [
   {

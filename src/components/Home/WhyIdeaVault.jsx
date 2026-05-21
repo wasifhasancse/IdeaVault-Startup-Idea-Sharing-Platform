@@ -1,11 +1,11 @@
 import {
-  FiEye,
-  FiGlobe,
-  FiLock,
-  FiShield,
-  FiStar,
-  FiUsers,
-  FiZap,
+    FiEye,
+    FiGlobe,
+    FiLock,
+    FiShield,
+    FiStar,
+    FiUsers,
+    FiZap,
 } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
 
@@ -15,7 +15,8 @@ const FEATURES = [
     title: "Instant Publishing",
     description:
       "Post your idea in under 2 minutes. No lengthy forms — just the essentials that matter to investors and co-founders.",
-    accent: "bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400",
+    accent:
+      "bg-amber-500/10 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400",
     border: "hover:border-amber-300 dark:hover:border-amber-600/50",
   },
   {
@@ -23,7 +24,8 @@ const FEATURES = [
     title: "Community Validation",
     description:
       "Real entrepreneurs review your concept. Upvotes and comments tell you if you're onto something before you spend a dime.",
-    accent: "bg-[#5e41de]/10 text-[#5e41de] dark:bg-[#5e41de]/15 dark:text-[#a78bfa]",
+    accent:
+      "bg-[#5e41de]/10 text-[#5e41de] dark:bg-[#5e41de]/15 dark:text-[#a78bfa]",
     border: "hover:border-[#5e41de]/40 dark:hover:border-[#5e41de]/50",
   },
   {
@@ -39,7 +41,8 @@ const FEATURES = [
     title: "Trending Visibility",
     description:
       "Great ideas get promoted automatically. The more engagement your idea earns, the more exposure it receives.",
-    accent: "bg-rose-500/10 text-rose-600 dark:bg-rose-500/15 dark:text-rose-400",
+    accent:
+      "bg-rose-500/10 text-rose-600 dark:bg-rose-500/15 dark:text-rose-400",
     border: "hover:border-rose-300 dark:hover:border-rose-600/50",
   },
   {
@@ -47,7 +50,8 @@ const FEATURES = [
     title: "Idea Protection",
     description:
       "Your submission is timestamped and attributed to you. Build a verifiable track record of your innovation journey.",
-    accent: "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400",
+    accent:
+      "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400",
     border: "hover:border-emerald-300 dark:hover:border-emerald-600/50",
   },
   {
@@ -55,7 +59,8 @@ const FEATURES = [
     title: "Rich Insights",
     description:
       "See who viewed your idea, how many upvoted it, and what the community is saying — all from your dashboard.",
-    accent: "bg-violet-500/10 text-violet-600 dark:bg-violet-500/15 dark:text-violet-400",
+    accent:
+      "bg-violet-500/10 text-violet-600 dark:bg-violet-500/15 dark:text-violet-400",
     border: "hover:border-violet-300 dark:hover:border-violet-600/50",
   },
   {
@@ -63,7 +68,8 @@ const FEATURES = [
     title: "Privacy Controls",
     description:
       "Keep your idea draft until you're ready. Publish only when the concept is polished and the timing is right.",
-    accent: "bg-orange-500/10 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400",
+    accent:
+      "bg-orange-500/10 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400",
     border: "hover:border-orange-300 dark:hover:border-orange-600/50",
   },
   {
@@ -71,7 +77,8 @@ const FEATURES = [
     title: "Iterative Updates",
     description:
       "Ideas evolve. Update your concept anytime as you learn from feedback and the market changes around you.",
-    accent: "bg-teal-500/10 text-teal-600 dark:bg-teal-500/15 dark:text-teal-400",
+    accent:
+      "bg-teal-500/10 text-teal-600 dark:bg-teal-500/15 dark:text-teal-400",
     border: "hover:border-teal-300 dark:hover:border-teal-600/50",
   },
 ];

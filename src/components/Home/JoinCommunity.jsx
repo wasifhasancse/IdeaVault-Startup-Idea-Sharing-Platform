@@ -84,13 +84,8 @@ const JoinCommunity = () => {
             <ul className="space-y-3.5">
               {PERKS.map((perk) => (
                 <li key={perk} className="flex items-center gap-3">
-                  <FiCheckCircle
-                    size={17}
-                    className="shrink-0 text-white/90"
-                  />
-                  <span className="text-sm font-medium text-white">
-                    {perk}
-                  </span>
+                  <FiCheckCircle size={17} className="shrink-0 text-white/90" />
+                  <span className="text-sm font-medium text-white">{perk}</span>
                 </li>
               ))}
             </ul>
