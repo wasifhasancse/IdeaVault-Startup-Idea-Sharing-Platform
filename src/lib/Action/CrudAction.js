@@ -10,7 +10,7 @@ export const GetIdeasAction = async (searchQuery, categoryQuery) => {
   const data = await getData.json();
   return data;
 };
-export const GetTrendingIdeasAction = async (searchQuery, categoryQuery) => {
+export const GetTrendingIdeasAction = async () => {
   const getData = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/trending-ideas`,
   );
