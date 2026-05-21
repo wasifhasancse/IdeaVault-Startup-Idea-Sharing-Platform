@@ -1,5 +1,8 @@
 import Hero from "@/components/Hero/Hero";
+import HowItWorks from "@/components/Home/HowItWorks";
+import JoinCommunity from "@/components/Home/JoinCommunity";
 import TrendingIdeas from "@/components/Home/TrendingIdeas";
+import WhyIdeaVault from "@/components/Home/WhyIdeaVault";
 
 export const metadata = {
   title: "Home",
@@ -12,6 +15,9 @@ export default function Home() {
     <div>
       <Hero />
       <TrendingIdeas />
+      <HowItWorks />
+      <WhyIdeaVault />
+      <JoinCommunity />
     </div>
   );
 }
