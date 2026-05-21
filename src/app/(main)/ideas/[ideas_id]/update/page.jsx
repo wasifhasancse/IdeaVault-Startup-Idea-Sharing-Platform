@@ -98,18 +98,6 @@ const UpdateIdeas = async ({ params }) => {
   const session = await auth.api.getSession({ headers: await headers() });
   const ideasDetails = await GetIdeasById(ideas_id);
   const {
-    _id,
-    title,
-    imageUrl,
-    category,
-    shortDescription,
-    detailedDescription,
-    problemStatement,
-    proposedSolution,
-    estimatedBudget,
-    createTime,
-    tags,
-    targetAudience,
     userInfo,
   } = ideasDetails;
   if (session?.user?.email !== userInfo.email) {
