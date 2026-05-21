@@ -354,7 +354,7 @@ const MyInteractions = async () => {
 
         {/* Commented section */}
         {myCommentedIdeas.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
+          <div className="mt-6 flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-[#5e41de]/30 bg-white/60 py-20 text-center dark:border-[#5e41de]/20 dark:bg-zinc-900/40">
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
               <RiLightbulbFlashLine
                 size={36}
@@ -378,7 +378,7 @@ const MyInteractions = async () => {
             </Link>
           </div>
         ) : (
-          <div className="mb-10">
+          <div className="mt-6 mb-10">
             <div className="mb-4 flex items-center gap-3">
               <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#5e41de]/10 dark:bg-[#5e41de]/20">
                 <FiMessageSquare
