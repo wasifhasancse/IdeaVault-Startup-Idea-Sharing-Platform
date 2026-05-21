@@ -53,8 +53,8 @@ const CATEGORY_BAR = {
 const MyIdeas = async () => {
   const { session } = await auth.api.getSession({ headers: await headers() });
   const myIdeas = await GetMyIdeas(session?.userId);
-  const totalUpvotes = myIdeas.reduce((sum, idea) => sum + (idea.upvotes || 0), 0);
-  const totalComments = myIdeas.reduce((sum, idea) => sum + (idea.comments?.length || 0), 0);
+  const totalUpvotes = myIdeas?.reduce((sum, idea) => sum + (idea.upvotes || 0), 0);
+  const totalComments = myIdeas?.reduce((sum, idea) => sum + (idea.comments?.length || 0), 0);
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 py-10 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5 md:py-14 lg:py-16">
       {/* Background blobs */}
