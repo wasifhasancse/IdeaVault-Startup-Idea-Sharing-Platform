@@ -1,21 +1,22 @@
+import { GetIdeasAction, GetMyIdeas } from "@/lib/Action/CrudAction";
 import { auth } from "@/lib/auth";
 import { format } from "date-fns";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import {
-    FiCalendar,
-    FiChevronRight,
-    FiEdit3,
-    FiMessageSquare,
-    FiShield,
-    FiThumbsUp,
-    FiZap,
+  FiCalendar,
+  FiChevronRight,
+  FiEdit3,
+  FiMessageSquare,
+  FiShield,
+  FiThumbsUp,
+  FiZap,
 } from "react-icons/fi";
 import {
-    MdOutlineExplore,
-    MdOutlineInterests,
-    MdOutlineTipsAndUpdates,
+  MdOutlineExplore,
+  MdOutlineInterests,
+  MdOutlineTipsAndUpdates,
 } from "react-icons/md";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
@@ -37,23 +38,31 @@ const Profile = async () => {
 
   const profileImage =
     user.image || "https://img.icons8.com/color/1200/user.jpg";
+  const myIdeas = await GetMyIdeas(session?.session?.userId);
+  const allExistingIdeas = await GetIdeasAction();
+  const myCommentedIdeas = allExistingIdeas.filter((idea) =>
+    idea.comments?.some(
+      (comment) => comment.userInfo?.email === session?.user?.email,
+    ),
+  );
+  const myUpvotedIdeas = [];
 
   const stats = [
     {
       label: "Ideas Shared",
-      value: "0",
+      value: myIdeas.length,
       icon: FiZap,
       tip: "Share your first idea",
     },
     {
       label: "Interactions",
-      value: "0",
+      value: myCommentedIdeas.length,
       icon: FiMessageSquare,
       tip: "Vote, comment & discuss",
     },
     {
       label: "Upvotes Received",
-      value: "0",
+      value: myUpvotedIdeas.length,
       icon: FiThumbsUp,
       tip: "Earn recognition",
     },
