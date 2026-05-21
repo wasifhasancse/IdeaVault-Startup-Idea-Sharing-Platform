@@ -20,14 +20,14 @@ const ProtectedRoute = async ({ searchParams }) => {
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-[#a78bfa]/10 blur-3xl dark:bg-[#a78bfa]/20" />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center gap-6 text-center">
+      <div className="relative z-10 flex w-full max-w-lg flex-col items-center gap-6 text-center">
         {/* Icon badge */}
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#5e41de]/25 bg-[#5e41de]/10 shadow-lg shadow-[#5e41de]/15 dark:border-[#5e41de]/30 dark:bg-[#5e41de]/20">
           <FiLock size={28} className="text-[#5e41de] dark:text-[#a78bfa]" />
         </div>
 
         {/* Lottie */}
-        <div className="w-56">
+        <div className="w-72 sm:w-96 lg:w-md">
           <DotLottieReact
             src="https://lottie.host/44f2bb75-6a1e-49f0-8fea-318abfabfcf0/3Wmx52w3OG.lottie"
             loop

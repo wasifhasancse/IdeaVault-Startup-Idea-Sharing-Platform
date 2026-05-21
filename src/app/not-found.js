@@ -15,7 +15,7 @@ const NotFound = () => {
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-[#a78bfa]/10 blur-3xl dark:bg-[#a78bfa]/20" />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center gap-6 text-center">
+      <div className="relative z-10 flex w-full max-w-lg flex-col items-center gap-6 text-center">
         {/* 404 badge */}
         <div className="flex items-center gap-2 rounded-full border border-[#5e41de]/25 bg-[#5e41de]/10 px-5 py-2 dark:border-[#5e41de]/30 dark:bg-[#5e41de]/20">
           <FiCompass size={14} className="text-[#5e41de] dark:text-[#a78bfa]" />
@@ -25,7 +25,7 @@ const NotFound = () => {
         </div>
 
         {/* Lottie */}
-        <div className="w-60">
+        <div className="w-72 sm:w-96 lg:w-md">
           <DotLottieReact
             src="https://lottie.host/e54ff801-75d7-427f-b50d-67901db86877/SsWcllQCND.lottie"
             loop
