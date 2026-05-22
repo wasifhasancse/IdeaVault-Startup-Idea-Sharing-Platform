@@ -179,7 +179,7 @@ const MyIdeas = async () => {
               <h3 className="text-lg font-bold text-zinc-700 dark:text-zinc-300">
                 No ideas yet
               </h3>
-              <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-500">
+              <p className="mt-1 px-1.5 text-sm text-zinc-400 dark:text-zinc-500">
                 You haven&apos;t shared any ideas yet. Start by posting your
                 first concept!
               </p>
