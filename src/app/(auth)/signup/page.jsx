@@ -12,13 +12,15 @@ import {
 } from "@heroui/react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FiUserPlus } from "react-icons/fi";
 import { RiLightbulbFlashFill } from "react-icons/ri";
 
 export default function SignUp() {
+   const searchParams = useSearchParams();
+    const redirectTo = searchParams.get("redirect") || "/";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
@@ -57,7 +59,7 @@ export default function SignUp() {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    const { data, error } = await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+    const { data, error } = await authClient.signIn.social({ provider: "google", callbackURL: redirectTo });
     if (data) {
         toast.success(
           "Signing in with Google successful!",

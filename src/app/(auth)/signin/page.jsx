@@ -51,7 +51,7 @@ function SignInForm() {
     setIsGoogleLoading(true);
     const { data, error } = await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/",
+      callbackURL: redirectTo,
     });
     if (data) {
       toast.success("Signing in with Google successful!");
