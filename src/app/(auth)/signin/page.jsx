@@ -49,10 +49,16 @@ function SignInForm() {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    await authClient.signIn.social({
+    const { data, error } = await authClient.signIn.social({
       provider: "google",
-      callbackURL: redirectTo,
+      callbackURL: "/",
     });
+    if (data) {
+      toast.success("Signing in with Google successful!");
+    }
+    if (error) {
+      toast.danger("Failed to Sign in with Google. " + error.message);
+    }
   };
 
   return (

@@ -13,7 +13,7 @@ const ProtectedRoute = async ({ searchParams }) => {
     : "/signin";
 
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 px-4 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5">
+    <section className="relative flex min-h-[80vh] py-20 items-center justify-center overflow-hidden bg-linear-to-br from-white via-[#5e41de]/5 to-[#a78bfa]/10 px-4 dark:from-zinc-950 dark:via-[#5e41de]/10 dark:to-[#a78bfa]/5">
       {/* Background blobs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-[#5e41de]/10 blur-3xl dark:bg-[#5e41de]/20" />
@@ -27,7 +27,7 @@ const ProtectedRoute = async ({ searchParams }) => {
         </div>
 
         {/* Lottie */}
-        <div className="w-72 sm:w-96 lg:w-md">
+        <div className="w-full max-w-lg lg:max-w-xl">
           <DotLottieReact
             src="https://lottie.host/44f2bb75-6a1e-49f0-8fea-318abfabfcf0/3Wmx52w3OG.lottie"
             loop

@@ -57,7 +57,15 @@ export default function SignUp() {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
-    await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+    const { data, error } = await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+    if (data) {
+        toast.success(
+          "Signing in with Google successful!",
+        );
+      }
+      if (error) {
+        toast.danger("Failed to create account. " + error.message);
+      }
   };
 
   return (

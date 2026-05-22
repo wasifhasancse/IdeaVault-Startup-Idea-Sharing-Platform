@@ -42,9 +42,9 @@ const Footer = () => {
       <div className="mx-auto max-w-11/12 py-12 lg:py-16">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-8">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1 flex flex-col gap-5">
+          <div className="col-span-2 md:col-span-4 lg:col-span-2 xl:col-span-1 flex flex-col gap-5">
             <Link href="/" className="z-10 inline-flex items-center gap-2.5">
-              
+
               <LogoWithAnimation />
             </Link>
             <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
@@ -143,7 +143,7 @@ const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div className="col-span-2 md:col-span-2 lg:col-span-1 flex flex-col gap-4">
+          <div className="col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-1 flex flex-col gap-4">
             <div className="space-y-1.5">
               <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-100">
                 Contact

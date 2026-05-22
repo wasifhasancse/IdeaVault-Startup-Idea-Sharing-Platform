@@ -19,7 +19,7 @@ const StyledWrapper = styled.div`
   /* From Uiverse.io by SteveBloX */
   .ui-logo {
     position: relative;
-    padding: 8px 12px;
+    padding: 2px 5px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
@@ -31,7 +31,7 @@ const StyledWrapper = styled.div`
 
   @media (min-width: 768px) {
     .ui-logo {
-      padding: 12px 24px;
+      padding: 2px 5px;
       font-size: 1.375rem;
     }
   }
