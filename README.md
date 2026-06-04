@@ -2,8 +2,10 @@
 
 A community-driven platform where entrepreneurs share, discover, and validate startup ideas.
 
-**Live Site:** https://idea-vault-startup-idea-sharing.vercel.app/
-
+**Live Site:**
+```
+https://idea-vault-startup-idea-sharing.vercel.app/
+```
 ---
 
 ## Project Description
