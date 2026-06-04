@@ -26,6 +26,8 @@ IdeaVault is built with Next.js App Router, styled with Tailwind CSS, and design
 - Better Auth
 - MongoDB
 - HeroUI
+- Javascript (ES6+)
+- JWT for authentication
 
 ---
 
