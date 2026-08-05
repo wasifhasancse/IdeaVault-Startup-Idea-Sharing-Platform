@@ -4,7 +4,7 @@ A community-driven platform where entrepreneurs share, discover, and validate st
 
 **Live Site:**
 ```
-https://idea-vault-startup-idea-sharing.vercel.app/
+https://idea-vault-startup-idea-sharing.vercel.app
 ```
 ---
 
