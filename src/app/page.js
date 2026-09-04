@@ -5,7 +5,7 @@ import TrendingIdeas from "@/components/Home/TrendingIdeas";
 import WhyIdeaVault from "@/components/Home/WhyIdeaVault";
 
 export const metadata = {
-  title: "Home",
+  title: "Home | IdeaVault",
   description:
     "Welcome to IdeaVault — discover and share startup ideas with a community of innovators.",
 };
