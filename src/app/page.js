@@ -7,7 +7,7 @@ import WhyIdeaVault from "@/components/Home/WhyIdeaVault";
 export const metadata = {
   title: "Home | IdeaVault",
   description:
-    "Welcome to IdeaVault — discover and share startup ideas with a community of innovators.",
+    "Welcome to IdeaVault — discover and share startup ideas with a community of innovators. Explore trending ideas, learn how it works, and join our community to turn your concepts into reality.",
 };
 
 export default function Home() {
